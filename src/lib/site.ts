@@ -1,10 +1,10 @@
 export const siteConfig = {
   name: "작심스페이스",
-  nameEn: "JakSimSpace",
+  nameEn: "ZakSimSpace",
   tagline: "결심을 사업장으로",
   description:
     "비상주 사무실 주소지 · 사업자 등록 · 우편물 관리까지 한 번에. 전국 어디든 월 2만원부터 시작하세요.",
-  url: "https://jaksimspace.com",
+  url: "https://zaksimspace.com",
   customerCenter: "1833-0000",
   nav: [
     { label: "전국 지점", href: "/locations" },

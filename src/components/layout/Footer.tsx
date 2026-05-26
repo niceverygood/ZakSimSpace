@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { NewsletterSignup } from "@/components/newsletter/NewsletterSignup";
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -77,19 +78,36 @@ const footerNav = {
 
 export function Footer() {
   return (
-    <footer className="bg-navy-50 border-t border-navy-100">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-14">
+    <footer className="bg-ink-900 text-cream-200">
+      {/* Newsletter strip */}
+      <div className="border-b border-ink-700/60">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-10 grid lg:grid-cols-[1.2fr_1fr] gap-8 items-end">
+          <div>
+            <h3 className="text-[20px] lg:text-[24px] font-extrabold text-white leading-[1.3]">
+              결심한 그날부터
+              <br />
+              사업의 다음 단계까지 함께
+            </h3>
+            <p className="mt-2 text-[13px] text-ink-400">
+              매월 1회, 작심스페이스의 새 소식과 사업자 가이드를 보내드려요.
+            </p>
+          </div>
+          <NewsletterSignup variant="footer" />
+        </div>
+      </div>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-14 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-10 lg:gap-8">
           {/* Brand block */}
           <div className="space-y-5">
-            <Logo />
-            <div className="text-[13px] leading-6 text-navy-500 space-y-1">
+            <Logo variant="light" />
+            <div className="text-[13px] leading-6 text-ink-300 space-y-1">
               <p>주식회사 작심스페이스</p>
               <p>서울특별시 강남구 테헤란로 000, 00층</p>
               <p>사업자등록번호 000-00-00000</p>
               <p>통신판매업 신고 2026-서울강남-00000</p>
               <p className="pt-2">
-                고객센터 <span className="text-navy-800 font-semibold">1833-0000</span>
+                고객센터{" "}
+                <span className="text-white font-semibold tnum">1833-0000</span>
               </p>
               <p>평일 10:00 - 18:00 (점심 12:00 - 13:00)</p>
             </div>
@@ -98,7 +116,7 @@ export function Footer() {
           {/* Nav blocks */}
           {Object.entries(footerNav).map(([key, group]) => (
             <div key={key}>
-              <h4 className="text-[13px] font-semibold text-navy-900 mb-4">
+              <h4 className="text-[13px] font-semibold text-white mb-4">
                 {group.title}
               </h4>
               <ul className="space-y-2.5">
@@ -106,7 +124,7 @@ export function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-[13px] text-navy-500 hover:text-navy-800 transition-colors"
+                      className="text-[13px] text-ink-300 hover:text-white transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -117,22 +135,22 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 pt-6 border-t border-navy-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <p className="text-[12px] text-navy-400">
-            © 2026 JakSimSpace Corporation. All rights reserved.
+        <div className="mt-12 pt-6 border-t border-ink-700/60 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <p className="text-[12px] text-ink-400">
+            © 2026 ZakSimSpace Corporation. All rights reserved.
           </p>
-          <div className="flex items-center gap-4 text-navy-400">
+          <div className="flex items-center gap-4 text-ink-300">
             <Link
               href="#"
               aria-label="Instagram"
-              className="hover:text-navy-700 transition-colors"
+              className="hover:text-white transition-colors"
             >
               <InstagramIcon className="w-[18px] h-[18px]" />
             </Link>
             <Link
               href="#"
               aria-label="YouTube"
-              className="hover:text-navy-700 transition-colors"
+              className="hover:text-white transition-colors"
             >
               <YoutubeIcon className="w-[18px] h-[18px]" />
             </Link>
