@@ -37,7 +37,7 @@ export default async function CheckoutPage({
             결제하기
           </h1>
           <p className="text-[13.5px] text-ink-500">
-            결제는 외부 PG사(토스페이먼츠/포트원)를 통해 안전하게 처리됩니다.
+            결제는 NicePay 보안 결제로 안전하게 처리됩니다.
           </p>
 
           {/* Summary */}
@@ -70,7 +70,12 @@ export default async function CheckoutPage({
           </section>
 
           {/* Client controls */}
-          <CheckoutClient branchName={branch.name} amount={amount} />
+          <CheckoutClient
+            branchId={branch.id}
+            branchName={branch.name}
+            cycle={isYearly ? "yearly" : "monthly"}
+            amount={amount}
+          />
         </div>
       </main>
       <Footer />
