@@ -41,14 +41,14 @@ export function MyPageSidebar() {
                 className={cn(
                   "flex items-center gap-3 h-11 px-3.5 rounded-xl text-[13.5px] font-semibold transition-colors",
                   active
-                    ? "bg-sage-50 text-sage-700 border border-sage-200"
+                    ? "bg-navy-50 text-navy-700 border border-navy-200"
                     : "text-ink-700 hover:bg-cream-100 border border-transparent",
                 )}
               >
                 <Icon
                   className={cn(
                     "w-4 h-4",
-                    active ? "text-sage-600" : "text-ink-400",
+                    active ? "text-navy-600" : "text-ink-400",
                   )}
                   strokeWidth={2}
                 />

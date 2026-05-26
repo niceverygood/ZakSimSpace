@@ -23,7 +23,7 @@ export default function ContractsPage() {
             const status = statusLabel(c.status);
             const toneCls =
               status.tone === "green"
-                ? "bg-sage-50 text-sage-700 border-sage-200"
+                ? "bg-navy-50 text-navy-700 border-navy-200"
                 : status.tone === "amber"
                   ? "bg-amber-50 text-amber-600 border-amber-200"
                   : "bg-cream-100 text-ink-500 border-cream-200";

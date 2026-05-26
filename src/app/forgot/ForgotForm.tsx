@@ -20,8 +20,8 @@ export function ForgotForm() {
   if (sent) {
     return (
       <div className="text-center py-2">
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-sage-100 mb-4">
-          <CheckCircle2 className="w-7 h-7 text-sage-700" strokeWidth={2} />
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-navy-100 mb-4">
+          <CheckCircle2 className="w-7 h-7 text-navy-700" strokeWidth={2} />
         </div>
         <p className="text-[15px] font-bold text-ink-900">
           재설정 링크를 보냈어요
@@ -62,14 +62,14 @@ export function ForgotForm() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="가입한 이메일"
             autoComplete="email"
-            className="w-full h-12 rounded-2xl border border-ink-200 bg-white pl-11 pr-4 text-[14px] font-medium text-ink-900 placeholder:text-ink-300 focus:outline-none focus:border-sage-500 transition-colors"
+            className="w-full h-12 rounded-2xl border border-ink-200 bg-white pl-11 pr-4 text-[14px] font-medium text-ink-900 placeholder:text-ink-300 focus:outline-none focus:border-navy-500 transition-colors"
           />
         </div>
       </label>
       <button
         type="submit"
         disabled={submitting}
-        className="mt-3 w-full h-12 rounded-2xl bg-sage-600 hover:bg-sage-700 disabled:bg-sage-300 text-white font-bold text-[14px] transition-colors"
+        className="mt-3 w-full h-12 rounded-2xl bg-navy-600 hover:bg-navy-700 disabled:bg-navy-300 text-white font-bold text-[14px] transition-colors"
       >
         {submitting ? "전송 중..." : "재설정 링크 받기"}
       </button>

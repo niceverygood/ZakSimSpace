@@ -40,7 +40,7 @@ export default function GlobalError({
           <button
             type="button"
             onClick={reset}
-            className="inline-flex items-center gap-1.5 rounded-full bg-sage-600 hover:bg-sage-700 text-white font-bold px-5 h-11 text-[13px] transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full bg-navy-600 hover:bg-navy-700 text-white font-bold px-5 h-11 text-[13px] transition-colors"
           >
             <RefreshCcw className="w-3.5 h-3.5" strokeWidth={2.5} />
             다시 시도

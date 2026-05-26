@@ -6,13 +6,13 @@ export function Process() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mb-14 lg:mb-16">
-          <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+          <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
             Step 01 · 계약 → 등록
           </p>
           <h2 className="text-[30px] lg:text-[44px] font-extrabold text-ink-900 leading-[1.2] tracking-tight">
             주소지 계약 후 바로
             <br />
-            <span className="text-sage-600">간편 사업자 등록 신청</span>까지
+            <span className="text-navy-600">간편 사업자 등록 신청</span>까지
           </h2>
           <p className="mt-5 text-[15.5px] lg:text-[17px] leading-[1.7] text-ink-500 max-w-xl">
             마이페이지에 표시된 임대차계약서를 그대로 첨부하면, 홈택스 사업자등록
@@ -43,9 +43,9 @@ export function Process() {
             ].map((s) => (
               <li
                 key={s.no}
-                className="rounded-2xl bg-white border border-ink-100 p-5 lg:p-6 flex gap-4 hover:border-sage-300 transition-colors"
+                className="rounded-2xl bg-white border border-ink-100 p-5 lg:p-6 flex gap-4 hover:border-navy-300 transition-colors"
               >
-                <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-sage-50 border border-sage-200 flex items-center justify-center font-extrabold text-sage-700 tnum text-[14px]">
+                <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-navy-50 border border-navy-200 flex items-center justify-center font-extrabold text-navy-700 tnum text-[14px]">
                   {s.no}
                 </div>
                 <div>
@@ -63,7 +63,7 @@ export function Process() {
           {/* Right: product UI mockup */}
           <div className="relative">
             {/* Backdrop */}
-            <div className="absolute -inset-4 bg-gradient-to-br from-sage-100/60 to-amber-100/40 rounded-[28px] blur-2xl" />
+            <div className="absolute -inset-4 bg-gradient-to-br from-navy-100/60 to-amber-100/40 rounded-[28px] blur-2xl" />
 
             {/* Browser card */}
             <div className="relative rounded-3xl bg-white border border-ink-100 shadow-[0_30px_80px_-30px_rgba(12,18,25,0.35)] overflow-hidden">
@@ -81,7 +81,7 @@ export function Process() {
               <div className="p-5 lg:p-7 grid gap-4">
                 {/* Search */}
                 <div className="rounded-xl border border-ink-100 px-4 py-3 flex items-center gap-3 bg-cream-50">
-                  <MapPin className="w-4 h-4 text-sage-600" strokeWidth={2.2} />
+                  <MapPin className="w-4 h-4 text-navy-600" strokeWidth={2.2} />
                   <span className="text-[13px] text-ink-700 font-medium">
                     서울 강남 / 통신판매업 가능
                   </span>
@@ -98,7 +98,7 @@ export function Process() {
                       key={b.name}
                       className="rounded-xl border border-ink-100 p-3.5 bg-white"
                     >
-                      <div className="w-full aspect-[16/9] rounded-lg bg-gradient-to-br from-sage-200 to-sage-400 mb-3 relative overflow-hidden">
+                      <div className="w-full aspect-[16/9] rounded-lg bg-gradient-to-br from-navy-200 to-navy-400 mb-3 relative overflow-hidden">
                         <div className="absolute inset-2 rounded-md bg-white/30 backdrop-blur-sm" />
                         {b.hot && (
                           <span className="absolute top-2 left-2 text-[10px] font-bold bg-amber-300 text-ink-900 rounded-full px-2 py-0.5">
@@ -109,7 +109,7 @@ export function Process() {
                       <p className="text-[12.5px] font-bold text-ink-900">
                         {b.name}
                       </p>
-                      <p className="text-[12px] text-sage-700 font-extrabold tnum mt-0.5">
+                      <p className="text-[12px] text-navy-700 font-extrabold tnum mt-0.5">
                         월 {b.price}
                       </p>
                     </div>
@@ -117,19 +117,19 @@ export function Process() {
                 </div>
 
                 {/* CTA bar */}
-                <div className="rounded-xl bg-sage-600 px-4 py-3.5 flex items-center justify-between">
+                <div className="rounded-xl bg-navy-600 px-4 py-3.5 flex items-center justify-between">
                   <span className="text-[13px] text-white font-semibold">
                     선택한 지점으로 계약 진행
                   </span>
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white text-sage-700">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white text-navy-700">
                     <Check className="w-3.5 h-3.5" strokeWidth={3} />
                   </span>
                 </div>
 
                 {/* Status row */}
-                <div className="rounded-xl border border-dashed border-sage-300 bg-sage-50 px-4 py-3 flex items-center gap-3">
-                  <FileText className="w-4 h-4 text-sage-700" strokeWidth={2.2} />
-                  <p className="text-[12.5px] text-sage-700 font-semibold">
+                <div className="rounded-xl border border-dashed border-navy-300 bg-navy-50 px-4 py-3 flex items-center gap-3">
+                  <FileText className="w-4 h-4 text-navy-700" strokeWidth={2.2} />
+                  <p className="text-[12.5px] text-navy-700 font-semibold">
                     임대차계약서가 자동 발급되었어요
                   </p>
                   <Sparkles className="w-4 h-4 text-amber-400 ml-auto" />
@@ -139,7 +139,7 @@ export function Process() {
 
             {/* Floating chip */}
             <div className="absolute -bottom-5 -left-3 lg:-left-6 rounded-2xl bg-white border border-ink-100 shadow-xl px-4 py-3 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-sage-500 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-navy-500 flex items-center justify-center">
                 <Check className="w-4 h-4 text-white" strokeWidth={3} />
               </div>
               <div>

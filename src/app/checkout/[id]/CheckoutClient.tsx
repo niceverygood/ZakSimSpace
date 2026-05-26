@@ -27,8 +27,8 @@ export function CheckoutClient({
   if (phase === "done") {
     return (
       <section className="mt-6 rounded-3xl bg-white border border-cream-200 p-8 text-center">
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-sage-100 mb-4">
-          <CheckCircle2 className="w-7 h-7 text-sage-700" strokeWidth={2} />
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-navy-100 mb-4">
+          <CheckCircle2 className="w-7 h-7 text-navy-700" strokeWidth={2} />
         </div>
         <h2 className="text-[20px] font-extrabold text-ink-900">
           결제가 완료됐어요
@@ -44,7 +44,7 @@ export function CheckoutClient({
         <div className="mt-7 flex flex-wrap justify-center gap-3">
           <Link
             href="/me/contracts"
-            className="inline-flex items-center gap-2 rounded-full bg-sage-600 hover:bg-sage-700 text-white font-bold px-6 h-12 text-[14px]"
+            className="inline-flex items-center gap-2 rounded-full bg-navy-600 hover:bg-navy-700 text-white font-bold px-6 h-12 text-[14px]"
           >
             내 계약 보기
             <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
@@ -80,7 +80,7 @@ export function CheckoutClient({
                 className={cn(
                   "rounded-2xl border p-5 text-left transition-all",
                   active
-                    ? "border-sage-600 bg-sage-50 ring-2 ring-sage-600/15"
+                    ? "border-navy-600 bg-navy-50 ring-2 ring-navy-600/15"
                     : "border-ink-200 bg-white hover:border-ink-300",
                 )}
                 aria-pressed={active}
@@ -88,7 +88,7 @@ export function CheckoutClient({
                 <p
                   className={cn(
                     "text-[14.5px] font-bold",
-                    active ? "text-sage-700" : "text-ink-900",
+                    active ? "text-navy-700" : "text-ink-900",
                   )}
                 >
                   {o.l}
@@ -109,7 +109,7 @@ export function CheckoutClient({
           type="button"
           onClick={start}
           disabled={phase === "loading"}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-sage-600 hover:bg-sage-700 disabled:bg-sage-300 text-white font-bold px-7 h-13 text-[14.5px] transition-colors h-[52px] min-w-[200px]"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-navy-600 hover:bg-navy-700 disabled:bg-navy-300 text-white font-bold px-7 h-13 text-[14.5px] transition-colors h-[52px] min-w-[200px]"
         >
           {phase === "loading" ? (
             <>

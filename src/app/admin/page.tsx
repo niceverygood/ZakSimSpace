@@ -58,7 +58,7 @@ export default function AdminHome() {
               </div>
               <Link
                 href="/admin/support"
-                className="flex-shrink-0 inline-flex items-center gap-1.5 rounded-full bg-sage-600 hover:bg-sage-700 text-white h-9 px-4 text-[12.5px] font-semibold"
+                className="flex-shrink-0 inline-flex items-center gap-1.5 rounded-full bg-navy-600 hover:bg-navy-700 text-white h-9 px-4 text-[12.5px] font-semibold"
               >
                 응대
                 <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
@@ -114,11 +114,11 @@ function Kpi({
           className={
             tone === "warn"
               ? "w-9 h-9 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center"
-              : "w-9 h-9 rounded-lg bg-sage-600/20 border border-sage-600/40 flex items-center justify-center"
+              : "w-9 h-9 rounded-lg bg-navy-600/20 border border-navy-600/40 flex items-center justify-center"
           }
         >
           <Icon
-            className={tone === "warn" ? "w-4 h-4 text-amber-300" : "w-4 h-4 text-sage-300"}
+            className={tone === "warn" ? "w-4 h-4 text-amber-300" : "w-4 h-4 text-navy-300"}
             strokeWidth={2}
           />
         </div>

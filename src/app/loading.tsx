@@ -4,7 +4,7 @@ export default function GlobalLoading() {
       <div className="flex flex-col items-center gap-4">
         <div
           aria-hidden
-          className="w-10 h-10 rounded-full border-4 border-sage-200 border-t-sage-600 animate-spin"
+          className="w-10 h-10 rounded-full border-4 border-navy-200 border-t-navy-600 animate-spin"
         />
         <p className="text-[12.5px] text-ink-500 font-semibold">
           페이지를 준비하는 중…

@@ -39,7 +39,7 @@ export function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            className="w-full h-12 rounded-2xl border border-ink-200 bg-white pl-11 pr-4 text-[14px] font-medium text-ink-900 placeholder:text-ink-300 focus:outline-none focus:border-sage-500 transition-colors"
+            className="w-full h-12 rounded-2xl border border-ink-200 bg-white pl-11 pr-4 text-[14px] font-medium text-ink-900 placeholder:text-ink-300 focus:outline-none focus:border-navy-500 transition-colors"
           />
         </div>
       </label>
@@ -60,7 +60,7 @@ export function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="비밀번호 입력"
-            className="w-full h-12 rounded-2xl border border-ink-200 bg-white pl-11 pr-12 text-[14px] font-medium text-ink-900 placeholder:text-ink-300 focus:outline-none focus:border-sage-500 transition-colors"
+            className="w-full h-12 rounded-2xl border border-ink-200 bg-white pl-11 pr-12 text-[14px] font-medium text-ink-900 placeholder:text-ink-300 focus:outline-none focus:border-navy-500 transition-colors"
           />
           <button
             type="button"
@@ -84,7 +84,7 @@ export function LoginForm() {
           <span
             className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${
               remember
-                ? "bg-sage-600 border-sage-600"
+                ? "bg-navy-600 border-navy-600"
                 : "bg-white border-ink-300"
             }`}
           >
@@ -116,7 +116,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="mt-3 w-full h-12 rounded-2xl bg-sage-600 hover:bg-sage-700 disabled:bg-sage-300 text-white font-bold text-[14px] transition-colors"
+        className="mt-3 w-full h-12 rounded-2xl bg-navy-600 hover:bg-navy-700 disabled:bg-navy-300 text-white font-bold text-[14px] transition-colors"
       >
         {submitting ? "확인 중..." : "이메일로 로그인"}
       </button>

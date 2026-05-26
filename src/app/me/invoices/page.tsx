@@ -13,7 +13,7 @@ export default function InvoicesPage() {
             전자세금계산서
           </h2>
           <div className="relative">
-            <select className="h-9 appearance-none rounded-xl border border-ink-200 bg-white pl-3 pr-8 text-[12.5px] font-semibold text-ink-700 focus:outline-none focus:border-sage-500">
+            <select className="h-9 appearance-none rounded-xl border border-ink-200 bg-white pl-3 pr-8 text-[12.5px] font-semibold text-ink-700 focus:outline-none focus:border-navy-500">
               <option>최근 6개월</option>
               <option>최근 1년</option>
               <option>전체</option>
@@ -32,9 +32,9 @@ export default function InvoicesPage() {
               className="rounded-2xl border border-cream-200 p-5 flex items-center justify-between gap-3"
             >
               <div className="flex items-start gap-4 min-w-0">
-                <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-sage-50 border border-sage-200 flex items-center justify-center">
+                <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-navy-50 border border-navy-200 flex items-center justify-center">
                   <Receipt
-                    className="w-4 h-4 text-sage-700"
+                    className="w-4 h-4 text-navy-700"
                     strokeWidth={2}
                   />
                 </div>

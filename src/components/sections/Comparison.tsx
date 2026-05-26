@@ -15,13 +15,13 @@ export function Comparison() {
     <section className="bg-cream-100 py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-14">
-          <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+          <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
             Why ZakSimSpace
           </p>
           <h2 className="text-[28px] lg:text-[40px] font-extrabold text-ink-900 leading-[1.25] tracking-tight">
             작심스페이스만의
             <br />
-            <span className="text-sage-600">계약 방식과 운영관리</span>
+            <span className="text-navy-600">계약 방식과 운영관리</span>
           </h2>
         </div>
 
@@ -31,8 +31,8 @@ export function Comparison() {
             <div className="px-6 py-5 bg-cream-50 border-b border-ink-100">
               <p className="text-[12px] text-ink-400">비교 항목</p>
             </div>
-            <div className="px-4 py-5 bg-sage-600 text-white border-b border-sage-700 text-center">
-              <p className="text-[11px] text-sage-100 tracking-widest font-semibold">
+            <div className="px-4 py-5 bg-navy-600 text-white border-b border-navy-700 text-center">
+              <p className="text-[11px] text-navy-100 tracking-widest font-semibold">
                 ZAKSIM·SPACE
               </p>
               <p className="text-[15px] font-bold mt-0.5">작심스페이스</p>
@@ -56,9 +56,9 @@ export function Comparison() {
               <div className="px-6 py-4 border-t border-ink-100 text-[13.5px] lg:text-[14px] text-ink-700 font-medium">
                 {r.label}
               </div>
-              <div className="px-4 py-4 border-t border-sage-200/50 bg-sage-50 flex items-center justify-center">
+              <div className="px-4 py-4 border-t border-navy-200/50 bg-navy-50 flex items-center justify-center">
                 {r.us ? (
-                  <div className="w-7 h-7 rounded-full bg-sage-600 flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-full bg-navy-600 flex items-center justify-center">
                     <Check className="w-4 h-4 text-white" strokeWidth={3} />
                   </div>
                 ) : (

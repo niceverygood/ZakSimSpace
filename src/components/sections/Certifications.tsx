@@ -12,13 +12,13 @@ export function Certifications() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-14">
-          <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+          <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
             Certified Quality
           </p>
           <h2 className="text-[28px] lg:text-[38px] font-extrabold text-ink-900 leading-[1.25] tracking-tight">
             공식 정부 인증 품질로
             <br />
-            <span className="text-sage-600">검증된 사업장</span>만 운영합니다
+            <span className="text-navy-600">검증된 사업장</span>만 운영합니다
           </h2>
           <p className="mt-5 text-[14.5px] lg:text-[15.5px] text-ink-500 leading-[1.7]">
             벤처기업·이노비즈·ISO 정보보호 관리체계 인증까지 — 안심하고 등록할 수
@@ -31,11 +31,11 @@ export function Certifications() {
           {certs.map((c) => (
             <div
               key={c.label}
-              className="rounded-2xl bg-white border border-ink-100 px-5 py-6 flex flex-col items-center text-center hover:border-sage-300 transition-colors"
+              className="rounded-2xl bg-white border border-ink-100 px-5 py-6 flex flex-col items-center text-center hover:border-navy-300 transition-colors"
             >
               {/* Stylized "badge" */}
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-sage-100 to-sage-200 border border-sage-300 flex items-center justify-center mb-3">
-                <span className="text-[11px] font-extrabold text-sage-700 tracking-tight">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-navy-100 to-navy-200 border border-navy-300 flex items-center justify-center mb-3">
+                <span className="text-[11px] font-extrabold text-navy-700 tracking-tight">
                   {c.code}
                 </span>
               </div>

@@ -54,7 +54,7 @@ export default function ContactPage() {
             <>
               궁금한 점이 있으세요?
               <br />
-              <span className="text-sage-600">먼저 연락드릴게요</span>
+              <span className="text-navy-600">먼저 연락드릴게요</span>
             </>
           }
           description="제휴·지점 입점·언론 문의 등 어떤 주제든 편하게 남겨주세요."
@@ -71,10 +71,10 @@ export default function ContactPage() {
                 {channels.map((c) => {
                   const Icon = c.icon;
                   const Inner = (
-                    <div className="rounded-2xl bg-white border border-cream-200 p-5 flex items-start gap-4 hover:border-sage-300 transition-colors">
-                      <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-sage-50 border border-sage-200 flex items-center justify-center">
+                    <div className="rounded-2xl bg-white border border-cream-200 p-5 flex items-start gap-4 hover:border-navy-300 transition-colors">
+                      <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-navy-50 border border-navy-200 flex items-center justify-center">
                         <Icon
-                          className="w-4.5 h-4.5 text-sage-700"
+                          className="w-4.5 h-4.5 text-navy-700"
                           strokeWidth={2}
                         />
                       </div>

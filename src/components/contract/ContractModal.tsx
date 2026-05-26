@@ -252,8 +252,8 @@ export function ContractModal({
               className={cn(
                 "w-full h-14 rounded-2xl font-bold text-[15px] transition-colors",
                 setupCanProceed
-                  ? "bg-sage-600 hover:bg-sage-700 text-white"
-                  : "bg-sage-200 text-white cursor-not-allowed",
+                  ? "bg-navy-600 hover:bg-navy-700 text-white"
+                  : "bg-navy-200 text-white cursor-not-allowed",
               )}
             >
               지점 보기
@@ -277,7 +277,7 @@ export function ContractModal({
                   `결제 요청 ${formatKRW(total)} (${selectedBranch.name})\n[데모] 실제 결제는 연동 예정입니다.`,
                 );
               }}
-              className="w-full h-14 rounded-2xl font-bold text-[15px] bg-sage-600 hover:bg-sage-700 text-white transition-colors"
+              className="w-full h-14 rounded-2xl font-bold text-[15px] bg-navy-600 hover:bg-navy-700 text-white transition-colors"
             >
               결제하기 · {formatKRW(total)}
             </button>
@@ -320,8 +320,8 @@ function ModalHeader({
         >
           <X className="w-5 h-5 text-ink-500" strokeWidth={2} />
         </button>
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-sage-50 border border-sage-200 mb-4">
-          <Rocket className="w-5 h-5 text-sage-700" strokeWidth={2} />
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-navy-50 border border-navy-200 mb-4">
+          <Rocket className="w-5 h-5 text-navy-700" strokeWidth={2} />
         </div>
         <h2
           id="contract-modal-title"
@@ -399,7 +399,7 @@ function SetupStep({
                 className={cn(
                   "h-14 rounded-2xl border text-[14.5px] font-semibold transition-all",
                   active
-                    ? "border-sage-600 bg-sage-50 text-sage-700 ring-2 ring-sage-600/15"
+                    ? "border-navy-600 bg-navy-50 text-navy-700 ring-2 ring-navy-600/15"
                     : "border-ink-200 bg-white text-ink-700 hover:border-ink-300",
                 )}
                 aria-pressed={active}
@@ -437,7 +437,7 @@ function SetupStep({
                     className={cn(
                       "w-full text-left rounded-2xl border px-4 py-3.5 transition-all",
                       active
-                        ? "border-sage-600 bg-sage-50 ring-2 ring-sage-600/15"
+                        ? "border-navy-600 bg-navy-50 ring-2 ring-navy-600/15"
                         : "border-ink-200 bg-white hover:border-ink-300",
                       disabled && "opacity-50 cursor-not-allowed",
                     )}
@@ -446,7 +446,7 @@ function SetupStep({
                     <p
                       className={cn(
                         "text-[13.5px] font-bold leading-tight",
-                        active ? "text-sage-700" : "text-ink-900",
+                        active ? "text-navy-700" : "text-ink-900",
                       )}
                     >
                       {ind.title}
@@ -525,7 +525,7 @@ function BranchesStep({
                 className={cn(
                   "text-[13px] font-semibold transition-colors",
                   cycle === o.v
-                    ? "bg-sage-50 text-sage-700 border-sage-600 ring-1 ring-sage-600/40"
+                    ? "bg-navy-50 text-navy-700 border-navy-600 ring-1 ring-navy-600/40"
                     : "bg-white text-ink-500 hover:text-ink-800",
                 )}
               >
@@ -557,7 +557,7 @@ function BranchesStep({
                   className={cn(
                     "text-[13px] font-semibold transition-colors",
                     active
-                      ? "bg-sage-50 text-sage-700"
+                      ? "bg-navy-50 text-navy-700"
                       : "bg-white text-ink-500 hover:text-ink-800",
                   )}
                 >
@@ -613,8 +613,8 @@ function BranchesStep({
                   className={cn(
                     "w-full text-left rounded-2xl border bg-white p-4 transition-all hover:-translate-y-0.5",
                     active
-                      ? "border-sage-600 ring-2 ring-sage-600/15"
-                      : "border-ink-200 hover:border-sage-300",
+                      ? "border-navy-600 ring-2 ring-navy-600/15"
+                      : "border-ink-200 hover:border-navy-300",
                   )}
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -672,7 +672,7 @@ function FilterDropdown({
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full h-11 appearance-none rounded-xl border border-ink-200 bg-white pl-3.5 pr-9 text-[13px] font-semibold text-ink-800 focus:outline-none focus:border-sage-500"
+          className="w-full h-11 appearance-none rounded-xl border border-ink-200 bg-white pl-3.5 pr-9 text-[13px] font-semibold text-ink-800 focus:outline-none focus:border-navy-500"
         >
           {options.map((o) => (
             <option key={o.value} value={o.value}>
@@ -706,7 +706,7 @@ function Tag({
 }) {
   const cls =
     tone === "green"
-      ? "bg-sage-50 text-sage-700 border-sage-200"
+      ? "bg-navy-50 text-navy-700 border-navy-200"
       : tone === "warm"
         ? "bg-cream-100 text-ink-500 border-cream-200"
         : tone === "blue"
@@ -797,7 +797,7 @@ function CheckoutStep({
               className={cn(
                 "text-[14px] font-bold transition-colors",
                 cycle === o.v
-                  ? "bg-sage-50 text-sage-700"
+                  ? "bg-navy-50 text-navy-700"
                   : "bg-white text-ink-500 hover:text-ink-800",
               )}
             >
@@ -842,10 +842,10 @@ function CheckoutStep({
           role="switch"
           aria-checked={licenseSupport}
           disabled={!canSupportLicense}
-          onClick={() => setLicenseSupport((b) => !b && canSupportLicense)}
+          onClick={() => setLicenseSupport(!licenseSupport && canSupportLicense)}
           className={cn(
             "relative w-14 h-8 rounded-full transition-colors",
-            licenseSupport ? "bg-sage-600" : "bg-ink-200",
+            licenseSupport ? "bg-navy-600" : "bg-ink-200",
             !canSupportLicense && "opacity-50 cursor-not-allowed",
           )}
         >
@@ -864,7 +864,7 @@ function CheckoutStep({
           <select
             value={mailOption}
             onChange={(e) => setMailOption(e.target.value)}
-            className="w-full h-12 appearance-none rounded-2xl border border-ink-200 bg-white px-4 pr-10 text-[14px] font-semibold text-ink-800 focus:outline-none focus:border-sage-500"
+            className="w-full h-12 appearance-none rounded-2xl border border-ink-200 bg-white px-4 pr-10 text-[14px] font-semibold text-ink-800 focus:outline-none focus:border-navy-500"
           >
             {mailOptions.map((o) => (
               <option key={o.value} value={o.value}>
@@ -900,9 +900,9 @@ function CheckoutStep({
       </div>
 
       {/* Trust line */}
-      <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-sage-50 border border-sage-200 px-3 py-1.5">
-        <Check className="w-3.5 h-3.5 text-sage-700" strokeWidth={2.5} />
-        <span className="text-[12px] font-semibold text-sage-700">
+      <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-navy-50 border border-navy-200 px-3 py-1.5">
+        <Check className="w-3.5 h-3.5 text-navy-700" strokeWidth={2.5} />
+        <span className="text-[12px] font-semibold text-navy-700">
           결제 즉시 임대차계약서 자동 발급
         </span>
       </div>

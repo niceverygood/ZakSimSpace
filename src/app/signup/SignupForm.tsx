@@ -148,7 +148,7 @@ export function SignupForm() {
       <button
         type="submit"
         disabled={submitting || !allRequired}
-        className="mt-4 w-full h-12 rounded-2xl bg-sage-600 hover:bg-sage-700 disabled:bg-sage-300 text-white font-bold text-[14px] transition-colors"
+        className="mt-4 w-full h-12 rounded-2xl bg-navy-600 hover:bg-navy-700 disabled:bg-navy-300 text-white font-bold text-[14px] transition-colors"
       >
         {submitting ? "가입 중..." : "회원가입"}
       </button>
@@ -181,7 +181,7 @@ function InputWrap({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-3 h-12 rounded-2xl border border-ink-200 bg-white px-4 focus-within:border-sage-500 transition-colors">
+    <div className="flex items-center gap-3 h-12 rounded-2xl border border-ink-200 bg-white px-4 focus-within:border-navy-500 transition-colors">
       <Icon className="w-4 h-4 text-ink-400" strokeWidth={2} />
       {children}
     </div>
@@ -206,7 +206,7 @@ function CheckBox({
       <span
         className={cn(
           "w-5 h-5 rounded-md border flex items-center justify-center transition-colors",
-          checked ? "bg-sage-600 border-sage-600" : "bg-white border-ink-300",
+          checked ? "bg-navy-600 border-navy-600" : "bg-white border-ink-300",
         )}
       >
         {checked && (

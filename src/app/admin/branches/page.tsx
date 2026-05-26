@@ -30,7 +30,7 @@ export default function AdminBranchesPage() {
 
 function Status({ status }: { status: "active" | "preparing" | "paused" }) {
   const map = {
-    active: { l: "운영", c: "bg-sage-600/20 text-sage-300 border-sage-600/40" },
+    active: { l: "운영", c: "bg-navy-600/20 text-navy-300 border-navy-600/40" },
     preparing: { l: "준비", c: "bg-amber-500/20 text-amber-300 border-amber-500/40" },
     paused: { l: "정지", c: "bg-ink-700 text-ink-400 border-ink-700" },
   } as const;

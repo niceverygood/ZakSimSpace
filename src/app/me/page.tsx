@@ -70,7 +70,7 @@ export default function MyPage() {
                   </p>
                   <div className="mt-2 flex items-center gap-1.5">
                     {c.autoRenew && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-sage-50 border border-sage-200 px-2 py-0.5 text-[10.5px] font-bold text-sage-700">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-navy-50 border border-navy-200 px-2 py-0.5 text-[10.5px] font-bold text-navy-700">
                         <CheckCircle2 className="w-2.5 h-2.5" strokeWidth={3} />
                         자동 갱신
                       </span>
@@ -110,7 +110,7 @@ export default function MyPage() {
                   </p>
                 </div>
                 {m.scanned ? (
-                  <span className="text-[10.5px] font-bold text-sage-700 bg-sage-50 border border-sage-200 px-2 py-0.5 rounded-full">
+                  <span className="text-[10.5px] font-bold text-navy-700 bg-navy-50 border border-navy-200 px-2 py-0.5 rounded-full">
                     스캔 완료
                   </span>
                 ) : m.forwarded ? (
@@ -178,8 +178,8 @@ function StatCard({
   return (
     <div className="rounded-2xl bg-white border border-cream-200 p-5">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-sage-50 border border-sage-200 flex items-center justify-center">
-          <Icon className="w-4 h-4 text-sage-700" strokeWidth={2} />
+        <div className="w-10 h-10 rounded-xl bg-navy-50 border border-navy-200 flex items-center justify-center">
+          <Icon className="w-4 h-4 text-navy-700" strokeWidth={2} />
         </div>
         <div>
           <p className="text-[11.5px] text-ink-400 font-semibold">{label}</p>
@@ -190,7 +190,7 @@ function StatCard({
       </div>
       <Link
         href={link.href}
-        className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-sage-700 hover:text-sage-800"
+        className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-navy-700 hover:text-navy-800"
       >
         {link.label}
         <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />

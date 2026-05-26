@@ -32,7 +32,7 @@ export function PageHero({
         )}
       >
         {eyebrow && (
-          <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+          <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
             {eyebrow}
           </p>
         )}

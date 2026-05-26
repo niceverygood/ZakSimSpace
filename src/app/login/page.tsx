@@ -58,7 +58,7 @@ export default function LoginPage() {
               아직 계정이 없으신가요?{" "}
               <Link
                 href="/signup"
-                className="font-bold text-sage-700 hover:text-sage-800"
+                className="font-bold text-navy-700 hover:text-navy-800"
               >
                 무료 회원가입
               </Link>

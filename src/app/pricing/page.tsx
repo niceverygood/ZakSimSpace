@@ -60,13 +60,13 @@ export default function PricingPage() {
         {/* Hero */}
         <section className="bg-cream-100 border-b border-cream-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-8 py-14 lg:py-20 text-center">
-            <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+            <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
               Pricing
             </p>
             <h1 className="text-[32px] lg:text-[48px] font-extrabold text-ink-900 leading-[1.2] tracking-tight">
               하나의 요금제
               <br />
-              <span className="text-sage-600">숨겨진 비용은 없습니다</span>
+              <span className="text-navy-600">숨겨진 비용은 없습니다</span>
             </h1>
             <p className="mt-5 text-[15.5px] lg:text-[17px] text-ink-500 max-w-xl mx-auto leading-[1.7]">
               월 정액 하나로 끝. 입주 후에도 관리비, 갱신비, 자료 발급비를 따로
@@ -80,7 +80,7 @@ export default function PricingPage() {
           <div className="mx-auto max-w-3xl px-6 lg:px-8">
             <div className="relative rounded-[28px] bg-white border border-cream-200 shadow-[0_30px_80px_-40px_rgba(12,18,25,0.35)] overflow-hidden">
               {/* Top accent strip */}
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sage-400 via-sage-600 to-sage-400" />
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-navy-400 via-navy-600 to-navy-400" />
 
               <div className="p-8 lg:p-12 grid lg:grid-cols-[1fr_auto] gap-8 items-start">
                 <div>
@@ -90,7 +90,7 @@ export default function PricingPage() {
                       가장 인기 있는 요금제
                     </span>
                   </div>
-                  <p className="text-[15px] font-bold text-sage-700">
+                  <p className="text-[15px] font-bold text-navy-700">
                     작심스페이스 베이직
                   </p>
                   <div className="mt-3 flex items-baseline gap-1">
@@ -110,7 +110,7 @@ export default function PricingPage() {
                   </p>
                 </div>
 
-                <ContractTrigger className="inline-flex items-center justify-center gap-2 rounded-full bg-sage-600 hover:bg-sage-700 text-white font-bold px-7 h-13 text-[14.5px] transition-colors shadow-[0_12px_30px_-10px_rgba(67,105,63,0.55)] h-[52px]">
+                <ContractTrigger className="inline-flex items-center justify-center gap-2 rounded-full bg-navy-600 hover:bg-navy-700 text-white font-bold px-7 h-13 text-[14.5px] transition-colors shadow-[0_12px_30px_-10px_rgba(35,61,104,0.55)] h-[52px]">
                   지점 보러 가기
                   <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                 </ContractTrigger>
@@ -122,8 +122,8 @@ export default function PricingPage() {
                     key={it}
                     className="flex items-start gap-2 text-[13.5px] text-ink-700"
                   >
-                    <span className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-sage-100 flex items-center justify-center">
-                      <Check className="w-2.5 h-2.5 text-sage-700" strokeWidth={3} />
+                    <span className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-navy-100 flex items-center justify-center">
+                      <Check className="w-2.5 h-2.5 text-navy-700" strokeWidth={3} />
                     </span>
                     {it}
                   </div>
@@ -131,10 +131,10 @@ export default function PricingPage() {
               </div>
 
               {/* Zero-cost row */}
-              <div className="bg-sage-50 border-t border-sage-200 px-8 lg:px-12 py-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="bg-navy-50 border-t border-navy-200 px-8 lg:px-12 py-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {excluded.map((c) => (
                   <div key={c.label} className="text-center">
-                    <p className="text-[11.5px] text-sage-700 font-semibold">
+                    <p className="text-[11.5px] text-navy-700 font-semibold">
                       {c.label}
                     </p>
                     <p className="text-[18px] font-extrabold text-ink-900 mt-0.5 tnum">
@@ -156,7 +156,7 @@ export default function PricingPage() {
         <section className="bg-cream-100 py-16 lg:py-20">
           <div className="mx-auto max-w-5xl px-6 lg:px-8">
             <div className="text-center mb-10">
-              <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+              <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
                 Add-ons
               </p>
               <h2 className="text-[26px] lg:text-[34px] font-extrabold text-ink-900">
@@ -177,7 +177,7 @@ export default function PricingPage() {
                       {a.desc}
                     </p>
                   </div>
-                  <p className="flex-shrink-0 text-right text-[13px] font-extrabold text-sage-700 tnum">
+                  <p className="flex-shrink-0 text-right text-[13px] font-extrabold text-navy-700 tnum">
                     {a.price}
                   </p>
                 </li>
@@ -197,14 +197,14 @@ export default function PricingPage() {
                 <h3 className="text-[24px] lg:text-[32px] font-extrabold leading-[1.25]">
                   결심한 그날,
                   <br />
-                  <span className="text-sage-300">사업의 첫 주소</span>가 됩니다
+                  <span className="text-navy-300">사업의 첫 주소</span>가 됩니다
                 </h3>
                 <p className="mt-3 text-[13.5px] lg:text-[14.5px] text-ink-300">
                   복잡한 서류 없이 5분 만에 시작하세요.
                 </p>
               </div>
               <div className="flex flex-wrap gap-3">
-                <ContractTrigger className="inline-flex items-center gap-2 rounded-full bg-sage-500 hover:bg-sage-400 text-ink-900 font-bold px-6 h-12 text-[14px] transition-colors">
+                <ContractTrigger className="inline-flex items-center gap-2 rounded-full bg-navy-500 hover:bg-navy-400 text-ink-900 font-bold px-6 h-12 text-[14px] transition-colors">
                   빠른 계약
                   <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                 </ContractTrigger>

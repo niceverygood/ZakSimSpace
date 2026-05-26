@@ -36,7 +36,7 @@ export default function AdminPaymentsPage() {
 
 function Status({ status }: { status: "settled" | "refunded" | "failed" }) {
   const map = {
-    settled: { l: "정산", c: "bg-sage-600/20 text-sage-300 border-sage-600/40" },
+    settled: { l: "정산", c: "bg-navy-600/20 text-navy-300 border-navy-600/40" },
     refunded: { l: "환불", c: "bg-amber-500/20 text-amber-300 border-amber-500/40" },
     failed: { l: "실패", c: "bg-rose-500/20 text-rose-300 border-rose-500/40" },
   } as const;

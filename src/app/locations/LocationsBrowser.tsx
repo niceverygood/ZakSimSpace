@@ -53,7 +53,7 @@ export function LocationsBrowser() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="지점명 또는 주소로 검색"
-              className="w-full h-12 rounded-xl border border-ink-200 bg-cream-50 pl-11 pr-4 text-[14px] font-medium text-ink-800 placeholder:text-ink-300 focus:outline-none focus:border-sage-500 focus:bg-white transition-colors"
+              className="w-full h-12 rounded-xl border border-ink-200 bg-cream-50 pl-11 pr-4 text-[14px] font-medium text-ink-800 placeholder:text-ink-300 focus:outline-none focus:border-navy-500 focus:bg-white transition-colors"
             />
           </div>
 
@@ -83,7 +83,7 @@ export function LocationsBrowser() {
                     className={cn(
                       "text-[13px] font-semibold transition-colors",
                       cycle === o.v
-                        ? "bg-sage-50 text-sage-700"
+                        ? "bg-navy-50 text-navy-700"
                         : "bg-white text-ink-500 hover:text-ink-800",
                     )}
                   >
@@ -112,7 +112,7 @@ export function LocationsBrowser() {
                       className={cn(
                         "text-[13px] font-semibold transition-colors",
                         active
-                          ? "bg-sage-50 text-sage-700"
+                          ? "bg-navy-50 text-navy-700"
                           : "bg-white text-ink-500 hover:text-ink-800",
                       )}
                     >
@@ -142,7 +142,7 @@ export function LocationsBrowser() {
               <span
                 className={cn(
                   "relative w-11 h-6 rounded-full transition-colors",
-                  licenseOnly ? "bg-sage-600" : "bg-ink-200",
+                  licenseOnly ? "bg-navy-600" : "bg-ink-200",
                 )}
               >
                 <span
@@ -190,7 +190,7 @@ function BranchCard({ branch, cycle }: { branch: Branch; cycle: Cycle }) {
   return (
     <Link
       href={`/locations/${branch.id}`}
-      className="group block rounded-2xl bg-white border border-ink-100 p-5 hover:border-sage-300 hover:-translate-y-0.5 transition-all duration-300 relative"
+      className="group block rounded-2xl bg-white border border-ink-100 p-5 hover:border-navy-300 hover:-translate-y-0.5 transition-all duration-300 relative"
     >
       {/* Favorite */}
       <div className="absolute top-7 right-7 z-10">
@@ -201,14 +201,14 @@ function BranchCard({ branch, cycle }: { branch: Branch; cycle: Cycle }) {
         />
       </div>
       {/* Image placeholder */}
-      <div className="aspect-[16/9] rounded-xl bg-gradient-to-br from-sage-200 to-sage-400 mb-4 relative overflow-hidden">
+      <div className="aspect-[16/9] rounded-xl bg-gradient-to-br from-navy-200 to-navy-400 mb-4 relative overflow-hidden">
         <div
           aria-hidden
           className="absolute inset-0 opacity-[0.12] [background-image:linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] [background-size:24px_24px]"
         />
         <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur px-2.5 py-1">
           <MapPin
-            className="w-3 h-3 text-sage-700"
+            className="w-3 h-3 text-navy-700"
             strokeWidth={2.5}
           />
           <span className="text-[10.5px] font-bold text-ink-800">
@@ -218,11 +218,11 @@ function BranchCard({ branch, cycle }: { branch: Branch; cycle: Cycle }) {
       </div>
 
       <div className="flex items-start justify-between gap-3">
-        <p className="text-[15.5px] font-bold text-ink-900 leading-snug group-hover:text-sage-700 transition-colors">
+        <p className="text-[15.5px] font-bold text-ink-900 leading-snug group-hover:text-navy-700 transition-colors">
           {branch.name}
         </p>
         <ArrowRight
-          className="w-4 h-4 text-ink-300 group-hover:text-sage-700 group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-0.5"
+          className="w-4 h-4 text-ink-300 group-hover:text-navy-700 group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-0.5"
           strokeWidth={2}
         />
       </div>
@@ -273,7 +273,7 @@ function FilterDropdown({
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full h-11 appearance-none rounded-xl border border-ink-200 bg-white pl-3.5 pr-9 text-[13px] font-semibold text-ink-800 focus:outline-none focus:border-sage-500"
+          className="w-full h-11 appearance-none rounded-xl border border-ink-200 bg-white pl-3.5 pr-9 text-[13px] font-semibold text-ink-800 focus:outline-none focus:border-navy-500"
         >
           {options.map((o) => (
             <option key={o.value} value={o.value}>
@@ -299,7 +299,7 @@ function Tag({
 }) {
   const cls =
     tone === "green"
-      ? "bg-sage-50 text-sage-700 border-sage-200"
+      ? "bg-navy-50 text-navy-700 border-navy-200"
       : tone === "warm"
         ? "bg-cream-100 text-ink-500 border-cream-200"
         : tone === "blue"

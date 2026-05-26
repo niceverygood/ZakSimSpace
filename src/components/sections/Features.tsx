@@ -37,13 +37,13 @@ export function Features() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center max-w-2xl mx-auto mb-14 lg:mb-16">
-          <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+          <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
             We care
           </p>
           <h2 className="text-[30px] lg:text-[40px] font-extrabold text-ink-900 leading-[1.25] tracking-tight">
             한 번쯤은 고민해봤던 걱정들
             <br />
-            <span className="text-sage-600">작심스페이스 본사가 직접 케어</span>
+            <span className="text-navy-600">작심스페이스 본사가 직접 케어</span>
             합니다
           </h2>
         </div>
@@ -55,7 +55,7 @@ export function Features() {
             return (
               <article
                 key={c.worry}
-                className="group relative rounded-2xl bg-white border border-ink-100 p-6 lg:p-7 transition-all hover:border-sage-300 hover:shadow-[0_18px_40px_-20px_rgba(12,18,25,0.18)] hover:-translate-y-0.5 duration-300"
+                className="group relative rounded-2xl bg-white border border-ink-100 p-6 lg:p-7 transition-all hover:border-navy-300 hover:shadow-[0_18px_40px_-20px_rgba(12,18,25,0.18)] hover:-translate-y-0.5 duration-300"
               >
                 {/* Worry pill */}
                 <div className="inline-flex items-center rounded-full bg-cream-100 px-3 py-1 mb-5">
@@ -76,8 +76,8 @@ export function Features() {
 
                 {/* Footer with icon + metric */}
                 <div className="mt-6 pt-5 border-t border-dashed border-ink-100 flex items-end justify-between gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-sage-50 border border-sage-200 flex items-center justify-center group-hover:bg-sage-100 transition-colors">
-                    <Icon className="w-4.5 h-4.5 text-sage-700" strokeWidth={2} />
+                  <div className="w-10 h-10 rounded-xl bg-navy-50 border border-navy-200 flex items-center justify-center group-hover:bg-navy-100 transition-colors">
+                    <Icon className="w-4.5 h-4.5 text-navy-700" strokeWidth={2} />
                   </div>
                   <div className="text-right">
                     <p className="text-[18px] font-extrabold text-ink-900 tnum leading-none">

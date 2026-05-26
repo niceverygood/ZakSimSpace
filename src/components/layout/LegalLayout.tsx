@@ -50,7 +50,7 @@ export function LegalLayout({
                   <li key={s.id}>
                     <a
                       href={`#${s.id}`}
-                      className="text-[13px] text-ink-700 hover:text-sage-700 tnum"
+                      className="text-[13px] text-ink-700 hover:text-navy-700 tnum"
                     >
                       제{i + 1}조. {s.title}
                     </a>

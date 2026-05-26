@@ -30,7 +30,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
     <div className="min-h-screen flex bg-ink-900 text-ink-100">
       <aside className="hidden lg:flex w-[240px] flex-col border-r border-ink-700/60 bg-ink-900">
         <div className="px-6 py-6 border-b border-ink-700/60">
-          <p className="text-[11.5px] font-bold text-sage-300 tracking-widest">
+          <p className="text-[11.5px] font-bold text-navy-300 tracking-widest">
             ZAKSIM · OPS
           </p>
           <p className="text-[16px] font-extrabold text-white mt-1">
@@ -53,7 +53,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
                     className={cn(
                       "flex items-center gap-3 h-10 px-3 rounded-lg text-[13px] font-semibold transition-colors",
                       active
-                        ? "bg-sage-600 text-white"
+                        ? "bg-navy-600 text-white"
                         : "text-ink-300 hover:bg-ink-700/50 hover:text-white",
                     )}
                   >
@@ -94,8 +94,8 @@ export function AdminShell({ children }: { children: ReactNode }) {
           <p className="text-[13px] text-ink-400">
             관리자 · 한승수 (Owner)
           </p>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-600/20 text-sage-300 border border-sage-600/40 px-2.5 py-1 text-[11px] font-bold">
-            <span className="w-1.5 h-1.5 rounded-full bg-sage-300" />
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-navy-600/20 text-navy-300 border border-navy-600/40 px-2.5 py-1 text-[11px] font-bold">
+            <span className="w-1.5 h-1.5 rounded-full bg-navy-300" />
             라이브
           </span>
         </header>

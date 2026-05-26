@@ -24,7 +24,7 @@ export default function CasesPage() {
             <>
               어떤 업종도
               <br />
-              <span className="text-sage-600">작심스페이스로 시작</span>합니다
+              <span className="text-navy-600">작심스페이스로 시작</span>합니다
             </>
           }
           description="업종별로 필요한 인허가와 적합한 지점을 함께 안내해 드립니다."
@@ -35,10 +35,10 @@ export default function CasesPage() {
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
               {cases.map((c) => (
                 <li key={c.id}>
-                  <article className="rounded-2xl bg-white border border-cream-200 p-6 lg:p-7 h-full flex flex-col hover:border-sage-300 hover:-translate-y-0.5 transition-all">
+                  <article className="rounded-2xl bg-white border border-cream-200 p-6 lg:p-7 h-full flex flex-col hover:border-navy-300 hover:-translate-y-0.5 transition-all">
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <p className="text-[11.5px] font-bold text-sage-700 tracking-wider uppercase">
+                        <p className="text-[11.5px] font-bold text-navy-700 tracking-wider uppercase">
                           {c.shortLabel}
                         </p>
                         <p className="text-[18px] lg:text-[19px] font-extrabold text-ink-900 mt-1">
@@ -66,9 +66,9 @@ export default function CasesPage() {
                           key={e}
                           className="flex items-center gap-2 text-[13px] text-ink-700"
                         >
-                          <span className="w-4 h-4 rounded-full bg-sage-100 flex items-center justify-center">
+                          <span className="w-4 h-4 rounded-full bg-navy-100 flex items-center justify-center">
                             <Check
-                              className="w-2.5 h-2.5 text-sage-700"
+                              className="w-2.5 h-2.5 text-navy-700"
                               strokeWidth={3}
                             />
                           </span>
@@ -88,7 +88,7 @@ export default function CasesPage() {
                       </div>
                       <Link
                         href="/locations"
-                        className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-sage-700 hover:text-sage-800"
+                        className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-navy-700 hover:text-navy-800"
                       >
                         지점 보기
                         <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
@@ -104,13 +104,13 @@ export default function CasesPage() {
                 <h3 className="text-[22px] lg:text-[28px] font-extrabold leading-[1.3]">
                   내 업종도 가능한지
                   <br />
-                  <span className="text-sage-300">5초 안에 알아보기</span>
+                  <span className="text-navy-300">5초 안에 알아보기</span>
                 </h3>
                 <p className="mt-3 text-[13.5px] text-ink-300">
                   업종을 선택하면 인허가 가능 지점만 자동으로 필터링됩니다.
                 </p>
               </div>
-              <ContractTrigger className="inline-flex items-center gap-2 rounded-full bg-sage-500 hover:bg-sage-400 text-ink-900 font-bold px-6 h-12 text-[14px] transition-colors">
+              <ContractTrigger className="inline-flex items-center gap-2 rounded-full bg-navy-500 hover:bg-navy-400 text-ink-900 font-bold px-6 h-12 text-[14px] transition-colors">
                 업종 확인
                 <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
               </ContractTrigger>

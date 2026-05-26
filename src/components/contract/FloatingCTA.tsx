@@ -34,8 +34,8 @@ export function FloatingCTA() {
             }}
             className="w-full flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-cream-50 transition-colors"
           >
-            <span className="w-9 h-9 rounded-full bg-sage-50 border border-sage-200 flex items-center justify-center">
-              <Rocket className="w-4 h-4 text-sage-700" strokeWidth={2} />
+            <span className="w-9 h-9 rounded-full bg-navy-50 border border-navy-200 flex items-center justify-center">
+              <Rocket className="w-4 h-4 text-navy-700" strokeWidth={2} />
             </span>
             <span className="text-[13px] font-bold text-ink-900">빠른 계약</span>
           </button>
@@ -71,11 +71,11 @@ export function FloatingCTA() {
         aria-label={expanded ? "메뉴 닫기" : "도움 받기"}
         onClick={() => setExpanded((v) => !v)}
         className={cn(
-          "w-14 h-14 rounded-full shadow-[0_18px_40px_-12px_rgba(67,105,63,0.55)]",
+          "w-14 h-14 rounded-full shadow-[0_18px_40px_-12px_rgba(35,61,104,0.55)]",
           "flex items-center justify-center transition-all duration-200",
           expanded
             ? "bg-ink-900 text-white hover:bg-ink-800 rotate-90"
-            : "bg-sage-600 text-white hover:bg-sage-700 hover:-translate-y-0.5",
+            : "bg-navy-600 text-white hover:bg-navy-700 hover:-translate-y-0.5",
         )}
       >
         {expanded ? (

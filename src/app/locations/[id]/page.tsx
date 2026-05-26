@@ -68,7 +68,7 @@ export default async function BranchDetailPage({
           <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12 lg:py-16 grid lg:grid-cols-[1.2fr_1fr] gap-10 items-start">
             <div>
               <div className="inline-flex items-center gap-1.5 rounded-full bg-white border border-cream-200 px-3 py-1 mb-5">
-                <MapPin className="w-3 h-3 text-sage-700" strokeWidth={2.5} />
+                <MapPin className="w-3 h-3 text-navy-700" strokeWidth={2.5} />
                 <span className="text-[11.5px] font-bold text-ink-800">
                   {branch.region}
                 </span>
@@ -91,7 +91,7 @@ export default async function BranchDetailPage({
               </div>
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
-                <ContractTrigger className="inline-flex items-center gap-2 rounded-full bg-sage-600 hover:bg-sage-700 text-white font-bold px-6 h-12 text-[14.5px] transition-colors shadow-[0_10px_24px_-8px_rgba(67,105,63,0.5)]">
+                <ContractTrigger className="inline-flex items-center gap-2 rounded-full bg-navy-600 hover:bg-navy-700 text-white font-bold px-6 h-12 text-[14.5px] transition-colors shadow-[0_10px_24px_-8px_rgba(35,61,104,0.5)]">
                   이 지점으로 계약 시작
                   <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                 </ContractTrigger>
@@ -106,7 +106,7 @@ export default async function BranchDetailPage({
 
             {/* Pricing card */}
             <div className="rounded-3xl bg-white border border-cream-200 shadow-[0_18px_50px_-25px_rgba(12,18,25,0.25)] p-7">
-              <p className="text-[12.5px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+              <p className="text-[12.5px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
                 Pricing
               </p>
               <div className="flex items-baseline gap-1 mb-1">
@@ -134,8 +134,8 @@ export default async function BranchDetailPage({
                     key={it}
                     className="flex items-start gap-2 text-[13.5px] text-ink-700"
                   >
-                    <span className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-sage-100 flex items-center justify-center">
-                      <Check className="w-2.5 h-2.5 text-sage-700" strokeWidth={3} />
+                    <span className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-navy-100 flex items-center justify-center">
+                      <Check className="w-2.5 h-2.5 text-navy-700" strokeWidth={3} />
                     </span>
                     {it}
                   </li>
@@ -161,7 +161,7 @@ export default async function BranchDetailPage({
                   href={`https://map.kakao.com/?q=${encodeURIComponent(branch.address)}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-[13px] font-semibold text-sage-700 hover:text-sage-800 inline-flex items-center gap-1"
+                  className="text-[13px] font-semibold text-navy-700 hover:text-navy-800 inline-flex items-center gap-1"
                 >
                   카카오맵에서 보기 <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
@@ -203,9 +203,9 @@ export default async function BranchDetailPage({
                     key={row.label}
                     className="rounded-2xl border border-cream-200 bg-white p-4 flex items-center gap-4"
                   >
-                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-sage-50 border border-sage-200 flex items-center justify-center">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-navy-50 border border-navy-200 flex items-center justify-center">
                       <Icon
-                        className="w-4 h-4 text-sage-700"
+                        className="w-4 h-4 text-navy-700"
                         strokeWidth={2}
                       />
                     </div>
@@ -232,7 +232,7 @@ export default async function BranchDetailPage({
                 </h2>
                 <Link
                   href="/locations"
-                  className="text-[13.5px] font-semibold text-ink-700 hover:text-sage-700"
+                  className="text-[13.5px] font-semibold text-ink-700 hover:text-navy-700"
                 >
                   전체 보기 →
                 </Link>
@@ -242,7 +242,7 @@ export default async function BranchDetailPage({
                   <li key={b.id}>
                     <Link
                       href={`/locations/${b.id}`}
-                      className="block rounded-2xl bg-white border border-cream-200 p-5 hover:border-sage-300 hover:-translate-y-0.5 transition-all"
+                      className="block rounded-2xl bg-white border border-cream-200 p-5 hover:border-navy-300 hover:-translate-y-0.5 transition-all"
                     >
                       <p className="text-[15px] font-bold text-ink-900">
                         {b.name}
@@ -278,7 +278,7 @@ function Tag({
 }) {
   const cls =
     tone === "green"
-      ? "bg-sage-50 text-sage-700 border-sage-200"
+      ? "bg-navy-50 text-navy-700 border-navy-200"
       : tone === "warm"
         ? "bg-cream-100 text-ink-500 border-cream-200"
         : tone === "blue"

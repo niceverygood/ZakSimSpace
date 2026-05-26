@@ -8,7 +8,7 @@ type LogoProps = {
 
 export function Logo({ className, variant = "dark" }: LogoProps) {
   const color = variant === "light" ? "text-white" : "text-ink-900";
-  const accent = variant === "light" ? "text-sage-300" : "text-sage-600";
+  const accent = variant === "light" ? "text-navy-300" : "text-navy-600";
 
   return (
     <Link

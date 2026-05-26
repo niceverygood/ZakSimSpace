@@ -42,7 +42,7 @@ export default async function CheckoutPage({
 
           {/* Summary */}
           <section className="mt-8 rounded-3xl bg-white border border-cream-200 p-6 lg:p-8">
-            <p className="text-[12.5px] font-semibold text-sage-600 tracking-wider uppercase">
+            <p className="text-[12.5px] font-semibold text-navy-600 tracking-wider uppercase">
               주문 내역
             </p>
             <p className="mt-2 text-[18px] font-bold text-ink-900">

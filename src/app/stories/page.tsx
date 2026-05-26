@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 const accentMap = {
-  sage: "from-sage-500 to-sage-700",
+  sage: "from-navy-500 to-navy-700",
   amber: "from-amber-400 to-amber-500",
   ink: "from-ink-700 to-ink-900",
 } as const;
@@ -31,7 +31,7 @@ export default function StoriesPage() {
             <>
               먼저 시작한 대표님들의
               <br />
-              <span className="text-sage-600">진짜 이야기</span>
+              <span className="text-navy-600">진짜 이야기</span>
             </>
           }
           description="결심을 사업장으로 만든 분들의 인터뷰를 한 곳에 모았어요."
@@ -68,7 +68,7 @@ export default function StoriesPage() {
                       </div>
                     </div>
                     <div className="p-6 lg:p-7">
-                      <p className="text-sage-500 text-[26px] leading-none font-serif">
+                      <p className="text-navy-500 text-[26px] leading-none font-serif">
                         “
                       </p>
                       <p className="text-[15px] lg:text-[16px] font-medium text-ink-700 leading-[1.7] mt-1">

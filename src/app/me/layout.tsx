@@ -11,7 +11,7 @@ export default function MyPageLayout({ children }: { children: ReactNode }) {
       <main id="main" className="flex-1 pt-16 bg-cream-50">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 py-10 lg:py-14">
           <header className="mb-8 lg:mb-10">
-            <p className="text-[12.5px] font-semibold text-sage-600 tracking-wider uppercase mb-2">
+            <p className="text-[12.5px] font-semibold text-navy-600 tracking-wider uppercase mb-2">
               My Page
             </p>
             <h1 className="text-[26px] lg:text-[32px] font-extrabold text-ink-900 leading-tight">

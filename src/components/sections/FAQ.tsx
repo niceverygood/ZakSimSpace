@@ -47,14 +47,14 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         className="w-full flex items-center justify-between gap-6 py-6 text-left group"
         aria-expanded={open}
       >
-        <span className="text-[15.5px] lg:text-[16.5px] font-semibold text-ink-900 leading-snug group-hover:text-sage-700 transition-colors">
+        <span className="text-[15.5px] lg:text-[16.5px] font-semibold text-ink-900 leading-snug group-hover:text-navy-700 transition-colors">
           {q}
         </span>
         <span
           className={cn(
             "flex-shrink-0 w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300",
             open
-              ? "bg-sage-600 border-sage-600 rotate-45"
+              ? "bg-navy-600 border-navy-600 rotate-45"
               : "bg-white border-ink-200 group-hover:border-ink-400",
           )}
         >
@@ -89,7 +89,7 @@ export function FAQ() {
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-12 lg:mb-14">
-          <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+          <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
             FAQ
           </p>
           <h2 className="text-[28px] lg:text-[40px] font-extrabold text-ink-900 leading-[1.2] tracking-tight">
@@ -111,7 +111,7 @@ export function FAQ() {
           </p>
           <Link
             href="/faq"
-            className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-ink-900 hover:text-sage-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-ink-900 hover:text-navy-700 transition-colors"
           >
             전체 질문 보기
             <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />

@@ -27,10 +27,10 @@ export function NewsletterSignup({
           "rounded-2xl border flex items-center gap-3 px-4 py-3",
           isFooter
             ? "border-ink-700/60 bg-ink-800 text-ink-200"
-            : "border-sage-200 bg-sage-50 text-sage-700",
+            : "border-navy-200 bg-navy-50 text-navy-700",
         )}
       >
-        <span className="inline-flex w-7 h-7 rounded-full bg-sage-600 items-center justify-center flex-shrink-0">
+        <span className="inline-flex w-7 h-7 rounded-full bg-navy-600 items-center justify-center flex-shrink-0">
           <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />
         </span>
         <p className="text-[12.5px] font-semibold">
@@ -91,7 +91,7 @@ export function NewsletterSignup({
         </div>
         <button
           type="submit"
-          className="rounded-xl bg-sage-600 hover:bg-sage-700 text-white text-[12.5px] font-bold px-4 h-9 transition-colors"
+          className="rounded-xl bg-navy-600 hover:bg-navy-700 text-white text-[12.5px] font-bold px-4 h-9 transition-colors"
         >
           구독
         </button>

@@ -30,7 +30,7 @@ export default function FaqPage() {
       <main id="main" className="flex-1 pt-16">
         <section className="bg-cream-100 border-b border-cream-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-8 py-14 lg:py-20 text-center">
-            <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+            <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
               FAQ
             </p>
             <h1 className="text-[32px] lg:text-[44px] font-extrabold text-ink-900 leading-[1.2] tracking-tight">

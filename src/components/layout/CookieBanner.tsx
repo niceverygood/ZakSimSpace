@@ -77,7 +77,7 @@ export function CookieBanner() {
           <button
             type="button"
             onClick={() => persist("all")}
-            className="flex-1 h-10 rounded-full bg-sage-600 hover:bg-sage-700 text-white text-[12.5px] font-bold transition-colors"
+            className="flex-1 h-10 rounded-full bg-navy-600 hover:bg-navy-700 text-white text-[12.5px] font-bold transition-colors"
           >
             전체 동의
           </button>

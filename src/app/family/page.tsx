@@ -45,7 +45,7 @@ export default function FamilyPage() {
             <>
               사업의 성장 단계마다
               <br />
-              <span className="text-sage-600">함께 자라는 서비스</span>
+              <span className="text-navy-600">함께 자라는 서비스</span>
             </>
           }
           description="작심스페이스 입주 고객은 패밀리 서비스를 더 합리적인 가격에 이용할 수 있어요."
@@ -56,7 +56,7 @@ export default function FamilyPage() {
             <ul className="grid sm:grid-cols-2 gap-4">
               {services.map((s) => (
                 <li key={s.name}>
-                  <article className="rounded-3xl bg-white border border-cream-200 p-7 h-full hover:-translate-y-0.5 hover:border-sage-300 transition-all">
+                  <article className="rounded-3xl bg-white border border-cream-200 p-7 h-full hover:-translate-y-0.5 hover:border-navy-300 transition-all">
                     <div className="flex items-center justify-between mb-4">
                       <p className="text-[18px] font-extrabold text-ink-900">
                         {s.name}
@@ -71,7 +71,7 @@ export default function FamilyPage() {
                     </p>
                     <button
                       type="button"
-                      className="mt-5 inline-flex items-center gap-1 text-[12.5px] font-semibold text-sage-700 hover:text-sage-800"
+                      className="mt-5 inline-flex items-center gap-1 text-[12.5px] font-semibold text-navy-700 hover:text-navy-800"
                     >
                       자세히 보기
                       <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
@@ -86,13 +86,13 @@ export default function FamilyPage() {
               드려요.
             </p>
 
-            <div className="mt-10 rounded-2xl bg-sage-50 border border-sage-200 px-6 py-5 flex flex-wrap items-center justify-between gap-4">
-              <p className="text-[13.5px] font-bold text-sage-700">
+            <div className="mt-10 rounded-2xl bg-navy-50 border border-navy-200 px-6 py-5 flex flex-wrap items-center justify-between gap-4">
+              <p className="text-[13.5px] font-bold text-navy-700">
                 패밀리 서비스 입점·협업 문의는?
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-1.5 rounded-full bg-sage-600 hover:bg-sage-700 text-white font-bold px-5 h-10 text-[13px]"
+                className="inline-flex items-center gap-1.5 rounded-full bg-navy-600 hover:bg-navy-700 text-white font-bold px-5 h-10 text-[13px]"
               >
                 문의하기 <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
               </Link>

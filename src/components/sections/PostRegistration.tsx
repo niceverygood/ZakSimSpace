@@ -6,13 +6,13 @@ export function PostRegistration() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mb-14 lg:mb-16">
-          <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+          <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
             Step 02 · 계약 이후
           </p>
           <h2 className="text-[30px] lg:text-[44px] font-extrabold text-ink-900 leading-[1.2] tracking-tight">
             사업자 등록 후에도
             <br />
-            <span className="text-sage-600">작심스페이스가 챙겨드려요</span>
+            <span className="text-navy-600">작심스페이스가 챙겨드려요</span>
           </h2>
           <p className="mt-5 text-[15.5px] lg:text-[17px] leading-[1.7] text-ink-500 max-w-xl">
             우편물·계약 갱신·세무서 안내까지 — 매번 신경 쓰지 않아도 작심스페이스가
@@ -24,7 +24,7 @@ export function PostRegistration() {
         <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-14 items-center">
           {/* Left: calendar mockup */}
           <div className="relative order-2 lg:order-1">
-            <div className="absolute -inset-4 bg-gradient-to-br from-amber-100/60 to-sage-100/50 rounded-[28px] blur-2xl" />
+            <div className="absolute -inset-4 bg-gradient-to-br from-amber-100/60 to-navy-100/50 rounded-[28px] blur-2xl" />
             <div className="relative rounded-3xl bg-white border border-ink-100 shadow-[0_30px_80px_-30px_rgba(12,18,25,0.35)] p-6 lg:p-7">
               {/* Header */}
               <div className="flex items-center justify-between mb-5">
@@ -57,7 +57,7 @@ export function PostRegistration() {
                       key={day}
                       className={`aspect-square rounded-md flex flex-col items-center justify-center text-[11.5px] font-medium relative ${
                         highlight
-                          ? "bg-sage-600 text-white"
+                          ? "bg-navy-600 text-white"
                           : "bg-cream-50 text-ink-700 hover:bg-cream-100"
                       }`}
                     >
@@ -71,8 +71,8 @@ export function PostRegistration() {
               </div>
 
               {/* Event */}
-              <div className="mt-5 rounded-xl bg-sage-50 border border-sage-200 px-4 py-3 flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-sage-600 flex items-center justify-center">
+              <div className="mt-5 rounded-xl bg-navy-50 border border-navy-200 px-4 py-3 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-navy-600 flex items-center justify-center">
                   <Calendar className="w-4 h-4 text-white" strokeWidth={2.2} />
                 </div>
                 <div className="flex-1">
@@ -83,7 +83,7 @@ export function PostRegistration() {
                     영업일 기준 7일 전부터 알림톡으로 안내
                   </p>
                 </div>
-                <button className="rounded-full bg-white border border-sage-300 text-sage-700 text-[11px] font-semibold px-3 py-1.5">
+                <button className="rounded-full bg-white border border-navy-300 text-navy-700 text-[11px] font-semibold px-3 py-1.5">
                   자동 갱신
                 </button>
               </div>
@@ -129,7 +129,7 @@ export function PostRegistration() {
               return (
                 <li
                   key={s.title}
-                  className="rounded-2xl bg-white border border-ink-100 p-5 lg:p-6 flex gap-4 hover:border-sage-300 transition-colors"
+                  className="rounded-2xl bg-white border border-ink-100 p-5 lg:p-6 flex gap-4 hover:border-navy-300 transition-colors"
                 >
                   <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center">
                     <Icon className="w-4.5 h-4.5 text-amber-500" strokeWidth={2.2} />

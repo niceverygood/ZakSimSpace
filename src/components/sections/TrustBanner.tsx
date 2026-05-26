@@ -6,13 +6,13 @@ export function TrustBanner() {
   return (
     <section className="bg-cream-50 pt-2 pb-10">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="rounded-2xl border border-sage-200 bg-sage-50 px-5 sm:px-7 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+        <div className="rounded-2xl border border-navy-200 bg-navy-50 px-5 sm:px-7 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
           <div className="flex items-start sm:items-center gap-4">
-            <div className="flex-shrink-0 w-11 h-11 rounded-full bg-sage-500 flex items-center justify-center shadow-[0_6px_18px_-6px_rgba(67,105,63,0.65)]">
+            <div className="flex-shrink-0 w-11 h-11 rounded-full bg-navy-500 flex items-center justify-center shadow-[0_6px_18px_-6px_rgba(35,61,104,0.65)]">
               <CheckCircle2 className="w-5 h-5 text-white" strokeWidth={2.2} />
             </div>
             <div>
-              <p className="text-[13px] font-semibold text-sage-700 mb-1">
+              <p className="text-[13px] font-semibold text-navy-700 mb-1">
                 초기 비용 부담은 NO
               </p>
               <p className="text-[15.5px] lg:text-[16px] font-bold text-ink-900 leading-snug">

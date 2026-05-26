@@ -43,7 +43,7 @@ export default function CareersPage() {
             <>
               결심을 사업장으로
               <br />
-              <span className="text-sage-600">함께 만드실 분을 찾아요</span>
+              <span className="text-navy-600">함께 만드실 분을 찾아요</span>
             </>
           }
           description="작심스페이스는 정직한 가격과 끝까지의 책임을 중요하게 생각하는 작은 팀입니다."
@@ -53,7 +53,7 @@ export default function CareersPage() {
         <section className="bg-cream-50 py-14 lg:py-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="text-center mb-10">
-              <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+              <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
                 Benefits
               </p>
               <h2 className="text-[24px] lg:text-[32px] font-extrabold text-ink-900">
@@ -68,9 +68,9 @@ export default function CareersPage() {
                     key={b.title}
                     className="rounded-2xl bg-white border border-cream-200 p-6"
                   >
-                    <div className="w-11 h-11 rounded-xl bg-sage-50 border border-sage-200 flex items-center justify-center mb-4">
+                    <div className="w-11 h-11 rounded-xl bg-navy-50 border border-navy-200 flex items-center justify-center mb-4">
                       <Icon
-                        className="w-4.5 h-4.5 text-sage-700"
+                        className="w-4.5 h-4.5 text-navy-700"
                         strokeWidth={2}
                       />
                     </div>
@@ -91,7 +91,7 @@ export default function CareersPage() {
         <section className="bg-cream-100 py-14 lg:py-20">
           <div className="mx-auto max-w-3xl px-6 lg:px-8">
             <div className="mb-8">
-              <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+              <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
                 Open positions
               </p>
               <h2 className="text-[24px] lg:text-[32px] font-extrabold text-ink-900">
@@ -128,7 +128,7 @@ export default function CareersPage() {
                     className="rounded-2xl bg-white border border-cream-200 p-5 flex items-center justify-between"
                   >
                     <div>
-                      <p className="text-[11.5px] font-bold text-sage-700">
+                      <p className="text-[11.5px] font-bold text-navy-700">
                         {p.team}
                       </p>
                       <p className="text-[15.5px] font-bold text-ink-900 mt-1">

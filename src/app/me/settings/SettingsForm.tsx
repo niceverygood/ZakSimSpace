@@ -153,14 +153,14 @@ export function SettingsForm() {
         <p
           className={cn(
             "text-[12.5px] font-semibold transition-opacity",
-            saved ? "text-sage-700 opacity-100" : "text-ink-400 opacity-100",
+            saved ? "text-navy-700 opacity-100" : "text-ink-400 opacity-100",
           )}
         >
           {saved ? "저장됐어요" : "변경 사항이 있으면 저장해 주세요."}
         </p>
         <button
           type="submit"
-          className="inline-flex items-center rounded-full bg-sage-600 hover:bg-sage-700 text-white font-bold h-10 px-5 text-[13px] transition-colors"
+          className="inline-flex items-center rounded-full bg-navy-600 hover:bg-navy-700 text-white font-bold h-10 px-5 text-[13px] transition-colors"
         >
           저장
         </button>
@@ -180,7 +180,7 @@ export function SettingsForm() {
         }
         .form-input:focus {
           outline: none;
-          border-color: var(--color-sage-500);
+          border-color: var(--color-navy-500);
         }
       `}</style>
     </form>
@@ -250,7 +250,7 @@ function Toggle({
       onClick={() => onChange(!on)}
       className={cn(
         "relative inline-flex w-10 h-6 rounded-full transition-colors",
-        on ? "bg-sage-600" : "bg-ink-200",
+        on ? "bg-navy-600" : "bg-ink-200",
       )}
     >
       <span

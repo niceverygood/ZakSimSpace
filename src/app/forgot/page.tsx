@@ -30,7 +30,7 @@ export default function ForgotPage() {
               로그인으로 돌아가기?{" "}
               <Link
                 href="/login"
-                className="font-bold text-sage-700 hover:text-sage-800"
+                className="font-bold text-navy-700 hover:text-navy-800"
               >
                 로그인
               </Link>

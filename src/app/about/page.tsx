@@ -53,7 +53,7 @@ export default function AboutPage() {
             <>
               결심을
               <br />
-              <span className="text-sage-600">사업장으로</span>
+              <span className="text-navy-600">사업장으로</span>
             </>
           }
           description="작심스페이스는 1인 사업자와 스타트업이 합법적이고 부담 없는 주소지에서 시작할 수 있도록 인프라를 만듭니다."
@@ -81,7 +81,7 @@ export default function AboutPage() {
         {/* Mission */}
         <section className="bg-cream-100 py-16 lg:py-24">
           <div className="mx-auto max-w-3xl px-6 lg:px-8 text-center">
-            <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+            <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
               Mission
             </p>
             <h2 className="text-[26px] lg:text-[36px] font-extrabold text-ink-900 leading-[1.3]">
@@ -102,7 +102,7 @@ export default function AboutPage() {
         <section className="bg-cream-50 py-16 lg:py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="text-center mb-12">
-              <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+              <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
                 Values
               </p>
               <h2 className="text-[26px] lg:text-[34px] font-extrabold text-ink-900">
@@ -115,7 +115,7 @@ export default function AboutPage() {
                   key={v.title}
                   className="rounded-2xl bg-white border border-cream-200 p-6 lg:p-7"
                 >
-                  <p className="text-[11.5px] font-bold text-sage-600 tracking-widest tnum mb-3">
+                  <p className="text-[11.5px] font-bold text-navy-600 tracking-widest tnum mb-3">
                     0{i + 1}
                   </p>
                   <p className="text-[17px] font-bold text-ink-900">
@@ -134,18 +134,18 @@ export default function AboutPage() {
         <section className="bg-cream-100 py-16 lg:py-24">
           <div className="mx-auto max-w-3xl px-6 lg:px-8">
             <div className="text-center mb-12">
-              <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+              <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
                 Milestones
               </p>
               <h2 className="text-[26px] lg:text-[34px] font-extrabold text-ink-900">
                 작심스페이스가 걸어온 길
               </h2>
             </div>
-            <ol className="relative border-l-2 border-sage-200 ml-3 space-y-7 pl-7">
+            <ol className="relative border-l-2 border-navy-200 ml-3 space-y-7 pl-7">
               {milestones.map((m) => (
                 <li key={m.year} className="relative">
-                  <span className="absolute -left-[34px] top-1 w-4 h-4 rounded-full bg-sage-600 border-4 border-cream-100" />
-                  <p className="text-[13px] font-extrabold text-sage-700 tnum">
+                  <span className="absolute -left-[34px] top-1 w-4 h-4 rounded-full bg-navy-600 border-4 border-cream-100" />
+                  <p className="text-[13px] font-extrabold text-navy-700 tnum">
                     {m.year}
                   </p>
                   <p className="mt-1 text-[14.5px] text-ink-800 leading-[1.7]">
@@ -165,11 +165,11 @@ export default function AboutPage() {
                 <h3 className="text-[22px] lg:text-[30px] font-extrabold leading-[1.3]">
                   지금 결심을
                   <br />
-                  <span className="text-sage-300">사업장으로 만들어 보세요</span>
+                  <span className="text-navy-300">사업장으로 만들어 보세요</span>
                 </h3>
               </div>
               <div className="flex flex-wrap gap-3">
-                <ContractTrigger className="inline-flex items-center gap-2 rounded-full bg-sage-500 hover:bg-sage-400 text-ink-900 font-bold px-6 h-12 text-[14px] transition-colors">
+                <ContractTrigger className="inline-flex items-center gap-2 rounded-full bg-navy-500 hover:bg-navy-400 text-ink-900 font-bold px-6 h-12 text-[14px] transition-colors">
                   빠른 계약
                   <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                 </ContractTrigger>

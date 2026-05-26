@@ -15,7 +15,7 @@ export default function MailPage() {
           </h2>
           <button
             type="button"
-            className="text-[12.5px] font-semibold text-sage-700 hover:text-sage-800"
+            className="text-[12.5px] font-semibold text-navy-700 hover:text-navy-800"
           >
             우편물 정책 보기 →
           </button>
@@ -49,7 +49,7 @@ export default function MailPage() {
                   className={cn(
                     "inline-flex items-center gap-1.5 rounded-full h-9 px-3.5 text-[12px] font-semibold transition-colors",
                     m.scanned
-                      ? "bg-sage-50 text-sage-700 hover:bg-sage-100"
+                      ? "bg-navy-50 text-navy-700 hover:bg-navy-100"
                       : "bg-cream-100 text-ink-400 cursor-not-allowed",
                   )}
                 >

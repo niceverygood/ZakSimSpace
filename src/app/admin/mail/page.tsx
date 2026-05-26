@@ -30,7 +30,7 @@ export default function AdminMailPage() {
 function State({ state }: { state: "received" | "scanned" | "forwarded" }) {
   const map = {
     received: { l: "도착", c: "bg-amber-500/20 text-amber-300 border-amber-500/40" },
-    scanned: { l: "스캔", c: "bg-sage-600/20 text-sage-300 border-sage-600/40" },
+    scanned: { l: "스캔", c: "bg-navy-600/20 text-navy-300 border-navy-600/40" },
     forwarded: { l: "발송", c: "bg-blue-500/20 text-blue-300 border-blue-500/40" },
   } as const;
   const s = map[state];

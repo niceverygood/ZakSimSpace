@@ -11,7 +11,7 @@ export default function HomeOG() {
         style={{
           width: "100%",
           height: "100%",
-          background: "linear-gradient(135deg, #f6f2e7 0%, #dfeadc 100%)",
+          background: "linear-gradient(135deg, #f6f2e7 0%, #d8e0ed 100%)",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -23,7 +23,7 @@ export default function HomeOG() {
           <span style={{ color: "#161d27", fontSize: 28, fontWeight: 800 }}>
             ZAKSIM
           </span>
-          <span style={{ color: "#43693f", fontSize: 28, fontWeight: 800 }}>
+          <span style={{ color: "#233d68", fontSize: 28, fontWeight: 800 }}>
             ·
           </span>
           <span style={{ color: "#161d27", fontSize: 28, fontWeight: 800 }}>
@@ -32,7 +32,7 @@ export default function HomeOG() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          <p style={{ color: "#43693f", fontSize: 24, fontWeight: 600, margin: 0 }}>
+          <p style={{ color: "#233d68", fontSize: 24, fontWeight: 600, margin: 0 }}>
             월 20,000원부터 시작하는 합법 사업장
           </p>
           <h1
@@ -47,7 +47,7 @@ export default function HomeOG() {
           >
             결심을
             <br />
-            <span style={{ color: "#43693f" }}>사업장으로</span>
+            <span style={{ color: "#233d68" }}>사업장으로</span>
           </h1>
         </div>
 
@@ -63,7 +63,7 @@ export default function HomeOG() {
           </p>
           <div
             style={{
-              background: "#43693f",
+              background: "#233d68",
               color: "#ffffff",
               borderRadius: 999,
               padding: "14px 28px",

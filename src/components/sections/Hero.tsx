@@ -14,7 +14,7 @@ export function Hero() {
       {/* Subtle blurred blobs */}
       <div
         aria-hidden
-        className="absolute -top-32 -left-24 w-[480px] h-[480px] rounded-full bg-sage-200/40 blur-3xl"
+        className="absolute -top-32 -left-24 w-[480px] h-[480px] rounded-full bg-navy-200/40 blur-3xl"
       />
       <div
         aria-hidden
@@ -26,9 +26,9 @@ export function Hero() {
           {/* Left: copy */}
           <div className="max-w-xl">
             {/* Eyebrow chip */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-sage-300/60 bg-white/70 backdrop-blur px-3 py-1.5 mb-7">
-              <span className="w-1.5 h-1.5 rounded-full bg-sage-500" />
-              <span className="text-[12.5px] font-semibold text-sage-700 tracking-wide">
+            <div className="inline-flex items-center gap-2 rounded-full border border-navy-300/60 bg-white/70 backdrop-blur px-3 py-1.5 mb-7">
+              <span className="w-1.5 h-1.5 rounded-full bg-navy-500" />
+              <span className="text-[12.5px] font-semibold text-navy-700 tracking-wide">
                 월 20,000원부터 시작하는 합법적인 사업장
               </span>
             </div>
@@ -37,7 +37,7 @@ export function Hero() {
             <h1 className="text-[40px] sm:text-[48px] lg:text-[60px] leading-[1.15] font-extrabold tracking-tight text-ink-900">
               터치 한 번이면
               <br />
-              <span className="text-sage-600">전국 어디든</span>
+              <span className="text-navy-600">전국 어디든</span>
               <br />내 사업장!
             </h1>
 
@@ -50,7 +50,7 @@ export function Hero() {
 
             {/* CTAs */}
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              <ContractTrigger className="group inline-flex items-center gap-2 rounded-full bg-sage-600 hover:bg-sage-700 text-white font-semibold px-7 text-[15px] transition-colors shadow-[0_10px_28px_-8px_rgba(67,105,63,0.5)] h-[54px]">
+              <ContractTrigger className="group inline-flex items-center gap-2 rounded-full bg-navy-600 hover:bg-navy-700 text-white font-semibold px-7 text-[15px] transition-colors shadow-[0_10px_28px_-8px_rgba(35,61,104,0.5)] h-[54px]">
                 사업자등록 바로하기
                 <ArrowRight
                   className="w-4 h-4 transition-transform group-hover:translate-x-0.5"
@@ -62,7 +62,7 @@ export function Hero() {
                 className="inline-flex items-center gap-2 rounded-full bg-white hover:bg-white text-ink-800 font-semibold px-7 text-[15px] border border-ink-200 hover:border-ink-400 transition-all"
                 style={{ height: "54px" }}
               >
-                <MapPin className="w-4 h-4 text-sage-600" strokeWidth={2.2} />
+                <MapPin className="w-4 h-4 text-navy-600" strokeWidth={2.2} />
                 전국 지점 둘러보기
               </Link>
             </div>
@@ -70,7 +70,7 @@ export function Hero() {
             {/* Stats */}
             <dl className="mt-14 grid grid-cols-3 gap-6 max-w-md">
               {stats.map((s) => (
-                <div key={s.label} className="border-l-2 border-sage-300 pl-3.5">
+                <div key={s.label} className="border-l-2 border-navy-300 pl-3.5">
                   <dt className="text-[11.5px] text-ink-400 mb-1 tracking-wide">
                     {s.label}
                   </dt>
@@ -108,7 +108,7 @@ function MascotIllustration() {
       {/* Backdrop ring */}
       <div
         aria-hidden
-        className="absolute inset-x-8 top-6 bottom-12 rounded-[40%] bg-gradient-to-br from-sage-200/70 via-cream-100 to-amber-100/70 border border-white/60 shadow-[inset_0_2px_30px_rgba(255,255,255,0.6),0_30px_60px_-25px_rgba(67,105,63,0.35)]"
+        className="absolute inset-x-8 top-6 bottom-12 rounded-[40%] bg-gradient-to-br from-navy-200/70 via-cream-100 to-amber-100/70 border border-white/60 shadow-[inset_0_2px_30px_rgba(255,255,255,0.6),0_30px_60px_-25px_rgba(35,61,104,0.35)]"
       />
 
       {/* Character body — gradient blob */}
@@ -134,28 +134,28 @@ function MascotIllustration() {
         {/* Body */}
         <div
           aria-hidden
-          className="absolute left-1/2 -translate-x-1/2 top-[42%] w-[70%] h-[55%] rounded-t-[60px] rounded-b-[28px] bg-gradient-to-br from-sage-500 via-sage-600 to-sage-700 shadow-[inset_-14px_-10px_30px_rgba(0,0,0,0.25),inset_10px_8px_24px_rgba(255,255,255,0.18)]"
+          className="absolute left-1/2 -translate-x-1/2 top-[42%] w-[70%] h-[55%] rounded-t-[60px] rounded-b-[28px] bg-gradient-to-br from-navy-500 via-navy-600 to-navy-700 shadow-[inset_-14px_-10px_30px_rgba(0,0,0,0.25),inset_10px_8px_24px_rgba(255,255,255,0.18)]"
         />
         {/* Floating phone */}
         <div className="absolute right-[6%] top-[42%] w-[26%] aspect-[9/16] rounded-[18px] bg-white border-2 border-ink-900/10 shadow-[0_18px_40px_-12px_rgba(12,18,25,0.35)] rotate-[8deg] overflow-hidden">
           <div className="absolute inset-x-3 top-3 h-2 rounded-full bg-ink-200" />
-          <div className="absolute inset-x-3 top-7 h-12 rounded-lg bg-gradient-to-br from-sage-100 to-sage-200" />
+          <div className="absolute inset-x-3 top-7 h-12 rounded-lg bg-gradient-to-br from-navy-100 to-navy-200" />
           <div className="absolute inset-x-3 top-[78px] space-y-1.5">
             <div className="h-1.5 w-3/4 rounded-full bg-ink-100" />
             <div className="h-1.5 w-2/3 rounded-full bg-ink-100" />
             <div className="h-1.5 w-1/2 rounded-full bg-ink-100" />
           </div>
-          <div className="absolute inset-x-3 bottom-3 h-6 rounded-md bg-sage-500" />
+          <div className="absolute inset-x-3 bottom-3 h-6 rounded-md bg-navy-500" />
         </div>
         {/* Tiny floating sparkles */}
         <div className="absolute left-[8%] top-[20%] w-3 h-3 rotate-45 bg-amber-300 rounded-sm" />
-        <div className="absolute right-[4%] top-[14%] w-2 h-2 rotate-45 bg-sage-400 rounded-sm" />
+        <div className="absolute right-[4%] top-[14%] w-2 h-2 rotate-45 bg-navy-400 rounded-sm" />
         <div className="absolute left-[14%] bottom-[16%] w-2.5 h-2.5 rotate-45 bg-amber-200 rounded-sm" />
       </div>
 
       {/* Pin chip near top */}
       <div className="absolute top-3 right-4 inline-flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur border border-ink-100 shadow-sm px-3 py-1.5">
-        <MapPin className="w-3.5 h-3.5 text-sage-600" strokeWidth={2.5} />
+        <MapPin className="w-3.5 h-3.5 text-navy-600" strokeWidth={2.5} />
         <span className="text-[12px] font-semibold text-ink-700">서울 강남 · 즉시 입주</span>
       </div>
       {/* Card chip near bottom */}

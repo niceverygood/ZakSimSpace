@@ -14,13 +14,13 @@ export function PartnerBenefits() {
     <section className="bg-cream-100 py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-14">
-          <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+          <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
             Partner Benefits
           </p>
           <h2 className="text-[28px] lg:text-[40px] font-extrabold text-ink-900 leading-[1.25] tracking-tight">
             연 <span className="text-amber-500">2,200,000원</span> 상당
             <br />
-            <span className="text-sage-600">제휴 혜택 서비스</span>
+            <span className="text-navy-600">제휴 혜택 서비스</span>
           </h2>
           <p className="mt-5 text-[14.5px] lg:text-[15.5px] text-ink-500 leading-[1.7]">
             결제·세무·SaaS·물류까지 — 작심스페이스 입주만으로 누리는 혜택이에요.
@@ -32,7 +32,7 @@ export function PartnerBenefits() {
           {partners.map((p) => (
             <div
               key={p.name}
-              className="group rounded-2xl bg-white border border-ink-100 p-5 hover:border-sage-300 hover:-translate-y-0.5 transition-all duration-300"
+              className="group rounded-2xl bg-white border border-ink-100 p-5 hover:border-navy-300 hover:-translate-y-0.5 transition-all duration-300"
             >
               <div
                 className={`w-12 h-12 rounded-xl bg-gradient-to-br ${p.color} flex items-center justify-center mb-4 shadow-sm`}
@@ -42,7 +42,7 @@ export function PartnerBenefits() {
                 </span>
               </div>
               <p className="text-[14px] font-bold text-ink-900">{p.name}</p>
-              <p className="text-[12.5px] text-sage-700 font-semibold mt-1">
+              <p className="text-[12.5px] text-navy-700 font-semibold mt-1">
                 {p.tag}
               </p>
             </div>

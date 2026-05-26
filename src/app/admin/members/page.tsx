@@ -29,7 +29,7 @@ export default function AdminMembersPage() {
 
 function Status({ status }: { status: "active" | "dormant" | "ended" }) {
   const map = {
-    active: { l: "활성", c: "bg-sage-600/20 text-sage-300 border-sage-600/40" },
+    active: { l: "활성", c: "bg-navy-600/20 text-navy-300 border-navy-600/40" },
     dormant: { l: "휴면", c: "bg-amber-500/20 text-amber-300 border-amber-500/40" },
     ended: { l: "탈퇴", c: "bg-ink-700 text-ink-400 border-ink-700" },
   } as const;

@@ -100,7 +100,7 @@ export function SearchBrowser() {
   return (
     <div>
       <header className="mb-8 text-center">
-        <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+        <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
           Search
         </p>
         <h1 className="text-[28px] lg:text-[36px] font-extrabold text-ink-900 leading-tight">
@@ -119,7 +119,7 @@ export function SearchBrowser() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="지점, FAQ, 업종 사례, 스토리에서 검색"
-          className="w-full h-14 rounded-2xl border border-ink-200 bg-white pl-14 pr-5 text-[15px] font-medium text-ink-900 placeholder:text-ink-300 focus:outline-none focus:border-sage-500 transition-colors shadow-[0_8px_30px_-15px_rgba(12,18,25,0.18)]"
+          className="w-full h-14 rounded-2xl border border-ink-200 bg-white pl-14 pr-5 text-[15px] font-medium text-ink-900 placeholder:text-ink-300 focus:outline-none focus:border-navy-500 transition-colors shadow-[0_8px_30px_-15px_rgba(12,18,25,0.18)]"
         />
       </div>
 
@@ -206,7 +206,7 @@ function HitRow({ hit }: { hit: Hit }) {
   const Icon = meta.icon;
   const badgeCls =
     meta.color === "sage"
-      ? "bg-sage-50 text-sage-700 border-sage-200"
+      ? "bg-navy-50 text-navy-700 border-navy-200"
       : meta.color === "blue"
         ? "bg-blue-50 text-blue-600 border-blue-100"
         : meta.color === "violet"
@@ -215,7 +215,7 @@ function HitRow({ hit }: { hit: Hit }) {
   return (
     <Link
       href={hit.href}
-      className="block rounded-2xl bg-white border border-cream-200 hover:border-sage-300 p-5 transition-colors"
+      className="block rounded-2xl bg-white border border-cream-200 hover:border-navy-300 p-5 transition-colors"
     >
       <div className="flex items-start gap-4">
         <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-cream-50 border border-cream-200 flex items-center justify-center">

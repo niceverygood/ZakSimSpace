@@ -45,7 +45,7 @@ export default function BillingPage() {
                 </p>
               </div>
               {m.isDefault ? (
-                <span className="inline-flex items-center gap-1 rounded-full bg-sage-50 border border-sage-200 px-2.5 py-1 text-[11px] font-bold text-sage-700">
+                <span className="inline-flex items-center gap-1 rounded-full bg-navy-50 border border-navy-200 px-2.5 py-1 text-[11px] font-bold text-navy-700">
                   <Check className="w-3 h-3" strokeWidth={3} />
                   기본
                 </span>
@@ -110,7 +110,7 @@ export default function BillingPage() {
 
 function StatusPill({ status }: { status: "paid" | "refunded" | "failed" }) {
   const map = {
-    paid: { l: "결제완료", c: "bg-sage-50 text-sage-700 border-sage-200" },
+    paid: { l: "결제완료", c: "bg-navy-50 text-navy-700 border-navy-200" },
     refunded: { l: "환불", c: "bg-amber-50 text-amber-600 border-amber-200" },
     failed: { l: "실패", c: "bg-rose-50 text-rose-600 border-rose-100" },
   } as const;

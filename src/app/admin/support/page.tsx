@@ -45,7 +45,7 @@ function Status({ s }: { s: "open" | "in-progress" | "resolved" }) {
   const map = {
     open: { l: "접수", c: "bg-amber-500/20 text-amber-300 border-amber-500/40" },
     "in-progress": { l: "응대중", c: "bg-blue-500/20 text-blue-300 border-blue-500/40" },
-    resolved: { l: "완료", c: "bg-sage-600/20 text-sage-300 border-sage-600/40" },
+    resolved: { l: "완료", c: "bg-navy-600/20 text-navy-300 border-navy-600/40" },
   } as const;
   const o = map[s];
   return (

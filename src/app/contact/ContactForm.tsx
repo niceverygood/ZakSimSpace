@@ -22,8 +22,8 @@ export function ContactForm() {
 
   if (done) {
     return (
-      <div className="rounded-2xl bg-sage-50 border border-sage-200 p-7 text-center">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-sage-600 mb-4">
+      <div className="rounded-2xl bg-navy-50 border border-navy-200 p-7 text-center">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-navy-600 mb-4">
           <CheckCircle2 className="w-5 h-5 text-white" strokeWidth={2.2} />
         </div>
         <p className="text-[16px] font-extrabold text-ink-900">
@@ -74,7 +74,7 @@ export function ContactForm() {
           <select
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
-            className="w-full h-12 appearance-none rounded-2xl border border-ink-200 bg-white px-4 pr-10 text-[14px] font-semibold text-ink-800 focus:outline-none focus:border-sage-500"
+            className="w-full h-12 appearance-none rounded-2xl border border-ink-200 bg-white px-4 pr-10 text-[14px] font-semibold text-ink-800 focus:outline-none focus:border-navy-500"
           >
             {topics.map((t) => (
               <option key={t.value} value={t.value}>
@@ -95,14 +95,14 @@ export function ContactForm() {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full h-12 rounded-2xl border border-ink-200 bg-white px-4 text-[14px] font-medium text-ink-900 focus:outline-none focus:border-sage-500"
+            className="w-full h-12 rounded-2xl border border-ink-200 bg-white px-4 text-[14px] font-medium text-ink-900 focus:outline-none focus:border-navy-500"
           />
         </Field>
         <Field label="회사 / 소속 (선택)">
           <input
             value={company}
             onChange={(e) => setCompany(e.target.value)}
-            className="w-full h-12 rounded-2xl border border-ink-200 bg-white px-4 text-[14px] font-medium text-ink-900 focus:outline-none focus:border-sage-500"
+            className="w-full h-12 rounded-2xl border border-ink-200 bg-white px-4 text-[14px] font-medium text-ink-900 focus:outline-none focus:border-navy-500"
           />
         </Field>
       </div>
@@ -114,7 +114,7 @@ export function ContactForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
-          className="w-full h-12 rounded-2xl border border-ink-200 bg-white px-4 text-[14px] font-medium text-ink-900 placeholder:text-ink-300 focus:outline-none focus:border-sage-500"
+          className="w-full h-12 rounded-2xl border border-ink-200 bg-white px-4 text-[14px] font-medium text-ink-900 placeholder:text-ink-300 focus:outline-none focus:border-navy-500"
         />
       </Field>
 
@@ -125,7 +125,7 @@ export function ContactForm() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="어떤 도움이 필요하신지 알려주세요."
-          className="w-full rounded-2xl border border-ink-200 bg-white px-4 py-3 text-[14px] font-medium text-ink-900 placeholder:text-ink-300 focus:outline-none focus:border-sage-500 resize-none"
+          className="w-full rounded-2xl border border-ink-200 bg-white px-4 py-3 text-[14px] font-medium text-ink-900 placeholder:text-ink-300 focus:outline-none focus:border-navy-500 resize-none"
         />
       </Field>
 
@@ -138,7 +138,7 @@ export function ContactForm() {
         />
         <span
           className={`mt-0.5 w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center transition-colors ${
-            agree ? "bg-sage-600 border-sage-600" : "bg-white border-ink-300"
+            agree ? "bg-navy-600 border-navy-600" : "bg-white border-ink-300"
           }`}
         >
           {agree && (
@@ -163,7 +163,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="mt-3 w-full h-12 rounded-2xl bg-sage-600 hover:bg-sage-700 disabled:bg-sage-300 text-white font-bold text-[14px] transition-colors"
+        className="mt-3 w-full h-12 rounded-2xl bg-navy-600 hover:bg-navy-700 disabled:bg-navy-300 text-white font-bold text-[14px] transition-colors"
       >
         {submitting ? "전송 중..." : "문의 보내기"}
       </button>

@@ -100,7 +100,7 @@ export default async function BlogPostPage({
                 return (
                   <blockquote
                     key={i}
-                    className="border-l-4 border-sage-400 bg-cream-100 rounded-r-2xl px-6 py-5"
+                    className="border-l-4 border-navy-400 bg-cream-100 rounded-r-2xl px-6 py-5"
                   >
                     <p className="text-[15.5px] text-ink-800 italic leading-[1.75]">
                       “{block.text}”
@@ -129,13 +129,13 @@ export default async function BlogPostPage({
                   <li key={r.slug}>
                     <Link
                       href={`/blog/${r.slug}`}
-                      className="block rounded-2xl bg-white border border-cream-200 p-5 hover:border-sage-300 transition-colors h-full"
+                      className="block rounded-2xl bg-white border border-cream-200 p-5 hover:border-navy-300 transition-colors h-full"
                     >
                       <p className="text-[12px] text-ink-500 tnum">{r.date}</p>
                       <p className="mt-2 text-[14px] font-bold text-ink-900 leading-snug">
                         {r.title}
                       </p>
-                      <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-sage-700">
+                      <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-navy-700">
                         읽기 <ArrowRight className="w-3 h-3" strokeWidth={2.5} />
                       </span>
                     </Link>

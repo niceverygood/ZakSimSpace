@@ -30,7 +30,7 @@ export default function SignupPage() {
               이미 계정이 있으신가요?{" "}
               <Link
                 href="/login"
-                className="font-bold text-sage-700 hover:text-sage-800"
+                className="font-bold text-navy-700 hover:text-navy-800"
               >
                 로그인
               </Link>

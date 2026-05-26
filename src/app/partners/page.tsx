@@ -50,7 +50,7 @@ export default function PartnersPage() {
             <>
               혼자보다 함께
               <br />
-              <span className="text-sage-600">더 멀리 갑니다</span>
+              <span className="text-navy-600">더 멀리 갑니다</span>
             </>
           }
           description="작심스페이스 파트너스 프로그램은 지점·리퍼럴·솔루션 3가지 트랙으로 운영됩니다."
@@ -65,9 +65,9 @@ export default function PartnersPage() {
                 return (
                   <li key={t.title}>
                     <article className="rounded-3xl bg-white border border-cream-200 p-7 h-full flex flex-col">
-                      <div className="w-12 h-12 rounded-2xl bg-sage-50 border border-sage-200 flex items-center justify-center mb-5">
+                      <div className="w-12 h-12 rounded-2xl bg-navy-50 border border-navy-200 flex items-center justify-center mb-5">
                         <Icon
-                          className="w-5 h-5 text-sage-700"
+                          className="w-5 h-5 text-navy-700"
                           strokeWidth={2}
                         />
                       </div>
@@ -98,7 +98,7 @@ export default function PartnersPage() {
         {/* Benefits */}
         <section className="bg-cream-100 py-14 lg:py-20">
           <div className="mx-auto max-w-3xl px-6 lg:px-8">
-            <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+            <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
               Why partner
             </p>
             <h2 className="text-[24px] lg:text-[32px] font-extrabold text-ink-900 leading-[1.3] mb-7">
@@ -110,8 +110,8 @@ export default function PartnersPage() {
                   key={b}
                   className="flex items-start gap-3 rounded-2xl bg-white border border-cream-200 px-5 py-4"
                 >
-                  <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-sage-100 flex items-center justify-center">
-                    <Check className="w-3 h-3 text-sage-700" strokeWidth={3} />
+                  <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-navy-100 flex items-center justify-center">
+                    <Check className="w-3 h-3 text-navy-700" strokeWidth={3} />
                   </span>
                   <p className="text-[14px] text-ink-700 font-medium">{b}</p>
                 </li>

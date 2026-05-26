@@ -113,13 +113,13 @@ function Placeholder({
 }) {
   return (
     <div className="rounded-3xl border border-cream-200 bg-white overflow-hidden">
-      <div className="relative aspect-[16/10] bg-gradient-to-br from-sage-100 via-cream-100 to-amber-100">
+      <div className="relative aspect-[16/10] bg-gradient-to-br from-navy-100 via-cream-100 to-amber-100">
         <div
           aria-hidden
           className="absolute inset-0 opacity-[0.18] [background-image:linear-gradient(rgba(34,40,49,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(34,40,49,0.4)_1px,transparent_1px)] [background-size:40px_40px]"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-          <div className="w-12 h-12 rounded-full bg-sage-600 text-white flex items-center justify-center shadow-[0_12px_30px_-8px_rgba(67,105,63,0.55)]">
+          <div className="w-12 h-12 rounded-full bg-navy-600 text-white flex items-center justify-center shadow-[0_12px_30px_-8px_rgba(35,61,104,0.55)]">
             <MapPin className="w-5 h-5" strokeWidth={2} />
           </div>
           {title && (

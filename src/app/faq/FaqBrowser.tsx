@@ -43,7 +43,7 @@ export function FaqBrowser() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="질문 또는 키워드 검색"
-            className="w-full h-12 rounded-2xl border border-ink-200 bg-white pl-11 pr-4 text-[14px] font-medium text-ink-800 placeholder:text-ink-300 focus:outline-none focus:border-sage-500 transition-colors"
+            className="w-full h-12 rounded-2xl border border-ink-200 bg-white pl-11 pr-4 text-[14px] font-medium text-ink-800 placeholder:text-ink-300 focus:outline-none focus:border-navy-500 transition-colors"
           />
         </div>
 
@@ -95,7 +95,7 @@ export function FaqBrowser() {
                       <span className="mt-1 inline-flex items-center rounded-full bg-cream-100 px-2 py-0.5 text-[10.5px] font-bold text-ink-500 flex-shrink-0">
                         {faqCategoryLabels[item.category]}
                       </span>
-                      <span className="text-[15px] lg:text-[16px] font-semibold text-ink-900 leading-snug group-hover:text-sage-700 transition-colors">
+                      <span className="text-[15px] lg:text-[16px] font-semibold text-ink-900 leading-snug group-hover:text-navy-700 transition-colors">
                         {item.q}
                       </span>
                     </div>
@@ -103,7 +103,7 @@ export function FaqBrowser() {
                       className={cn(
                         "flex-shrink-0 w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300",
                         open
-                          ? "bg-sage-600 border-sage-600 rotate-45"
+                          ? "bg-navy-600 border-navy-600 rotate-45"
                           : "bg-white border-ink-200 group-hover:border-ink-400",
                       )}
                     >

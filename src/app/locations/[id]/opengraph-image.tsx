@@ -37,7 +37,7 @@ export default async function BranchOG({
         style={{
           width: "100%",
           height: "100%",
-          background: "linear-gradient(135deg, #dfeadc 0%, #f6f2e7 60%, #fceac0 100%)",
+          background: "linear-gradient(135deg, #d8e0ed 0%, #f6f2e7 60%, #fceac0 100%)",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -47,7 +47,7 @@ export default async function BranchOG({
       >
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <span style={{ color: "#161d27", fontSize: 24, fontWeight: 800 }}>ZAKSIM</span>
-          <span style={{ color: "#43693f", fontSize: 24, fontWeight: 800 }}>·</span>
+          <span style={{ color: "#233d68", fontSize: 24, fontWeight: 800 }}>·</span>
           <span style={{ color: "#161d27", fontSize: 24, fontWeight: 800 }}>SPACE</span>
         </div>
 
@@ -57,12 +57,12 @@ export default async function BranchOG({
               display: "inline-flex",
               alignSelf: "flex-start",
               background: "#ffffff",
-              color: "#43693f",
+              color: "#233d68",
               borderRadius: 999,
               padding: "10px 22px",
               fontSize: 22,
               fontWeight: 700,
-              border: "2px solid #c2d6bd",
+              border: "2px solid #b3c1d6",
             }}
           >
             📍 {branch.region}
@@ -92,7 +92,7 @@ export default async function BranchOG({
           }}
         >
           <div style={{ display: "flex", gap: 24, alignItems: "baseline" }}>
-            <span style={{ color: "#43693f", fontSize: 64, fontWeight: 900 }}>
+            <span style={{ color: "#233d68", fontSize: 64, fontWeight: 900 }}>
               {formatKRW(branch.monthlyPrice)}
             </span>
             <span style={{ color: "#6d7c8b", fontSize: 24, fontWeight: 600 }}>

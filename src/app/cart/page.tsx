@@ -39,7 +39,7 @@ export default function CartPage() {
               자유롭게 변경할 수 있어요.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
-              <ContractTrigger className="inline-flex items-center gap-2 rounded-full bg-sage-600 hover:bg-sage-700 text-white font-bold px-6 h-12 text-[14px] transition-colors">
+              <ContractTrigger className="inline-flex items-center gap-2 rounded-full bg-navy-600 hover:bg-navy-700 text-white font-bold px-6 h-12 text-[14px] transition-colors">
                 빠른 계약 시작
                 <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
               </ContractTrigger>
@@ -47,7 +47,7 @@ export default function CartPage() {
                 href="/locations"
                 className="inline-flex items-center gap-2 rounded-full bg-cream-100 hover:bg-cream-200 text-ink-800 font-semibold px-6 h-12 text-[14px] transition-colors"
               >
-                <MapPin className="w-4 h-4 text-sage-700" strokeWidth={2} />
+                <MapPin className="w-4 h-4 text-navy-700" strokeWidth={2} />
                 전국 지점 둘러보기
               </Link>
             </div>
@@ -61,7 +61,7 @@ export default function CartPage() {
               </h2>
               <Link
                 href="/locations"
-                className="text-[13px] font-semibold text-ink-700 hover:text-sage-700"
+                className="text-[13px] font-semibold text-ink-700 hover:text-navy-700"
               >
                 전체 보기 →
               </Link>
@@ -71,7 +71,7 @@ export default function CartPage() {
                 <li key={b.id}>
                   <Link
                     href={`/locations/${b.id}`}
-                    className="block rounded-2xl bg-white border border-cream-200 p-5 hover:border-sage-300 hover:-translate-y-0.5 transition-all"
+                    className="block rounded-2xl bg-white border border-cream-200 p-5 hover:border-navy-300 hover:-translate-y-0.5 transition-all"
                   >
                     <p className="text-[14.5px] font-bold text-ink-900">
                       {b.name}

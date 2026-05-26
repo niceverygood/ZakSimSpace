@@ -11,7 +11,7 @@ const stories = [
     quote:
       "보증금 없이 강남 주소지로 사업자등록을 마쳤고, 통신판매업 신고까지 일주일 만에 끝냈어요.",
     tag: "통신판매업",
-    accent: "from-sage-500 to-sage-700",
+    accent: "from-navy-500 to-navy-700",
   },
   {
     name: "김도윤 대표",
@@ -40,13 +40,13 @@ export function Stories() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+          <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
             Success Stories
           </p>
           <h2 className="text-[30px] lg:text-[40px] font-extrabold text-ink-900 leading-[1.25] tracking-tight">
             먼저 시작한 대표님의
             <br />
-            <span className="text-sage-600">성공 사례</span>로 증명합니다
+            <span className="text-navy-600">성공 사례</span>로 증명합니다
           </h2>
         </div>
 
@@ -94,7 +94,7 @@ export function Stories() {
             {/* Quote card */}
             <div className="rounded-3xl bg-white border border-ink-100 p-8 lg:p-10 flex flex-col justify-between shadow-[0_12px_40px_-20px_rgba(12,18,25,0.18)]">
               <div>
-                <p className="text-sage-500 text-[40px] leading-none font-serif">“</p>
+                <p className="text-navy-500 text-[40px] leading-none font-serif">“</p>
                 <p className="text-[17px] lg:text-[18px] leading-[1.75] text-ink-700 font-medium mt-2">
                   {story.quote}
                 </p>
@@ -110,7 +110,7 @@ export function Stories() {
                       onClick={() => setIdx(i)}
                       className={cn(
                         "h-1.5 rounded-full transition-all",
-                        i === idx ? "w-8 bg-sage-600" : "w-3 bg-ink-200"
+                        i === idx ? "w-8 bg-navy-600" : "w-3 bg-ink-200"
                       )}
                     />
                   ))}

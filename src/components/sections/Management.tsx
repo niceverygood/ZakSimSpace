@@ -28,13 +28,13 @@ export function Management() {
     <section className="bg-cream-50 py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-14">
-          <p className="text-[13px] font-semibold text-sage-600 tracking-wider uppercase mb-3">
+          <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
             All in one
           </p>
           <h2 className="text-[28px] lg:text-[40px] font-extrabold text-ink-900 leading-[1.25] tracking-tight">
             이제 하나로 관리해요
             <br />
-            <span className="text-sage-600">with 작심스페이스</span>
+            <span className="text-navy-600">with 작심스페이스</span>
           </h2>
         </div>
 
@@ -46,10 +46,10 @@ export function Management() {
               return (
                 <li
                   key={it.title}
-                  className="rounded-2xl bg-white border border-ink-100 p-5 lg:p-6 flex gap-4 hover:border-sage-300 transition-colors"
+                  className="rounded-2xl bg-white border border-ink-100 p-5 lg:p-6 flex gap-4 hover:border-navy-300 transition-colors"
                 >
-                  <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-sage-50 border border-sage-200 flex items-center justify-center">
-                    <Icon className="w-4.5 h-4.5 text-sage-700" strokeWidth={2.2} />
+                  <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-navy-50 border border-navy-200 flex items-center justify-center">
+                    <Icon className="w-4.5 h-4.5 text-navy-700" strokeWidth={2.2} />
                   </div>
                   <div className="flex-1">
                     <p className="text-[15.5px] font-bold text-ink-900 leading-snug">
@@ -66,12 +66,12 @@ export function Management() {
 
           {/* Dashboard mockup */}
           <div className="relative">
-            <div className="absolute -inset-4 bg-gradient-to-br from-sage-100/60 to-amber-100/40 rounded-[28px] blur-2xl" />
+            <div className="absolute -inset-4 bg-gradient-to-br from-navy-100/60 to-amber-100/40 rounded-[28px] blur-2xl" />
             <div className="relative rounded-3xl bg-white border border-ink-100 shadow-[0_30px_80px_-30px_rgba(12,18,25,0.35)] overflow-hidden">
               {/* Top */}
               <div className="px-6 py-4 border-b border-ink-100 flex items-center justify-between bg-cream-50">
                 <p className="text-[13px] font-bold text-ink-900">대시보드</p>
-                <span className="rounded-full bg-sage-600 text-white text-[11px] font-semibold px-2.5 py-1">
+                <span className="rounded-full bg-navy-600 text-white text-[11px] font-semibold px-2.5 py-1">
                   자동 결제 ON
                 </span>
               </div>
@@ -103,7 +103,7 @@ export function Management() {
                       (h, i) => (
                         <div
                           key={i}
-                          className="flex-1 rounded-t-md bg-gradient-to-t from-sage-400 to-sage-600"
+                          className="flex-1 rounded-t-md bg-gradient-to-t from-navy-400 to-navy-600"
                           style={{ height: `${h}%` }}
                         />
                       ),
@@ -128,7 +128,7 @@ export function Management() {
                           {r.l}
                         </p>
                       </div>
-                      <p className="text-[13px] font-extrabold text-sage-700 tnum">
+                      <p className="text-[13px] font-extrabold text-navy-700 tnum">
                         {r.v}
                       </p>
                     </div>

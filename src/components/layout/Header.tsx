@@ -70,7 +70,7 @@ export function Header() {
                       className={cn(
                         "text-[13.5px] font-semibold transition-colors",
                         active
-                          ? "text-sage-700"
+                          ? "text-navy-700"
                           : "text-ink-700 hover:text-ink-900",
                       )}
                     >
@@ -94,7 +94,7 @@ export function Header() {
                       className={cn(
                         "text-[12.5px] transition-colors",
                         active
-                          ? "text-sage-700 font-semibold"
+                          ? "text-navy-700 font-semibold"
                           : "text-ink-500 hover:text-ink-900",
                       )}
                     >
@@ -119,7 +119,7 @@ export function Header() {
               <button
                 type="button"
                 onClick={openContract}
-                className="hidden sm:inline-flex rounded-full bg-sage-600 hover:bg-sage-700 text-white px-4 h-9 items-center text-[12.5px] font-semibold transition-colors"
+                className="hidden sm:inline-flex rounded-full bg-navy-600 hover:bg-navy-700 text-white px-4 h-9 items-center text-[12.5px] font-semibold transition-colors"
               >
                 빠른 계약
               </button>
@@ -196,7 +196,7 @@ export function Header() {
               <button
                 type="button"
                 onClick={openContractFromMobile}
-                className="mt-5 w-full h-12 rounded-2xl bg-sage-600 hover:bg-sage-700 text-white font-bold text-[14.5px] inline-flex items-center justify-center gap-2"
+                className="mt-5 w-full h-12 rounded-2xl bg-navy-600 hover:bg-navy-700 text-white font-bold text-[14.5px] inline-flex items-center justify-center gap-2"
               >
                 <Rocket className="w-4 h-4" strokeWidth={2} />
                 빠른 계약

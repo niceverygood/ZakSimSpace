@@ -2,24 +2,24 @@
 @import "pretendard/dist/web/variable/pretendardvariable.css";
 
 @theme {
-  /* === Brand: Sage Green (Cowork City inspired) === */
-  --color-sage-50: #f1f6f0;
-  --color-sage-100: #dfeadc;
-  --color-sage-200: #c2d6bd;
-  --color-sage-300: #9bbc94;
-  --color-sage-400: #74a06b;
-  --color-sage-500: #558450;
-  --color-sage-600: #43693f;
-  --color-sage-700: #355435;
-  --color-sage-800: #2a432c;
-  --color-sage-900: #1f3221;
-  --color-sage-950: #122014;
+  /* === Brand: Deep Navy (ZAKSIM primary) === */
+  --color-navy-50: #eef2f8;
+  --color-navy-100: #d8e0ed;
+  --color-navy-200: #b3c1d6;
+  --color-navy-300: #8499b9;
+  --color-navy-400: #56709a;
+  --color-navy-500: #34507f;
+  --color-navy-600: #233d68;
+  --color-navy-700: #1c3056;
+  --color-navy-800: #15243f;
+  --color-navy-900: #0e1a30;
+  --color-navy-950: #050d1d;
 
-  /* === Cream / Warm neutrals === */
-  --color-cream-50: #fbf9f3;
-  --color-cream-100: #f6f2e7;
-  --color-cream-200: #ece5cf;
-  --color-cream-300: #ddd3b1;
+  /* === Cream / Warm neutrals (background) === */
+  --color-cream-50: #fbf8f1;
+  --color-cream-100: #f4ede0;
+  --color-cream-200: #e6dac4;
+  --color-cream-300: #d4c4a4;
 
   /* === Ink (Deep cool gray for text) === */
   --color-ink-50: #f4f6f8;
@@ -33,20 +33,20 @@
   --color-ink-800: #161d27;
   --color-ink-900: #0c1219;
 
-  /* === Accent: Warm Amber (CTA highlight) === */
-  --color-amber-50: #fef7e6;
-  --color-amber-100: #fceac0;
-  --color-amber-200: #f9d57e;
-  --color-amber-300: #f5be43;
-  --color-amber-400: #efa820;
-  --color-amber-500: #d28c12;
+  /* === Accent: Warm Orange (ZAKSIM CTA) === */
+  --color-amber-50: #fdf3e3;
+  --color-amber-100: #fae0b8;
+  --color-amber-200: #f5c47a;
+  --color-amber-300: #efa845;
+  --color-amber-400: #e89b3c;
+  --color-amber-500: #c87e22;
 
   /* === Semantic === */
-  --color-background: #fbf9f3;
+  --color-background: #fbf8f1;
   --color-foreground: #161d27;
-  --color-muted: #f6f2e7;
+  --color-muted: #f4ede0;
   --color-muted-foreground: #6d7c8b;
-  --color-border: #ece5cf;
+  --color-border: #e6dac4;
 
   /* === Typography === */
   --font-sans:
@@ -91,7 +91,7 @@ body {
   outline: none;
 }
 :focus-visible {
-  outline: 2px solid var(--color-sage-600);
+  outline: 2px solid var(--color-navy-600);
   outline-offset: 2px;
   border-radius: 6px;
 }
