@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Rocket,
   X,
@@ -40,6 +41,7 @@ export function ContractModal({
   open: boolean;
   onClose: () => void;
 }) {
+  const router = useRouter();
   const [step, setStep] = useState<Step>("setup");
 
   // Step 1/2 — setup
@@ -273,8 +275,9 @@ export function ContractModal({
             <button
               type="button"
               onClick={() => {
-                alert(
-                  `결제 요청 ${formatKRW(total)} (${selectedBranch.name})\n[데모] 실제 결제는 연동 예정입니다.`,
+                onClose();
+                router.push(
+                  `/checkout/${selectedBranch.id}?cycle=${cycle}`,
                 );
               }}
               className="w-full h-14 rounded-2xl font-bold text-[15px] bg-navy-600 hover:bg-navy-700 text-white transition-colors"
