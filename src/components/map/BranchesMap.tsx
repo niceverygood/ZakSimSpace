@@ -93,8 +93,8 @@ export function BranchesMap({
   onSelect?: (id: string) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<KakaoMap | null>(null);
   const markersRef = useRef<Map<string, KakaoMarker>>(new Map());
+  const [map, setMap] = useState<KakaoMap | null>(null);
   const [sdkReady, setSdkReady] = useState(false);
   const [errored, setErrored] = useState(false);
   const [coords, setCoords] = useState<Record<string, Coord>>({});
@@ -139,18 +139,18 @@ export function BranchesMap({
 
   /** Initialize the map once SDK is ready. */
   useEffect(() => {
-    if (!sdkReady || !containerRef.current || mapRef.current) return;
+    if (!sdkReady || !containerRef.current || map) return;
     const kakao = window.kakao;
     if (!kakao) return;
     kakao.maps.load(() => {
       if (!containerRef.current) return;
-      const map = new kakao.maps.Map(containerRef.current, {
+      const m = new kakao.maps.Map(containerRef.current, {
         center: new kakao.maps.LatLng(36.5, 127.8),
         level: 13,
       });
-      mapRef.current = map;
+      setMap(m);
     });
-  }, [sdkReady]);
+  }, [sdkReady, map]);
 
   /** Geocode addresses progressively. Each lookup updates `coords` so the
    *  matching marker snaps from region-seeded position to real address. */
@@ -182,7 +182,6 @@ export function BranchesMap({
 
   /** Sync markers to the merged coord set (real geocoded → fallback to seed). */
   useEffect(() => {
-    const map = mapRef.current;
     const kakao = window.kakao;
     if (!map || !kakao) return;
 
@@ -219,18 +218,17 @@ export function BranchesMap({
         marker.setImage(img);
       }
     });
-  }, [branches, coords, seeded, selectedId, onSelect]);
+  }, [map, branches, coords, seeded, selectedId, onSelect]);
 
   /** Pan to selected branch. */
   useEffect(() => {
     if (!selectedId) return;
-    const map = mapRef.current;
     const kakao = window.kakao;
     if (!map || !kakao) return;
     const c = coords[selectedId] ?? seeded[selectedId];
     if (!c) return;
     map.panTo(new kakao.maps.LatLng(c.lat, c.lng));
-  }, [selectedId, coords, seeded]);
+  }, [map, selectedId, coords, seeded]);
 
   if (!KEY) {
     return <FallbackMap branches={branches} note="API 키 미설정" />;
