@@ -73,7 +73,7 @@ export function TestPaymentClient() {
   useEffect(() => {
     if (phase !== "popup-open" || !prepared) return;
     const form = document.getElementById(
-      "nicepay-test-form",
+      "nicepay-form",
     ) as HTMLFormElement | null;
     if (form && typeof window.goPay === "function") {
       window.goPay(form);
@@ -185,8 +185,8 @@ export function TestPaymentClient() {
 
       {prepared && (
         <form
-          id="nicepay-test-form"
-          name="nicepayTestForm"
+          id="nicepay-form"
+          name="nicepayForm"
           method="post"
           action="/payment/return"
           acceptCharset="euc-kr"
