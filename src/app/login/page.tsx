@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { LoginForm } from "./LoginForm";
 import { SocialButtons } from "@/components/auth/SocialButtons";
 
 export const metadata: Metadata = {
@@ -37,30 +36,13 @@ export default async function LoginPage({
                 {error}
               </div>
             )}
-            <LoginForm />
 
-            {/* Divider */}
-            <div className="my-6 flex items-center gap-3">
-              <span className="flex-1 h-px bg-cream-200" />
-              <span className="text-[11.5px] text-ink-400 font-semibold">
-                또는
-              </span>
-              <span className="flex-1 h-px bg-cream-200" />
-            </div>
-
-            {/* Social */}
-            <Suspense fallback={<div className="h-[110px]" />}>
+            <Suspense fallback={<div className="h-[52px]" />}>
               <SocialButtons />
             </Suspense>
 
-            <p className="mt-7 text-center text-[12.5px] text-ink-500">
-              아직 계정이 없으신가요?{" "}
-              <Link
-                href="/signup"
-                className="font-bold text-navy-700 hover:text-navy-800"
-              >
-                무료 회원가입
-              </Link>
+            <p className="mt-6 text-center text-[12px] text-ink-400">
+              카카오 계정으로 1초 만에 시작할 수 있어요.
             </p>
           </div>
 

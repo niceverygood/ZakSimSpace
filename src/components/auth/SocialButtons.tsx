@@ -37,24 +37,15 @@ export function SocialButtons() {
   };
 
   return (
-    <div className="space-y-2.5">
+    <div>
       <button
         type="button"
         onClick={signInWithKakao}
         disabled={loading !== null}
-        className="w-full h-12 rounded-2xl bg-[#FEE500] hover:brightness-95 disabled:opacity-60 text-[#191919] font-bold text-[14px] inline-flex items-center justify-center gap-2 transition-all"
+        className="w-full h-13 py-3.5 rounded-2xl bg-[#FEE500] hover:brightness-95 disabled:opacity-60 text-[#191919] font-bold text-[15px] inline-flex items-center justify-center gap-2 transition-all"
       >
         <KakaoBubble />
         {loading === "kakao" ? "이동 중…" : "카카오로 계속하기"}
-      </button>
-      <button
-        type="button"
-        disabled
-        title="준비 중"
-        className="w-full h-12 rounded-2xl bg-[#03C75A] opacity-50 cursor-not-allowed text-white font-bold text-[14px] inline-flex items-center justify-center gap-2"
-      >
-        <span className="font-black text-[15px]">N</span>
-        네이버로 계속하기 (준비 중)
       </button>
       {error && (
         <p className="mt-2 text-[12px] text-rose-600 text-center">{error}</p>
