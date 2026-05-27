@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 import { MapPin } from "lucide-react";
-import "@/types/kakao";
 
 const KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_KEY;
 
