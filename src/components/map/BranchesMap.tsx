@@ -77,10 +77,11 @@ type Coord = { lat: number; lng: number };
 
 /** Marker SVG (data URI) tinted navy or rose. Rendered once per color. */
 function markerDataUri(color: string, selected: boolean): string {
-  const ring = selected ? "<circle cx='18' cy='18' r='17' fill='none' stroke='%23fcd34d' stroke-width='3'/>" : "";
-  const scale = selected ? 1.12 : 1;
-  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${36 * scale}' height='${46 * scale}' viewBox='0 0 36 46'>${ring}<path d='M18 0C8.06 0 0 8.06 0 18c0 11.6 14.4 25.4 16.4 27.2a2.4 2.4 0 0 0 3.2 0C21.6 43.4 36 29.6 36 18 36 8.06 27.94 0 18 0z' fill='${encodeURIComponent(color)}'/><circle cx='18' cy='18' r='6' fill='white'/></svg>`;
-  return `data:image/svg+xml;utf-8,${svg}`;
+  const ring = selected
+    ? `<circle cx="18" cy="18" r="17" fill="none" stroke="#fcd34d" stroke-width="3"/>`
+    : "";
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="46" viewBox="0 0 36 46">${ring}<path d="M18 0C8.06 0 0 8.06 0 18c0 11.6 14.4 25.4 16.4 27.2a2.4 2.4 0 0 0 3.2 0C21.6 43.4 36 29.6 36 18 36 8.06 27.94 0 18 0z" fill="${color}"/><circle cx="18" cy="18" r="6" fill="white"/></svg>`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
 export function BranchesMap({
