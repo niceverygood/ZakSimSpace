@@ -1,19 +1,61 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ShoppingCart, Menu, X, Rocket } from "lucide-react";
 import { Logo } from "./Logo";
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { useContractModal } from "@/components/contract/ContractProvider";
+import { createClient } from "@/utils/supabase/client";
+
+/** Friendly display name pulled from Supabase user metadata. */
+function displayName(user: { user_metadata?: Record<string, unknown>; email?: string | null } | null) {
+  if (!user) return "";
+  const meta = user.user_metadata ?? {};
+  return (
+    (typeof meta.name === "string" && meta.name) ||
+    (typeof meta.nickname === "string" && meta.nickname) ||
+    (typeof meta.full_name === "string" && meta.full_name) ||
+    user.email ||
+    "회원"
+  );
+}
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState<{ user_metadata?: Record<string, unknown>; email?: string | null } | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
   const { open: openContract } = useContractModal();
+
+  /** Subscribe to Supabase auth state so the header reflects login changes. */
+  useEffect(() => {
+    let supabase;
+    try {
+      supabase = createClient();
+    } catch {
+      return; // Supabase env missing — degrade silently.
+    }
+    supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => {
+    try {
+      const supabase = createClient();
+      await supabase.auth.signOut();
+      setUser(null);
+      router.refresh();
+    } catch {
+      /* env missing — no-op */
+    }
+  };
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname?.startsWith(href);
 
@@ -90,12 +132,31 @@ export function Header() {
               >
                 <ShoppingCart className="w-[18px] h-[18px]" strokeWidth={1.8} />
               </Link>
-              <Link
-                href="/login"
-                className="hidden sm:inline-flex rounded-full px-4 h-9 items-center text-[12.5px] font-semibold text-ink-700 border border-ink-200 hover:border-ink-400 transition-all"
-              >
-                로그인
-              </Link>
+              {user ? (
+                <div className="hidden sm:inline-flex items-center gap-2">
+                  <Link
+                    href="/me"
+                    className="rounded-full px-4 h-9 inline-flex items-center text-[12.5px] font-semibold text-ink-700 border border-ink-200 hover:border-ink-400 transition-all max-w-[160px] truncate"
+                    title={displayName(user)}
+                  >
+                    {displayName(user)}
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleSignOut}
+                    className="text-[12px] text-ink-500 hover:text-ink-800 px-1"
+                  >
+                    로그아웃
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  className="hidden sm:inline-flex rounded-full px-4 h-9 items-center text-[12.5px] font-semibold text-ink-700 border border-ink-200 hover:border-ink-400 transition-all"
+                >
+                  로그인
+                </Link>
+              )}
               <button
                 type="button"
                 onClick={openContract}
@@ -147,13 +208,35 @@ export function Header() {
               </nav>
 
               <div className="mt-4 pt-4 border-t border-cream-200 grid grid-cols-2 gap-2 text-[13px]">
-                <Link
-                  href="/login"
-                  onClick={() => setMobileOpen(false)}
-                  className="py-2 text-ink-500"
-                >
-                  로그인
-                </Link>
+                {user ? (
+                  <>
+                    <Link
+                      href="/me"
+                      onClick={() => setMobileOpen(false)}
+                      className="py-2 text-ink-700 font-semibold truncate"
+                    >
+                      {displayName(user)}
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMobileOpen(false);
+                        handleSignOut();
+                      }}
+                      className="py-2 text-ink-500 text-left"
+                    >
+                      로그아웃
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="py-2 text-ink-500"
+                  >
+                    로그인
+                  </Link>
+                )}
                 <Link
                   href="/cart"
                   onClick={() => setMobileOpen(false)}
