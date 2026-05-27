@@ -3,34 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 import { MapPin } from "lucide-react";
-
-declare global {
-  interface Window {
-    kakao?: {
-      maps: {
-        load(cb: () => void): void;
-        Map: new (
-          el: HTMLElement,
-          opts: { center: KakaoLatLng; level: number },
-        ) => unknown;
-        LatLng: new (lat: number, lng: number) => KakaoLatLng;
-        Marker: new (opts: { position: KakaoLatLng }) => { setMap(m: unknown): void };
-        services?: {
-          Geocoder: new () => {
-            addressSearch(
-              q: string,
-              cb: (result: GeocodeResult[], status: string) => void,
-            ): void;
-          };
-          Status: { OK: string };
-        };
-      };
-    };
-  }
-}
-
-type KakaoLatLng = { __brand: "KakaoLatLng" };
-type GeocodeResult = { x: string; y: string };
+import "@/types/kakao";
 
 const KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_KEY;
 

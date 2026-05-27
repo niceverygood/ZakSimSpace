@@ -3,60 +3,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MapPin } from "lucide-react";
 import type { Branch } from "@/lib/contract-data";
-
-declare global {
-  interface Window {
-    kakao?: KakaoNamespace;
-  }
-}
-
-type KakaoLatLng = { __brand: "KakaoLatLng"; getLat(): number; getLng(): number };
-type KakaoMarkerImage = { __brand: "KakaoMarkerImage" };
-type KakaoMap = {
-  __brand: "KakaoMap";
-  setCenter(latlng: KakaoLatLng): void;
-  setLevel(level: number, opts?: { animate?: boolean }): void;
-  getLevel(): number;
-  panTo(latlng: KakaoLatLng): void;
-};
-type KakaoMarker = {
-  setMap(m: KakaoMap | null): void;
-  setImage(img: KakaoMarkerImage): void;
-  getPosition(): KakaoLatLng;
-};
-type KakaoSize = { __brand: "KakaoSize" };
-type KakaoPoint = { __brand: "KakaoPoint" };
-type KakaoNamespace = {
-  maps: {
-    load(cb: () => void): void;
-    Map: new (el: HTMLElement, opts: { center: KakaoLatLng; level: number }) => KakaoMap;
-    LatLng: new (lat: number, lng: number) => KakaoLatLng;
-    Marker: new (opts: {
-      position: KakaoLatLng;
-      image?: KakaoMarkerImage;
-      clickable?: boolean;
-    }) => KakaoMarker;
-    MarkerImage: new (
-      src: string,
-      size: KakaoSize,
-      opts?: { offset?: KakaoPoint },
-    ) => KakaoMarkerImage;
-    Size: new (w: number, h: number) => KakaoSize;
-    Point: new (x: number, y: number) => KakaoPoint;
-    event: {
-      addListener(target: KakaoMarker | KakaoMap, type: string, cb: () => void): void;
-    };
-    services?: {
-      Geocoder: new () => {
-        addressSearch(
-          q: string,
-          cb: (result: { x: string; y: string }[], status: string) => void,
-        ): void;
-      };
-      Status: { OK: string };
-    };
-  };
-};
+import type {
+  KakaoLatLng,
+  KakaoMap,
+  KakaoMarker,
+} from "@/types/kakao";
 
 const KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_KEY;
 
