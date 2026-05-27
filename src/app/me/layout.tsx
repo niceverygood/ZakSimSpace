@@ -1,10 +1,35 @@
 import type { ReactNode } from "react";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MyPageSidebar } from "./MyPageSidebar";
-import { currentUser } from "@/lib/mypage-data";
+import { createClient, isSupabaseConfigured } from "@/utils/supabase/server";
 
-export default function MyPageLayout({ children }: { children: ReactNode }) {
+export default async function MyPageLayout({ children }: { children: ReactNode }) {
+  // Auth gate. If Supabase env isn't configured (dev only), let through —
+  // there's no real session to check anyway.
+  let displayName = "회원";
+  let subtitle: string | null = null;
+  if (isSupabaseConfigured()) {
+    const supabase = createClient(await cookies());
+    const { data, error } = await supabase.auth.getUser();
+    if (error || !data.user) {
+      redirect("/login?next=/me");
+    }
+    const meta = (data.user.user_metadata ?? {}) as Record<string, unknown>;
+    displayName =
+      (typeof meta.name === "string" && meta.name) ||
+      (typeof meta.nickname === "string" && meta.nickname) ||
+      (typeof meta.full_name === "string" && meta.full_name) ||
+      data.user.email ||
+      "회원";
+    const joinedAt = data.user.created_at
+      ? new Date(data.user.created_at).toISOString().slice(0, 10)
+      : null;
+    subtitle = joinedAt ? `가입일 ${joinedAt}` : null;
+  }
+
   return (
     <>
       <Header />
@@ -15,11 +40,11 @@ export default function MyPageLayout({ children }: { children: ReactNode }) {
               My Page
             </p>
             <h1 className="text-[26px] lg:text-[32px] font-extrabold text-ink-900 leading-tight">
-              {currentUser.name} 대표님, 환영합니다
+              {displayName} 님, 환영합니다
             </h1>
-            <p className="mt-2 text-[13.5px] text-ink-500">
-              {currentUser.company} · 가입일 {currentUser.joinedAt}
-            </p>
+            {subtitle && (
+              <p className="mt-2 text-[13.5px] text-ink-500">{subtitle}</p>
+            )}
           </header>
 
           <div className="grid lg:grid-cols-[220px_1fr] gap-6 lg:gap-10 items-start">
