@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { LoginForm } from "./LoginForm";
+import { SocialButtons } from "@/components/auth/SocialButtons";
 
 export const metadata: Metadata = {
   title: "로그인",
   description: "작심스페이스 마이페이지에 로그인하세요.",
 };
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const { error } = await searchParams;
   return (
     <>
       <Header />
@@ -25,6 +32,11 @@ export default function LoginPage() {
           </div>
 
           <div className="rounded-3xl bg-white border border-cream-200 p-7 lg:p-8 shadow-[0_18px_50px_-30px_rgba(12,18,25,0.25)]">
+            {error && (
+              <div className="mb-5 rounded-2xl bg-rose-50 border border-rose-200 px-4 py-3 text-[13px] text-rose-700">
+                {error}
+              </div>
+            )}
             <LoginForm />
 
             {/* Divider */}
@@ -37,22 +49,9 @@ export default function LoginPage() {
             </div>
 
             {/* Social */}
-            <div className="space-y-2.5">
-              <button
-                type="button"
-                className="w-full h-12 rounded-2xl bg-[#FEE500] hover:brightness-95 text-[#191919] font-bold text-[14px] inline-flex items-center justify-center gap-2 transition-all"
-              >
-                <KakaoBubble />
-                카카오로 계속하기
-              </button>
-              <button
-                type="button"
-                className="w-full h-12 rounded-2xl bg-[#03C75A] hover:brightness-95 text-white font-bold text-[14px] inline-flex items-center justify-center gap-2 transition-all"
-              >
-                <span className="font-black text-[15px]">N</span>
-                네이버로 계속하기
-              </button>
-            </div>
+            <Suspense fallback={<div className="h-[110px]" />}>
+              <SocialButtons />
+            </Suspense>
 
             <p className="mt-7 text-center text-[12.5px] text-ink-500">
               아직 계정이 없으신가요?{" "}
@@ -83,16 +82,3 @@ export default function LoginPage() {
   );
 }
 
-function KakaoBubble() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden
-    >
-      <path d="M12 3C6.48 3 2 6.58 2 11c0 2.86 1.86 5.36 4.66 6.78L5.5 21.5c-.07.2.16.37.34.26L10 19.4c.66.08 1.33.13 2 .13 5.52 0 10-3.58 10-8s-4.48-9-10-9z" />
-    </svg>
-  );
-}
