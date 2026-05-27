@@ -1,5 +1,6 @@
-import { adminTickets } from "@/lib/admin-data";
+import { adminTickets, channelLabels } from "@/lib/admin-data";
 import { AdminTable } from "../AdminTable";
+import { Phone, MessageSquare, MessageCircle, Mail, MoreHorizontal } from "lucide-react";
 
 export default function AdminSupportPage() {
   const rows = adminTickets.map((t) => ({
@@ -7,6 +8,7 @@ export default function AdminSupportPage() {
     cells: [
       <span key="id" className="text-[12px] text-ink-400 tnum">{t.id}</span>,
       <span key="o" className="tnum text-ink-300">{t.openedAt}</span>,
+      <Channel key="ch" c={t.channel} />,
       <span key="m" className="font-bold text-white">{t.member}</span>,
       <span key="s" className="text-ink-200">{t.subject}</span>,
       <Priority key="p" p={t.priority} />,
@@ -17,13 +19,33 @@ export default function AdminSupportPage() {
     <div className="space-y-6">
       <header>
         <h1 className="text-[22px] lg:text-[26px] font-extrabold text-white">고객 문의</h1>
-        <p className="text-[13px] text-ink-400 mt-1">총 {adminTickets.length}건 · 최근 접수순</p>
+        <p className="text-[13px] text-ink-400 mt-1">총 {adminTickets.length}건 · 채널별 구분 · 긴급 우선 정렬</p>
       </header>
       <AdminTable
-        headers={["ID", "접수", "회원", "제목", "우선순위", "상태"]}
+        headers={["ID", "접수", "채널", "회원", "제목", "우선순위", "상태"]}
         rows={rows}
       />
     </div>
+  );
+}
+
+function Channel({ c }: { c: "phone" | "sms" | "kakao" | "email" | "etc" }) {
+  const map = {
+    phone: { Icon: Phone, cls: "bg-blue-500/20 text-blue-300 border-blue-500/40" },
+    sms: { Icon: MessageSquare, cls: "bg-amber-500/20 text-amber-300 border-amber-500/40" },
+    kakao: { Icon: MessageCircle, cls: "bg-yellow-500/20 text-yellow-300 border-yellow-500/40" },
+    email: { Icon: Mail, cls: "bg-violet-500/20 text-violet-300 border-violet-500/40" },
+    etc: { Icon: MoreHorizontal, cls: "bg-ink-700 text-ink-400 border-ink-700" },
+  } as const;
+  const m = map[c];
+  const Icon = m.Icon;
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10.5px] font-bold ${m.cls}`}
+    >
+      <Icon className="w-3 h-3" strokeWidth={2.2} />
+      {channelLabels[c]}
+    </span>
   );
 }
 

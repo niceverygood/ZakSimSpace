@@ -10,6 +10,9 @@ export default function AdminPaymentsPage() {
       <span key="d" className="tnum text-ink-300">{p.date}</span>,
       <span key="m" className="font-bold text-white">{p.member}</span>,
       p.branch,
+      <span key="months" className="inline-flex items-center rounded-full bg-navy-600/20 border border-navy-600/40 text-navy-300 px-2 py-0.5 text-[11px] font-bold tnum">
+        {p.months}개월
+      </span>,
       <span key="a" className="tnum font-extrabold text-white">{formatKRW(p.amount)}</span>,
       p.method,
       <Status key="s" status={p.status} />,
@@ -27,7 +30,7 @@ export default function AdminPaymentsPage() {
         </div>
       </header>
       <AdminTable
-        headers={["ID", "일자", "회원", "지점", "금액", "결제 수단", "상태"]}
+        headers={["ID", "일자", "회원", "지점", "계약 개월수", "금액", "결제 수단", "상태"]}
         rows={rows}
       />
     </div>

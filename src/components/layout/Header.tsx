@@ -83,26 +83,6 @@ export function Header() {
 
             {/* Right */}
             <div className="flex items-center gap-4">
-              <nav aria-label="보조 메뉴" className="hidden md:flex items-center gap-4">
-                {siteConfig.subNav.map((item) => {
-                  const active = isActive(item.href);
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      aria-current={active ? "page" : undefined}
-                      className={cn(
-                        "text-[12.5px] transition-colors",
-                        active
-                          ? "text-navy-700 font-semibold"
-                          : "text-ink-500 hover:text-ink-900",
-                      )}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                })}
-              </nav>
               <Link
                 href="/cart"
                 aria-label="장바구니"
@@ -167,16 +147,6 @@ export function Header() {
               </nav>
 
               <div className="mt-4 pt-4 border-t border-cream-200 grid grid-cols-2 gap-2 text-[13px]">
-                {siteConfig.subNav.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="py-2 text-ink-500"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
                 <Link
                   href="/login"
                   onClick={() => setMobileOpen(false)}

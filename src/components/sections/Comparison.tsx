@@ -1,12 +1,18 @@
 import { Check, X } from "lucide-react";
 
 const rows = [
+  { label: "24시간 즉시 계약", us: true, others: false },
+  { label: "계약 및 우편물 확인 페이지 제공", us: true, others: false },
+  { label: "자동 연장 결제 (카드 등록 결제 시)", us: true, others: false },
+  { label: "우편물 알림톡 실시간 안내", us: true, others: false },
+  { label: "우편물 전체 스캔", us: true, others: false },
+  { label: "전자 간편 계약서", us: true, others: false },
+  { label: "간편 사업자 신청", us: true, others: false },
+  { label: "폐업 시 대응", us: true, others: false },
   { label: "보증금 없음", us: true, others: false },
   { label: "월 정액 한 가지 (관리비 0원)", us: true, others: false },
-  { label: "임대차계약서 즉시 발급", us: true, others: false },
   { label: "전국 지점 자유 이전", us: true, others: false },
   { label: "통신판매·식품 인허가 지원", us: true, others: "일부" },
-  { label: "우편물 알림톡 실시간 안내", us: true, others: false },
   { label: "사업자등록 반려 시 무료 재신청", us: true, others: false },
 ];
 

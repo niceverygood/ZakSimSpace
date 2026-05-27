@@ -69,16 +69,17 @@ export type AdminPayment = {
   member: string;
   branch: string;
   amount: number;
+  months: 1 | 6 | 12 | 24;
   method: string;
   status: "settled" | "refunded" | "failed";
 };
 
 export const adminPayments: AdminPayment[] = [
-  { id: "P-26-0514-22", date: "2026-05-14", member: "한승수", branch: "서울 강서구", amount: 24000, method: "신한카드", status: "settled" },
-  { id: "P-26-0514-21", date: "2026-05-14", member: "박세영", branch: "서울 신촌", amount: 240000, method: "토스페이먼츠", status: "settled" },
-  { id: "P-26-0512-08", date: "2026-05-12", member: "이수민", branch: "화성 반송", amount: 24000, method: "현대카드", status: "settled" },
-  { id: "P-26-0510-03", date: "2026-05-10", member: "정지원", branch: "서울 구로구", amount: 24000, method: "신한카드", status: "failed" },
-  { id: "P-26-0508-11", date: "2026-05-08", member: "한승수", branch: "강원 원주", amount: 240000, method: "토스페이먼츠", status: "settled" },
+  { id: "P-26-0514-22", date: "2026-05-14", member: "한승수", branch: "서울 강서구", amount: 24000, months: 1, method: "신한카드", status: "settled" },
+  { id: "P-26-0514-21", date: "2026-05-14", member: "박세영", branch: "서울 신촌", amount: 240000, months: 12, method: "토스페이먼츠", status: "settled" },
+  { id: "P-26-0512-08", date: "2026-05-12", member: "이수민", branch: "화성 반송", amount: 132000, months: 6, method: "현대카드", status: "settled" },
+  { id: "P-26-0510-03", date: "2026-05-10", member: "정지원", branch: "서울 구로구", amount: 24000, months: 1, method: "신한카드", status: "failed" },
+  { id: "P-26-0508-11", date: "2026-05-08", member: "한승수", branch: "강원 원주", amount: 240000, months: 12, method: "토스페이먼츠", status: "settled" },
 ];
 
 export type AdminTicket = {
@@ -86,13 +87,22 @@ export type AdminTicket = {
   openedAt: string;
   member: string;
   subject: string;
+  channel: "phone" | "sms" | "kakao" | "email" | "etc";
   priority: "high" | "normal" | "low";
   status: "open" | "in-progress" | "resolved";
 };
 
+export const channelLabels: Record<AdminTicket["channel"], string> = {
+  phone: "전화",
+  sms: "문자",
+  kakao: "카카오톡",
+  email: "이메일",
+  etc: "기타",
+};
+
 export const adminTickets: AdminTicket[] = [
-  { id: "T-2603", openedAt: "2026-05-24 09:11", member: "박세영", subject: "사업자등록 반려, 재신청 도움 요청", priority: "high", status: "in-progress" },
-  { id: "T-2602", openedAt: "2026-05-23 17:32", member: "김도윤", subject: "우편물 표지 스캔이 안 보입니다", priority: "normal", status: "open" },
-  { id: "T-2601", openedAt: "2026-05-23 14:08", member: "이수민", subject: "지점 이전 신청 절차 안내 요청", priority: "normal", status: "open" },
-  { id: "T-2600", openedAt: "2026-05-22 10:44", member: "한승수", subject: "세금계산서 사업자번호 변경 요청", priority: "low", status: "resolved" },
+  { id: "T-2603", openedAt: "2026-05-24 09:11", member: "박세영", subject: "사업자등록 반려, 재신청 도움 요청", channel: "phone", priority: "high", status: "in-progress" },
+  { id: "T-2602", openedAt: "2026-05-23 17:32", member: "김도윤", subject: "우편물 표지 스캔이 안 보입니다", channel: "kakao", priority: "normal", status: "open" },
+  { id: "T-2601", openedAt: "2026-05-23 14:08", member: "이수민", subject: "지점 이전 신청 절차 안내 요청", channel: "sms", priority: "normal", status: "open" },
+  { id: "T-2600", openedAt: "2026-05-22 10:44", member: "한승수", subject: "세금계산서 사업자번호 변경 요청", channel: "email", priority: "low", status: "resolved" },
 ];

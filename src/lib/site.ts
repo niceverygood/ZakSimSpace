@@ -7,16 +7,14 @@ export const siteConfig = {
   url: "https://zaksimspace.com",
   customerCenter: "1833-0000",
   nav: [
-    { label: "전국 지점", href: "/locations" },
+    { label: "지점 검색", href: "/locations" },
+    { label: "계약진행", href: "/contract" },
     { label: "오피스 가격", href: "/pricing" },
-    { label: "업종 신청 사례", href: "/cases" },
-    { label: "작심스토리", href: "/stories" },
-    { label: "채용", href: "/careers" },
+    { label: "업종 신청 사례", href: "/industries" },
+    { label: "뉴스 / 블로그", href: "/blog" },
+    { label: "FAQ", href: "/faq" },
   ],
-  subNav: [
-    { label: "패밀리 센터", href: "/family" },
-    { label: "파트너스 센터", href: "/partners" },
-  ],
+  subNav: [],
 };
 
 export type SiteConfig = typeof siteConfig;

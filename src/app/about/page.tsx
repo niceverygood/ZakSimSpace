@@ -174,10 +174,10 @@ export default function AboutPage() {
                   <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                 </ContractTrigger>
                 <Link
-                  href="/careers"
+                  href="/contact"
                   className="inline-flex items-center rounded-full border border-white/25 hover:border-white/60 text-white font-semibold px-6 h-12 text-[13.5px] transition-colors"
                 >
-                  채용 보기
+                  제휴 문의
                 </Link>
               </div>
             </div>

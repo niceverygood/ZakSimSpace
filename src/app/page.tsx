@@ -1,15 +1,12 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
-import { TrustBanner } from "@/components/sections/TrustBanner";
-import { Stories } from "@/components/sections/Stories";
 import { Features } from "@/components/sections/Features";
-import { Certifications } from "@/components/sections/Certifications";
 import { Process } from "@/components/sections/Process";
 import { PostRegistration } from "@/components/sections/PostRegistration";
 import { Comparison } from "@/components/sections/Comparison";
 import { Management } from "@/components/sections/Management";
-import { PartnerBenefits } from "@/components/sections/PartnerBenefits";
+import { BlogPreview } from "@/components/sections/BlogPreview";
 import { FAQ } from "@/components/sections/FAQ";
 import { siteConfig } from "@/lib/site";
 
@@ -35,15 +32,12 @@ export default function HomePage() {
       <Header />
       <main id="main" className="flex-1">
         <Hero />
-        <TrustBanner />
-        <Stories />
         <Features />
-        <Certifications />
         <Process />
         <PostRegistration />
         <Comparison />
         <Management />
-        <PartnerBenefits />
+        <BlogPreview />
         <FAQ />
       </main>
       <Footer />

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { MapPin, Search, ChevronDown, ArrowRight } from "lucide-react";
+import { MapPin, Search, ChevronDown } from "lucide-react";
 import {
   branches,
   regions,
@@ -11,6 +11,7 @@ import {
   type Branch,
 } from "@/lib/contract-data";
 import { FavoriteButton } from "@/components/favorites/FavoriteButton";
+import { BranchesMap } from "@/components/map/BranchesMap";
 import { cn } from "@/lib/utils";
 
 type Cycle = "yearly" | "monthly";
@@ -19,10 +20,11 @@ type Congestion = "all" | "congested" | "not-congested";
 export function LocationsBrowser() {
   const [query, setQuery] = useState("");
   const [region, setRegion] = useState<(typeof regions)[number]>("전체");
-  const [cycle, setCycle] = useState<Cycle>("yearly");
+  const [cycle, setCycle] = useState<Cycle>("monthly");
   const [congestion, setCongestion] = useState<Congestion>("all");
   const [buildingType, setBuildingType] = useState<string>("all");
   const [licenseOnly, setLicenseOnly] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
     const q = query.trim();
@@ -41,7 +43,7 @@ export function LocationsBrowser() {
     <section className="bg-cream-50 py-12 lg:py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Filter bar */}
-        <div className="rounded-3xl border border-cream-200 bg-white p-5 lg:p-6 shadow-[0_12px_40px_-30px_rgba(12,18,25,0.18)]">
+        <div className="rounded-3xl border border-cream-200 bg-white p-5 lg:p-6 shadow-[0_12px_40px_-30px_rgba(12,18,25,0.18)] mb-6">
           {/* Search row */}
           <div className="relative mb-4">
             <Search
@@ -72,8 +74,8 @@ export function LocationsBrowser() {
               <div className="grid grid-cols-2 h-11 rounded-xl border border-ink-200 overflow-hidden">
                 {(
                   [
-                    { v: "yearly" as const, l: "연간" },
                     { v: "monthly" as const, l: "월간" },
+                    { v: "yearly" as const, l: "연간" },
                   ]
                 ).map((o) => (
                   <button
@@ -162,75 +164,96 @@ export function LocationsBrowser() {
           </div>
         </div>
 
-        {/* Results grid */}
-        <div className="mt-8">
-          {filtered.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-ink-200 bg-white px-6 py-20 text-center">
-              <p className="text-[15px] text-ink-500">
-                조건에 맞는 지점이 없어요. 필터를 조정해 주세요.
+        {/* 2-col list + map — 고정 폭 list (왼) + 넓은 지도 (오) */}
+        <div className="grid lg:grid-cols-[400px_1fr] gap-5 h-[680px]">
+          {/* List */}
+          <aside className="rounded-3xl border border-cream-200 bg-white overflow-hidden flex flex-col h-full">
+            <div className="px-5 py-4 border-b border-cream-200 bg-cream-50 flex-shrink-0">
+              <p className="text-[13px] font-bold text-ink-800 tnum">
+                {filtered.length}개 지점
               </p>
             </div>
-          ) : (
-            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filtered.map((b) => (
-                <li key={b.id}>
-                  <BranchCard branch={b} cycle={cycle} />
+            <ul className="flex-1 overflow-y-auto divide-y divide-cream-200">
+              {filtered.length === 0 ? (
+                <li className="px-6 py-12 text-center text-[13px] text-ink-500">
+                  조건에 맞는 지점이 없어요.
                 </li>
-              ))}
+              ) : (
+                filtered.map((b) => (
+                  <li key={b.id}>
+                    <BranchListItem
+                      branch={b}
+                      cycle={cycle}
+                      selected={selectedId === b.id}
+                      onClick={() => setSelectedId(b.id)}
+                    />
+                  </li>
+                ))
+              )}
             </ul>
-          )}
+          </aside>
+
+          {/* Map — fills column */}
+          <div className="h-full min-h-[480px]">
+            <BranchesMap
+              branches={filtered}
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+            />
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function BranchCard({ branch, cycle }: { branch: Branch; cycle: Cycle }) {
+function BranchListItem({
+  branch,
+  cycle,
+  selected,
+  onClick,
+}: {
+  branch: Branch;
+  cycle: Cycle;
+  selected: boolean;
+  onClick: () => void;
+}) {
   const price = cycle === "yearly" ? branch.yearlyPrice : branch.monthlyPrice;
   return (
-    <Link
-      href={`/locations/${branch.id}`}
-      className="group block rounded-2xl bg-white border border-ink-100 p-5 hover:border-navy-300 hover:-translate-y-0.5 transition-all duration-300 relative"
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+      className={cn(
+        "px-5 py-4 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-500",
+        selected ? "bg-navy-50" : "hover:bg-cream-50",
+      )}
     >
-      {/* Favorite */}
-      <div className="absolute top-7 right-7 z-10">
+      <div className="flex items-start justify-between gap-3">
+        <Link
+          href={`/locations/${branch.id}`}
+          className="flex-1 min-w-0"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <p className="text-[15px] font-bold text-ink-900 hover:text-navy-700">
+            {branch.name}
+          </p>
+          <p className="text-[12px] text-ink-500 mt-1.5">{branch.address}</p>
+        </Link>
         <FavoriteButton
           branchId={branch.id}
           branchName={branch.name}
           size="sm"
         />
       </div>
-      {/* Image placeholder */}
-      <div className="aspect-[16/9] rounded-xl bg-gradient-to-br from-navy-200 to-navy-400 mb-4 relative overflow-hidden">
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-[0.12] [background-image:linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] [background-size:24px_24px]"
-        />
-        <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur px-2.5 py-1">
-          <MapPin
-            className="w-3 h-3 text-navy-700"
-            strokeWidth={2.5}
-          />
-          <span className="text-[10.5px] font-bold text-ink-800">
-            {branch.region}
-          </span>
-        </div>
-      </div>
 
-      <div className="flex items-start justify-between gap-3">
-        <p className="text-[15.5px] font-bold text-ink-900 leading-snug group-hover:text-navy-700 transition-colors">
-          {branch.name}
-        </p>
-        <ArrowRight
-          className="w-4 h-4 text-ink-300 group-hover:text-navy-700 group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-0.5"
-          strokeWidth={2}
-        />
-      </div>
-      <p className="text-[12.5px] text-ink-500 mt-2 leading-snug">
-        {branch.address}
-      </p>
-
-      <div className="flex items-center gap-1.5 mt-3">
+      <div className="flex items-center gap-1.5 mt-3 flex-wrap">
         <Tag tone={branch.congested ? "warm" : "green"}>
           {branch.congested ? "과밀" : "비과밀"}
         </Tag>
@@ -238,18 +261,18 @@ function BranchCard({ branch, cycle }: { branch: Branch; cycle: Cycle }) {
         {branch.supportsLicense && <Tag tone="violet">인허가</Tag>}
       </div>
 
-      <div className="mt-4 pt-4 border-t border-cream-200 flex items-baseline justify-between">
-        <span className="text-[12px] text-ink-400">
-          {cycle === "yearly" ? "연간 이용료" : "월 이용료"}
+      <div className="mt-3 flex items-baseline justify-between">
+        <span className="text-[11.5px] text-ink-400">
+          {cycle === "yearly" ? "연간" : "월"} 이용료
         </span>
-        <p className="text-[16px] font-extrabold text-ink-900 tnum">
+        <p className="text-[16px] font-extrabold text-amber-500 tnum">
           {formatKRW(price)}
-          <span className="text-[11.5px] font-semibold text-ink-400 ml-0.5">
+          <span className="text-[11px] font-semibold text-ink-400 ml-0.5">
             /{cycle === "yearly" ? "연" : "월"}
           </span>
         </p>
       </div>
-    </Link>
+    </div>
   );
 }
 
@@ -301,7 +324,7 @@ function Tag({
     tone === "green"
       ? "bg-navy-50 text-navy-700 border-navy-200"
       : tone === "warm"
-        ? "bg-cream-100 text-ink-500 border-cream-200"
+        ? "bg-rose-50 text-rose-600 border-rose-200"
         : tone === "blue"
           ? "bg-blue-50 text-blue-600 border-blue-100"
           : "bg-violet-50 text-violet-600 border-violet-100";

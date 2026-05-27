@@ -73,7 +73,7 @@ export function SearchBrowser() {
             title: c.industry,
             sub: c.description,
             meta: `${c.shortLabel} · 누적 ${c.count}`,
-            href: `/cases`,
+            href: `/industries`,
           });
         }
       });
