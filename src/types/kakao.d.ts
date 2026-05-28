@@ -34,6 +34,12 @@ export type KakaoMarker = {
   getPosition(): KakaoLatLng;
 };
 
+export type KakaoCustomOverlay = {
+  setMap(m: KakaoMap | null): void;
+  setPosition(latlng: KakaoLatLng): void;
+  getMap(): KakaoMap | null;
+};
+
 export type KakaoSize = { __brand: "KakaoSize" };
 export type KakaoPoint = { __brand: "KakaoPoint" };
 
@@ -57,6 +63,14 @@ export type KakaoNamespace = {
     ) => KakaoMarkerImage;
     Size: new (w: number, h: number) => KakaoSize;
     Point: new (x: number, y: number) => KakaoPoint;
+    CustomOverlay: new (opts: {
+      position: KakaoLatLng;
+      content: string | HTMLElement;
+      yAnchor?: number;
+      xAnchor?: number;
+      zIndex?: number;
+      clickable?: boolean;
+    }) => KakaoCustomOverlay;
     event: {
       addListener(
         target: KakaoMarker | KakaoMap,

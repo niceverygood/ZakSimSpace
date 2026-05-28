@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { MapPin } from "lucide-react";
 import type { Branch } from "@/lib/contract-data";
+import { formatKRW } from "@/lib/contract-data";
 import type {
+  KakaoCustomOverlay,
   KakaoLatLng,
   KakaoMap,
   KakaoMarker,
@@ -26,6 +29,16 @@ const regionCenter: Record<string, { lat: number; lng: number }> = {
 
 type Coord = { lat: number; lng: number };
 
+/** Minimal HTML escape so branch text injected into the overlay can't break out. */
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 /** Marker SVG (data URI) tinted navy or rose. Rendered once per color. */
 function markerDataUri(color: string, selected: boolean): string {
   const ring = selected
@@ -39,13 +52,17 @@ export function BranchesMap({
   branches,
   selectedId,
   onSelect,
+  cycle = "yearly",
 }: {
   branches: Branch[];
   selectedId?: string | null;
-  onSelect?: (id: string) => void;
+  onSelect?: (id: string | null) => void;
+  cycle?: "yearly" | "monthly";
 }) {
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const markersRef = useRef<Map<string, KakaoMarker>>(new Map());
+  const overlayRef = useRef<KakaoCustomOverlay | null>(null);
   const [map, setMap] = useState<KakaoMap | null>(null);
   const [sdkReady, setSdkReady] = useState(false);
   const [errored, setErrored] = useState(false);
@@ -172,15 +189,100 @@ export function BranchesMap({
     });
   }, [map, branches, coords, seeded, selectedId, onSelect]);
 
-  /** Pan to selected branch. */
+  /** Pan to + show card overlay for the selected branch. */
   useEffect(() => {
-    if (!selectedId) return;
     const kakao = window.kakao;
     if (!map || !kakao) return;
+
+    // Always clear any previous overlay first.
+    if (overlayRef.current) {
+      overlayRef.current.setMap(null);
+      overlayRef.current = null;
+    }
+
+    if (!selectedId) return;
+    const branch = branches.find((b) => b.id === selectedId);
     const c = coords[selectedId] ?? seeded[selectedId];
-    if (!c) return;
+    if (!branch || !c) return;
+
     map.panTo(new kakao.maps.LatLng(c.lat, c.lng));
-  }, [map, selectedId, coords, seeded]);
+
+    // Build the card DOM. Using a real DOM element lets us attach React-style
+    // handlers (navigation, close) without HTML string parsing.
+    const card = document.createElement("div");
+    const price =
+      cycle === "yearly" ? branch.yearlyPrice : branch.monthlyPrice;
+    const cycleLabel = cycle === "yearly" ? "연" : "월";
+
+    card.innerHTML = `
+      <div class="bmap-card" style="
+        position: relative;
+        width: 280px;
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 12px 32px -8px rgba(12,18,25,0.25);
+        border: 1px solid #e7e1d3;
+        padding: 14px 16px 14px;
+        font-family: inherit;
+      ">
+        <button type="button" data-bmap-close style="
+          position:absolute; top:8px; right:8px;
+          width:24px; height:24px; border-radius:9999px;
+          border:0; background:transparent; cursor:pointer;
+          color:#5b6471; font-size:18px; line-height:1;
+        " aria-label="닫기">×</button>
+        <div style="display:flex; gap:6px; margin-bottom:6px;">
+          <span style="
+            font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:9999px;
+            background:${branch.congested ? "rgba(244,63,94,0.12)" : "rgba(16,185,129,0.12)"};
+            color:${branch.congested ? "#be123c" : "#047857"};
+          ">${branch.congested ? "과밀" : "비과밀"}</span>
+          ${branch.supportsLicense ? `<span style="font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:9999px; background:rgba(139,92,246,0.12); color:#6d28d9;">인허가</span>` : ""}
+        </div>
+        <p style="font-size:14.5px; font-weight:800; color:#0c1219; margin:0 0 4px;">
+          ${escapeHtml(branch.name)}
+        </p>
+        <p style="font-size:11.5px; color:#5b6471; margin:0 0 12px; line-height:1.45;">
+          ${escapeHtml(branch.address)}
+        </p>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px;">
+          <span style="font-size:11px; color:#9ca3af;">${cycleLabel}간 이용료</span>
+          <span style="font-size:15px; font-weight:800; color:#f59e0b;">
+            ${formatKRW(price)}
+            <span style="font-size:10px; color:#9ca3af; margin-left:2px;">/${cycleLabel}</span>
+          </span>
+        </div>
+        <button type="button" data-bmap-checkout style="
+          width:100%; height:40px; border-radius:10px; border:0;
+          background:#233d68; color:#fff; font-weight:800; font-size:13px;
+          cursor:pointer; transition:background-color 120ms;
+        ">계약하기</button>
+      </div>
+    `;
+
+    const closeBtn = card.querySelector<HTMLButtonElement>("[data-bmap-close]");
+    const checkoutBtn = card.querySelector<HTMLButtonElement>(
+      "[data-bmap-checkout]",
+    );
+    closeBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      onSelect?.(null);
+    });
+    checkoutBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      router.push(`/locations/${branch.id}`);
+    });
+
+    const overlay = new kakao.maps.CustomOverlay({
+      position: new kakao.maps.LatLng(c.lat, c.lng),
+      content: card,
+      yAnchor: 1.15,
+      xAnchor: 0.5,
+      zIndex: 50,
+    });
+    overlay.setMap(map);
+    overlayRef.current = overlay;
+  }, [map, selectedId, branches, coords, seeded, cycle, onSelect, router]);
 
   if (!KEY) {
     return <FallbackMap branches={branches} note="API 키 미설정" />;

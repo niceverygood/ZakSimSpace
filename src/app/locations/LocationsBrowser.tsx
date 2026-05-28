@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { MapPin, Search, ChevronDown } from "lucide-react";
 import {
   branches,
@@ -164,8 +163,8 @@ export function LocationsBrowser() {
           </div>
         </div>
 
-        {/* 2-col list + map — 고정 폭 list (왼) + 넓은 지도 (오) */}
-        <div className="grid lg:grid-cols-[400px_1fr] gap-5 h-[680px]">
+        {/* 2-col list + map — 좁은 list (왼) + 큰 지도 (오) */}
+        <div className="grid lg:grid-cols-[320px_1fr] gap-4 h-[720px]">
           {/* List */}
           <aside className="rounded-3xl border border-cream-200 bg-white overflow-hidden flex flex-col h-full">
             <div className="px-5 py-4 border-b border-cream-200 bg-cream-50 flex-shrink-0">
@@ -199,6 +198,7 @@ export function LocationsBrowser() {
               branches={filtered}
               selectedId={selectedId}
               onSelect={setSelectedId}
+              cycle={cycle}
             />
           </div>
         </div>
@@ -236,21 +236,21 @@ function BranchListItem({
       )}
     >
       <div className="flex items-start justify-between gap-3">
-        <Link
-          href={`/locations/${branch.id}`}
-          className="flex-1 min-w-0"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <p className="text-[15px] font-bold text-ink-900 hover:text-navy-700">
+        <div className="flex-1 min-w-0">
+          <p className="text-[15px] font-bold text-ink-900 group-hover:text-navy-700">
             {branch.name}
           </p>
-          <p className="text-[12px] text-ink-500 mt-1.5">{branch.address}</p>
-        </Link>
-        <FavoriteButton
-          branchId={branch.id}
-          branchName={branch.name}
-          size="sm"
-        />
+          <p className="text-[12px] text-ink-500 mt-1.5 line-clamp-1">
+            {branch.address}
+          </p>
+        </div>
+        <div onClick={(e) => e.stopPropagation()}>
+          <FavoriteButton
+            branchId={branch.id}
+            branchName={branch.name}
+            size="sm"
+          />
+        </div>
       </div>
 
       <div className="flex items-center gap-1.5 mt-3 flex-wrap">
