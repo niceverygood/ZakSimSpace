@@ -9,6 +9,11 @@ import { CheckoutClient } from "./CheckoutClient";
 type Params = Promise<{ id: string }>;
 type Search = Promise<{ cycle?: string }>;
 
+// Resolve against the live sheet on every request (same reason as the branch
+// detail page) so newly-added branches don't 404 at checkout.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "결제하기",
   description: "선택하신 지점의 계약을 결제합니다.",
@@ -23,7 +28,13 @@ export default async function CheckoutPage({
 }) {
   const { id } = await params;
   const { cycle } = await searchParams;
-  const branch = await findBranch(id);
+  let decodedId = id;
+  try {
+    decodedId = decodeURIComponent(id);
+  } catch {
+    /* leave as-is */
+  }
+  const branch = await findBranch(decodedId);
   if (!branch) notFound();
 
   const isYearly = cycle !== "monthly";

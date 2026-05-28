@@ -18,9 +18,19 @@ import { BranchOptionsCard } from "@/components/branch/BranchOptionsCard";
 
 type Params = Promise<{ id: string }>;
 
-export async function generateStaticParams() {
-  const branches = await loadBranches();
-  return branches.map((b) => ({ id: b.id }));
+// Branches come from a live Google Sheet that changes without a redeploy, so
+// resolve every request at runtime instead of baking static params at build
+// (which 404'd any branch added after the last deploy).
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+/** Path params arrive percent-encoded for non-ASCII ids; decode defensively. */
+function safeDecode(s: string): string {
+  try {
+    return decodeURIComponent(s);
+  } catch {
+    return s;
+  }
 }
 
 /** Title format per client PDF: 작심스페이스 {지역} {지점} 비상주사무실 */
@@ -35,7 +45,7 @@ export async function generateMetadata({
   params: Params;
 }): Promise<Metadata> {
   const { id } = await params;
-  const branch = await findBranch(id);
+  const branch = await findBranch(safeDecode(id));
   if (!branch) return { title: "지점을 찾을 수 없어요" };
   const full = fullDisplayName(branch.name, branch.region);
   return {
@@ -93,7 +103,8 @@ export default async function BranchDetailPage({
 }: {
   params: Params;
 }) {
-  const { id } = await params;
+  const { id: rawId } = await params;
+  const id = safeDecode(rawId);
   const branch = await findBranch(id);
   if (!branch) notFound();
 
