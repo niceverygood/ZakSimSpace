@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import {
   industries,
-  branches,
+  branches as mockBranches,
   regions,
   buildingTypes,
   mailOptions,
@@ -60,6 +60,27 @@ export function ContractModal({
   const [startDate, setStartDate] = useState<string>(todayISO());
   const [licenseSupport, setLicenseSupport] = useState(false);
   const [mailOption, setMailOption] = useState<string>(mailOptions[0].value);
+
+  // Live branches fetched once the modal first opens. Falls back to mock if
+  // the API errors so the form keeps working in dev without sheets configured.
+  const [branches, setBranches] = useState<Branch[]>(mockBranches);
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    fetch("/api/branches")
+      .then((r) => r.json())
+      .then((data) => {
+        if (!cancelled && Array.isArray(data?.branches) && data.branches.length > 0) {
+          setBranches(data.branches);
+        }
+      })
+      .catch(() => {
+        /* keep mock fallback */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
 
   // Reset state when modal closes
   useEffect(() => {
