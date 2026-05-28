@@ -1,28 +1,3 @@
-import { Wallet, FileSpreadsheet, Users, Building } from "lucide-react";
-
-const items = [
-  {
-    icon: Wallet,
-    title: "월 이용료 자동 결제 관리",
-    desc: "카드 등록 후 자동 결제. 영수증·세금계산서도 자동 발급해요.",
-  },
-  {
-    icon: FileSpreadsheet,
-    title: "임대차계약서·증빙 보관",
-    desc: "발급된 모든 서류를 마이페이지 한 곳에서 다운로드.",
-  },
-  {
-    icon: Users,
-    title: "공동 사업자·법인 멤버 관리",
-    desc: "역할별로 권한을 나누어 안전하게 협업할 수 있어요.",
-  },
-  {
-    icon: Building,
-    title: "다중 사업장 통합 대시보드",
-    desc: "여러 지점을 운영해도 한 화면에서 한눈에 관리.",
-  },
-];
-
 export function Management() {
   return (
     <section className="bg-cream-50 py-20 lg:py-28">
@@ -38,34 +13,9 @@ export function Management() {
           </h2>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-12 items-center">
-          {/* List */}
-          <ul className="space-y-3">
-            {items.map((it) => {
-              const Icon = it.icon;
-              return (
-                <li
-                  key={it.title}
-                  className="rounded-2xl bg-white border border-ink-100 p-5 lg:p-6 flex gap-4 hover:border-navy-300 transition-colors"
-                >
-                  <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-navy-50 border border-navy-200 flex items-center justify-center">
-                    <Icon className="w-4.5 h-4.5 text-navy-700" strokeWidth={2.2} />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-[15.5px] font-bold text-ink-900 leading-snug">
-                      {it.title}
-                    </p>
-                    <p className="mt-2 text-[13.5px] leading-[1.7] text-ink-500">
-                      {it.desc}
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-
+        <div className="flex justify-center">
           {/* Dashboard mockup */}
-          <div className="relative">
+          <div className="relative w-full max-w-2xl">
             <div className="absolute -inset-4 bg-gradient-to-br from-navy-100/60 to-amber-100/40 rounded-[28px] blur-2xl" />
             <div className="relative rounded-3xl bg-white border border-ink-100 shadow-[0_30px_80px_-30px_rgba(12,18,25,0.35)] overflow-hidden">
               {/* Top */}

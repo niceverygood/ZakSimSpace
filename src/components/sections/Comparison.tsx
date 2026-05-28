@@ -39,7 +39,7 @@ export function Comparison() {
             </div>
             <div className="px-4 py-5 bg-navy-600 text-white border-b border-navy-700 text-center">
               <p className="text-[11px] text-navy-100 tracking-widest font-semibold">
-                ZAKSIM·SPACE
+                ZAKSIM SPACE
               </p>
               <p className="text-[15px] font-bold mt-0.5">작심스페이스</p>
             </div>

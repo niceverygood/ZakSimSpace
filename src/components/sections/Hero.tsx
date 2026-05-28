@@ -3,9 +3,10 @@ import { ArrowRight, MapPin } from "lucide-react";
 import { ContractTrigger } from "@/components/contract/ContractTrigger";
 
 const stats = [
-  { value: "180+", label: "전국 지점" },
-  { value: "12,000+", label: "누적 입주 사업자" },
-  { value: "98.4%", label: "사업자등록 승인률" },
+  { value: "20,000+", label: "누적 계약수" },
+  { value: "100+", label: "운영 지점" },
+  { value: "98%", label: "고객만족도" },
+  { value: "2분", label: "간편계약" },
 ];
 
 export function Hero() {
@@ -33,25 +34,27 @@ export function Hero() {
               </span>
             </div>
 
-            {/* Headline — Cowork City style: short, bold, declarative */}
-            <h1 className="text-[40px] sm:text-[48px] lg:text-[60px] leading-[1.15] font-extrabold tracking-tight text-ink-900">
-              터치 한 번이면
+            {/* Headline — short, bold, declarative */}
+            <h1 className="text-[36px] sm:text-[44px] lg:text-[54px] leading-[1.2] font-extrabold tracking-tight text-ink-900">
+              방문하거나, 기다릴 필요없이,
               <br />
-              <span className="text-navy-600">전국 어디든</span>
-              <br />내 사업장!
+              <span className="text-navy-600">2분만에</span> 원하는 사업장을
+              <br />
+              내 주소지로!
             </h1>
 
             {/* Subhead */}
             <p className="mt-7 text-[16px] lg:text-[18px] leading-[1.75] text-ink-500 max-w-md">
-              사업자등록부터 우편물 관리, 인허가 업종 대응까지.
+              365일, 24시간 언제 어디서든 신속하게
               <br className="hidden sm:block" />
-              작심스페이스 한 곳에서 5분 만에 시작하세요.
+              사업자 주소지 계약을 진행할 수 있습니다.
             </p>
 
             {/* CTAs */}
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <ContractTrigger className="group inline-flex items-center gap-2 rounded-full bg-navy-600 hover:bg-navy-700 text-white font-semibold px-7 text-[15px] transition-colors shadow-[0_10px_28px_-8px_rgba(35,61,104,0.5)] h-[54px]">
-                사업자등록 바로하기
+                <span aria-hidden>🚀</span>
+                로켓 계약하기
                 <ArrowRight
                   className="w-4 h-4 transition-transform group-hover:translate-x-0.5"
                   strokeWidth={2.5}
@@ -67,14 +70,14 @@ export function Hero() {
               </Link>
             </div>
 
-            {/* Stats */}
-            <dl className="mt-14 grid grid-cols-3 gap-6 max-w-md">
+            {/* Stats — 4 KPIs per client spec */}
+            <dl className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-5 max-w-xl">
               {stats.map((s) => (
                 <div key={s.label} className="border-l-2 border-navy-300 pl-3.5">
                   <dt className="text-[11.5px] text-ink-400 mb-1 tracking-wide">
                     {s.label}
                   </dt>
-                  <dd className="text-[20px] lg:text-[24px] font-bold text-ink-900 tracking-tight tnum">
+                  <dd className="text-[20px] lg:text-[22px] font-bold text-ink-900 tracking-tight tnum">
                     {s.value}
                   </dd>
                 </div>

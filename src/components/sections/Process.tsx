@@ -1,26 +1,20 @@
-import Link from "next/link";
-import { Check, ArrowRight } from "lucide-react";
+import { Check } from "lucide-react";
 
 const steps = [
   {
     no: "1",
-    title: "계약한 주소지 선택",
-    desc: "원하는 지점을 선택하고 결제를 완료하면 임대차계약서가 즉시 발급됩니다.",
+    title: "계약 주소지/기간 선택",
+    desc: "원하는 지점/계약 기간을 선택하고 결제를 완료하면 임대차계약서가 즉시 발급됩니다.",
   },
   {
     no: "2",
     title: "사업자 등록 신청",
-    desc: "마이페이지에 표시된 임대차계약서를 첨부해 홈택스에서 사업자등록을 신청합니다.",
+    desc: "마이페이지에 표시된 임대차계약서를 첨부해 홈택스에 사업자등록을 신청합니다.",
   },
   {
     no: "3",
-    title: "사업자 등록 진행 확인",
-    desc: "심사 진행 상황과 결과를 알림톡으로 실시간 안내해 드립니다.",
-  },
-  {
-    no: "4",
-    title: "사업자 신청 완료",
-    desc: "승인 즉시 사업장 운영 시작. 우편물·세금계산서·갱신까지 마이페이지에서 한 번에.",
+    title: "사업자 등록 진행/신청 완료",
+    desc: "심사 진행 상황을 안내드리며 승인 즉시 사업장 운영이 가능합니다.",
   },
 ];
 
@@ -37,9 +31,10 @@ export function Process() {
             <br />
             <span className="text-amber-500">간편 사업자 등록 신청까지</span>
           </h2>
-          <p className="mt-5 text-[14.5px] lg:text-[16px] leading-[1.7] text-ink-500">
-            아직 사업자를 내기 전이시라면, 주소지 계약 후에 바로 간편 사업자등록을
-            신청할 수 있어요.
+          <p className="mt-5 text-[14.5px] lg:text-[16px] leading-[1.75] text-ink-500">
+            사업자 등록 신청? 걱정마세요!
+            <br />
+            바로 여기서! 사업자 신청까지! 한번에 끝내세요.
           </p>
         </div>
 
@@ -51,7 +46,7 @@ export function Process() {
             className="hidden lg:block absolute top-[34px] left-[12%] right-[12%] h-px border-t-2 border-dashed border-navy-200"
           />
 
-          <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5 relative">
+          <ol className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 relative">
             {steps.map((s, idx) => (
               <li key={s.no} className="relative">
                 {/* Number badge */}
@@ -78,16 +73,6 @@ export function Process() {
           </ol>
         </div>
 
-        {/* CTA */}
-        <div className="mt-14 text-center">
-          <Link
-            href="/contract"
-            className="inline-flex items-center gap-2 rounded-full bg-navy-900 hover:bg-navy-800 text-white font-bold px-7 text-[14.5px] transition-colors h-[52px]"
-          >
-            계약 진행 자세히 보기
-            <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
-          </Link>
-        </div>
       </div>
     </section>
   );

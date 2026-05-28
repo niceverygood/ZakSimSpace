@@ -9,10 +9,9 @@ export const siteConfig = {
   nav: [
     { label: "지점 검색", href: "/locations" },
     { label: "계약진행", href: "/contract" },
-    { label: "오피스 가격", href: "/pricing" },
-    { label: "업종 신청 사례", href: "/industries" },
-    { label: "뉴스 / 블로그", href: "/blog" },
-    { label: "FAQ", href: "/faq" },
+    { label: "가격 안내", href: "/pricing" },
+    { label: "업종신청사례", href: "/industries" },
+    { label: "MORE", href: "/blog" },
   ],
   subNav: [],
 };
