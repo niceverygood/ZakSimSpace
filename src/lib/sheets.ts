@@ -263,7 +263,9 @@ export async function readBranchesFromSheet(): Promise<SheetBranch[]> {
 
 function rowToBranch(r: Record<string, string>): SheetBranch | null {
   // 지점사업자명 (col H) is the customer-facing name per 강재혁 본부장 spec.
-  const name = r["지점사업자명"] || r.name || r["지점명"] || "";
+  // Trim aggressively — the sheet often has trailing spaces that would
+  // otherwise leak into URL IDs and break detail-page routing.
+  const name = (r["지점사업자명"] || r.name || r["지점명"] || "").trim();
   if (!name) return null;
 
   // Only show currently-operating branches publicly.

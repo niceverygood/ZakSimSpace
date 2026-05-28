@@ -54,7 +54,17 @@ export async function loadBranches(): Promise<Branch[]> {
   }
 }
 
+/** Match an id ignoring stray dashes / whitespace introduced by sheet edits. */
+function normalize(s: string): string {
+  return s.replace(/[-\s]+/g, "").toLowerCase();
+}
+
 export async function findBranch(id: string): Promise<Branch | undefined> {
   const all = await loadBranches();
-  return all.find((b) => b.id === id);
+  const exact = all.find((b) => b.id === id);
+  if (exact) return exact;
+  const target = normalize(id);
+  return all.find(
+    (b) => normalize(b.id) === target || normalize(b.name) === target,
+  );
 }
