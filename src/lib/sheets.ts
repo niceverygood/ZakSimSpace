@@ -242,40 +242,139 @@ export type SheetBranch = {
 
 const BRANCH_TAB_PRIMARY = "raw_26지점";
 
+/**
+ * Reads raw_26지점. Headers are on row 3 (rows 1-2 are title/spacer), so we
+ * fetch from row 3 explicitly. Only "운영중" branches surface to the public
+ * site; everything else (실사지원, 반려, 대기중, 운영불가, …) is filtered.
+ */
 export async function readBranchesFromSheet(): Promise<SheetBranch[]> {
   let rows: Record<string, string>[] = [];
   try {
-    rows = await readSheetAsObjects(`${BRANCH_TAB_PRIMARY}!A1:Z`);
+    // Row 1-2 are titles, row 3 is a group label (담당자 정보 / 지점정보),
+    // row 4 is the actual column header. Data starts row 5.
+    rows = await readSheetAsObjects(`${BRANCH_TAB_PRIMARY}!A4:Z`);
   } catch {
     return [];
   }
-
   return rows
     .map(rowToBranch)
     .filter((b): b is SheetBranch => b !== null);
 }
 
 function rowToBranch(r: Record<string, string>): SheetBranch | null {
-  const name = r.name || r["지점명"] || "";
+  // 지점사업자명 (col H) is the customer-facing name per 강재혁 본부장 spec.
+  const name = r["지점사업자명"] || r.name || r["지점명"] || "";
   if (!name) return null;
-  const region = r.region || r["지역"] || extractRegion(r["주소지"] || r.address || "");
+
+  // Only show currently-operating branches publicly.
+  const status = r["상태"] || "";
+  if (status && status !== "운영중") return null;
+
+  const region = r["지역#1"] || r.region || "";
+  const subregion = r["지역#2"] || "";
+  const address = r["주소"] || r["주소지"] || r.address || "";
 
   return {
     id:
       r.id ||
       name
         .replace(/[^가-힣a-zA-Z0-9]/g, "-")
+        .replace(/-+/g, "-")
         .toLowerCase(),
     name,
-    region,
-    address: r.address || r["주소지"] || r["주소"] || "",
-    congested:
-      (r.congested || r["과밀여부"] || r["과밀"] || "").toLowerCase() ===
-        "true" ||
-      (r.congested || r["과밀여부"] || r["과밀"] || "").includes("과밀"),
-    operator: r.operator || r["스페이스 사업자명"] || r["운영주체"] || undefined,
-    brand: r.brand || r["브랜드"] || undefined,
+    region: region || extractRegion(address),
+    address: address || (subregion ? `${region} ${subregion}` : ""),
+    congested: (r["지역구분"] || "").includes("과밀") &&
+      !(r["지역구분"] || "").includes("비과밀"),
+    operator: r["임대인(건물주)"] || r["스페이스 사업자명"] || undefined,
+    brand: r["브랜드"] || undefined,
   };
+}
+
+/* ──────── Products ──────── */
+
+export type BusinessType = "개인" | "법인";
+export type Months = 3 | 6 | 12 | 24;
+
+export type SheetProduct = {
+  /** "개인" | "법인" */
+  businessType: BusinessType;
+  /** Branch the price applies to. "all" → every branch. */
+  branchScope: string;
+  months: Months;
+  unitPrice: number;
+  /** Discount amount (won) — empty/0 if none. */
+  discount: number;
+  total: number;
+};
+
+const PRODUCT_TAB = "raw_상품";
+
+/**
+ * Reads raw_상품. Layout (per 강재혁 본부장):
+ *   col A: spacer (empty)
+ *   col B: 유형  (개인 | 법인) — only filled on the first row of each group;
+ *                                inherit downward
+ *   col C: 지점  ("all" → applies to every branch, else branch 지점사업자명)
+ *   col D: 개월
+ *   col E: 단가
+ *   col F: 할인
+ *   col G: 합계
+ * Header is on row 5 (rows 1-4 are titles), data starts row 6.
+ */
+export async function readProductsFromSheet(): Promise<SheetProduct[]> {
+  let rows: string[][] = [];
+  try {
+    rows = await readSheetValues(`${PRODUCT_TAB}!B5:G50`);
+  } catch {
+    return [];
+  }
+  // First row is header — skip.
+  const dataRows = rows.slice(1);
+
+  const out: SheetProduct[] = [];
+  let lastType: BusinessType | null = null;
+  for (const row of dataRows) {
+    const [typeCell, branchCell, monthsCell, unitCell, discountCell, totalCell] =
+      row;
+    if (!monthsCell && !unitCell) continue; // empty row
+    const type = (typeCell || "").trim();
+    if (type === "개인" || type === "법인") lastType = type;
+    if (!lastType) continue;
+
+    const months = Number(String(monthsCell).replace(/[^\d]/g, ""));
+    if (!months || ![3, 6, 12, 24].includes(months)) continue;
+
+    out.push({
+      businessType: lastType,
+      branchScope: (branchCell || "").trim() || "all",
+      months: months as Months,
+      unitPrice: parseKRW(unitCell || ""),
+      discount: parseKRW(discountCell || ""),
+      total: parseKRW(totalCell || ""),
+    });
+  }
+  return out;
+}
+
+/**
+ * Picks the price for a given (branchId, businessType, months) tuple.
+ * Per-branch pricing takes precedence over "all"; falls back to undefined
+ * when nothing matches (caller decides how to handle a missing price).
+ */
+export function pickProductPrice(
+  products: SheetProduct[],
+  branchName: string,
+  businessType: BusinessType,
+  months: Months,
+): number | undefined {
+  const matches = products.filter(
+    (p) => p.businessType === businessType && p.months === months,
+  );
+  const specific = matches.find((p) => p.branchScope === branchName);
+  if (specific) return specific.total || specific.unitPrice;
+  const fallback = matches.find((p) => p.branchScope === "all");
+  return fallback ? fallback.total || fallback.unitPrice : undefined;
 }
 
 function extractRegion(address: string): string {

@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { MapPin, Search, ChevronDown } from "lucide-react";
 import {
-  branches,
   regions,
   buildingTypes,
   formatKRW,
@@ -16,13 +15,12 @@ import { cn } from "@/lib/utils";
 type Cycle = "yearly" | "monthly";
 type Congestion = "all" | "congested" | "not-congested";
 
-export function LocationsBrowser() {
+export function LocationsBrowser({ branches }: { branches: Branch[] }) {
   const [query, setQuery] = useState("");
   const [region, setRegion] = useState<(typeof regions)[number]>("전체");
-  const [cycle, setCycle] = useState<Cycle>("monthly");
+  const [cycle, setCycle] = useState<Cycle>("yearly");
   const [congestion, setCongestion] = useState<Congestion>("all");
   const [buildingType, setBuildingType] = useState<string>("all");
-  const [licenseOnly, setLicenseOnly] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
@@ -32,11 +30,10 @@ export function LocationsBrowser() {
       if (congestion === "congested" && !b.congested) return false;
       if (congestion === "not-congested" && b.congested) return false;
       if (buildingType !== "all" && b.buildingType !== buildingType) return false;
-      if (licenseOnly && !b.supportsLicense) return false;
       if (q && !`${b.name} ${b.address}`.includes(q)) return false;
       return true;
     });
-  }, [region, congestion, buildingType, licenseOnly, query]);
+  }, [branches, region, congestion, buildingType, query]);
 
   return (
     <section className="bg-cream-50 py-12 lg:py-16">
@@ -131,32 +128,7 @@ export function LocationsBrowser() {
             />
           </div>
 
-          {/* License toggle */}
-          <div className="mt-4 flex items-center justify-between gap-3 flex-wrap">
-            <label className="inline-flex items-center gap-2 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={licenseOnly}
-                onChange={(e) => setLicenseOnly(e.target.checked)}
-                className="peer sr-only"
-              />
-              <span
-                className={cn(
-                  "relative w-11 h-6 rounded-full transition-colors",
-                  licenseOnly ? "bg-navy-600" : "bg-ink-200",
-                )}
-              >
-                <span
-                  className={cn(
-                    "absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform",
-                    licenseOnly && "translate-x-5",
-                  )}
-                />
-              </span>
-              <span className="text-[13px] font-semibold text-ink-700">
-                인허가 가능 지점만 보기
-              </span>
-            </label>
+          <div className="mt-4 flex items-center justify-end">
             <p className="text-[12.5px] text-ink-500 font-semibold tnum">
               {filtered.length}개 지점
             </p>

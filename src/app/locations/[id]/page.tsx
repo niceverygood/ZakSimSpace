@@ -5,7 +5,8 @@ import { MapPin, ArrowRight, Check, Building, Mail, ShieldCheck } from "lucide-r
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ContractTrigger } from "@/components/contract/ContractTrigger";
-import { branches, formatKRW } from "@/lib/contract-data";
+import { formatKRW } from "@/lib/contract-data";
+import { findBranch, loadBranches } from "@/lib/branches-loader";
 import { KakaoMap } from "@/components/map/KakaoMap";
 import { FavoriteButton } from "@/components/favorites/FavoriteButton";
 import { RecordRecentBranch } from "@/components/favorites/RecordRecentBranch";
@@ -14,6 +15,7 @@ import { cn } from "@/lib/utils";
 type Params = Promise<{ id: string }>;
 
 export async function generateStaticParams() {
+  const branches = await loadBranches();
   return branches.map((b) => ({ id: b.id }));
 }
 
@@ -23,7 +25,7 @@ export async function generateMetadata({
   params: Params;
 }): Promise<Metadata> {
   const { id } = await params;
-  const branch = branches.find((b) => b.id === id);
+  const branch = await findBranch(id);
   if (!branch) return { title: "지점을 찾을 수 없어요" };
   return {
     title: branch.name,
@@ -37,10 +39,11 @@ export default async function BranchDetailPage({
   params: Params;
 }) {
   const { id } = await params;
-  const branch = branches.find((b) => b.id === id);
+  const branch = await findBranch(id);
   if (!branch) notFound();
 
-  const related = branches
+  const all = await loadBranches();
+  const related = all
     .filter((b) => b.id !== branch.id && b.region === branch.region)
     .slice(0, 3);
 

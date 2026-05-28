@@ -2,14 +2,19 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { LocationsBrowser } from "./LocationsBrowser";
+import { loadBranches } from "@/lib/branches-loader";
 
 export const metadata: Metadata = {
   title: "전국 지점",
   description:
-    "작심스페이스 전국 12+개 직영점. 지역·인허가·과밀 여부로 필터링해서 내 사업장을 빠르게 찾아보세요.",
+    "작심스페이스 전국 직영·가맹점. 지역·과밀 여부로 필터링해서 내 사업장을 빠르게 찾아보세요.",
 };
 
-export default function LocationsPage() {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default async function LocationsPage() {
+  const branches = await loadBranches();
   return (
     <>
       <Header />
@@ -32,7 +37,7 @@ export default function LocationsPage() {
           </div>
         </section>
 
-        <LocationsBrowser />
+        <LocationsBrowser branches={branches} />
       </main>
       <Footer />
     </>

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { branches, formatKRW } from "@/lib/contract-data";
+import { formatKRW } from "@/lib/contract-data";
+import { findBranch } from "@/lib/branches-loader";
 import { CheckoutClient } from "./CheckoutClient";
 
 type Params = Promise<{ id: string }>;
@@ -22,7 +23,7 @@ export default async function CheckoutPage({
 }) {
   const { id } = await params;
   const { cycle } = await searchParams;
-  const branch = branches.find((b) => b.id === id);
+  const branch = await findBranch(id);
   if (!branch) notFound();
 
   const isYearly = cycle !== "monthly";
