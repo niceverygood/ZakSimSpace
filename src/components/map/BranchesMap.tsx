@@ -237,7 +237,6 @@ export function BranchesMap({
             background:${branch.congested ? "rgba(244,63,94,0.12)" : "rgba(16,185,129,0.12)"};
             color:${branch.congested ? "#be123c" : "#047857"};
           ">${branch.congested ? "과밀" : "비과밀"}</span>
-          ${branch.supportsLicense ? `<span style="font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:9999px; background:rgba(139,92,246,0.12); color:#6d28d9;">인허가</span>` : ""}
         </div>
         <p style="font-size:14.5px; font-weight:800; color:#0c1219; margin:0 0 4px;">
           ${escapeHtml(branch.name)}

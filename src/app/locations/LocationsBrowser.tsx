@@ -258,7 +258,6 @@ function BranchListItem({
           {branch.congested ? "과밀" : "비과밀"}
         </Tag>
         {branch.inspectable && <Tag tone="blue">실사가능</Tag>}
-        {branch.supportsLicense && <Tag tone="violet">인허가</Tag>}
       </div>
 
       <div className="mt-3 flex items-baseline justify-between">

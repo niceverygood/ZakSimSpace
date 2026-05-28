@@ -637,7 +637,6 @@ function BranchesStep({
                       {b.congested ? "과밀" : "비과밀"}
                     </Tag>
                     {b.inspectable && <Tag tone="blue">실사가능</Tag>}
-                    {b.supportsLicense && <Tag tone="violet">인허가</Tag>}
                   </div>
                   <p className="text-right text-[15.5px] font-extrabold text-ink-900 tnum mt-3">
                     {formatKRW(price)}
