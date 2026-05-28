@@ -75,6 +75,16 @@ export default async function BlogPostPage({
             </div>
           </header>
 
+          {post.image && (
+            <div className="mb-10 relative aspect-[16/9] rounded-2xl overflow-hidden bg-cream-100 border border-cream-200">
+              <img
+                src={post.image}
+                alt={post.title}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+          )}
+
           {/* Body */}
           <div className="space-y-6 text-[15px] lg:text-[16px] leading-[1.9] text-ink-700">
             {post.body.map((block, i) => {
@@ -115,6 +125,20 @@ export default async function BlogPostPage({
               return null;
             })}
           </div>
+
+          {post.source && (
+            <p className="mt-10 pt-6 border-t border-cream-200 text-[12.5px] text-ink-500">
+              원문 출처 ·{" "}
+              <a
+                href={post.source}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 hover:text-ink-900 break-all"
+              >
+                {post.source}
+              </a>
+            </p>
+          )}
         </article>
 
         {/* Related */}

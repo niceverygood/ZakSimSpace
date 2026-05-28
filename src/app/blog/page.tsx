@@ -39,12 +39,20 @@ export default function BlogIndexPage() {
               className="group block rounded-3xl bg-white border border-cream-200 overflow-hidden mb-10 hover:-translate-y-0.5 transition-all duration-300"
             >
               <div className="grid lg:grid-cols-[1.2fr_1fr] gap-0">
-                <div className="relative aspect-[16/10] lg:aspect-auto bg-gradient-to-br from-navy-500 via-navy-600 to-ink-800">
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] [background-size:32px_32px]"
-                  />
-                  <div className="absolute top-5 left-5 inline-flex items-center rounded-full bg-white/25 backdrop-blur border border-white/30 px-3 py-1 text-[11px] font-bold text-white">
+                <div className="relative aspect-[16/10] lg:aspect-auto bg-gradient-to-br from-navy-500 via-navy-600 to-ink-800 overflow-hidden">
+                  {feature.image ? (
+                    <img
+                      src={feature.image}
+                      alt={feature.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div
+                      aria-hidden
+                      className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] [background-size:32px_32px]"
+                    />
+                  )}
+                  <div className="absolute top-5 left-5 inline-flex items-center rounded-full bg-white/85 backdrop-blur border border-white px-3 py-1 text-[11px] font-bold text-ink-900 shadow-sm">
                     {blogCategoryLabels[feature.category]} · 추천
                   </div>
                 </div>
@@ -71,26 +79,37 @@ export default function BlogIndexPage() {
                 <li key={p.slug}>
                   <Link
                     href={`/blog/${p.slug}`}
-                    className="block h-full rounded-2xl bg-white border border-cream-200 p-6 hover:border-navy-300 hover:-translate-y-0.5 transition-all duration-300"
+                    className="block h-full rounded-2xl bg-white border border-cream-200 overflow-hidden hover:border-navy-300 hover:-translate-y-0.5 transition-all duration-300"
                   >
-                    <span className="inline-flex items-center rounded-full bg-cream-100 px-2.5 py-1 text-[11px] font-bold text-ink-700">
-                      {blogCategoryLabels[p.category]}
-                    </span>
-                    <h3 className="mt-4 text-[16px] font-bold text-ink-900 leading-snug">
-                      {p.title}
-                    </h3>
-                    <p className="mt-3 text-[13px] text-ink-500 leading-[1.7] line-clamp-3">
-                      {p.excerpt}
-                    </p>
-                    <div className="mt-5 pt-4 border-t border-dashed border-cream-200 flex items-center gap-3 text-[11.5px] text-ink-400">
-                      <span className="inline-flex items-center gap-1 tnum">
-                        <Calendar className="w-3 h-3" strokeWidth={2.5} />
-                        {p.date}
+                    {p.image && (
+                      <div className="relative aspect-[16/10] bg-cream-100 overflow-hidden">
+                        <img
+                          src={p.image}
+                          alt={p.title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                    <div className="p-6">
+                      <span className="inline-flex items-center rounded-full bg-cream-100 px-2.5 py-1 text-[11px] font-bold text-ink-700">
+                        {blogCategoryLabels[p.category]}
                       </span>
-                      <span className="inline-flex items-center gap-1 tnum">
-                        <Clock className="w-3 h-3" strokeWidth={2.5} />
-                        {p.readMins}분
-                      </span>
+                      <h3 className="mt-4 text-[16px] font-bold text-ink-900 leading-snug line-clamp-2">
+                        {p.title}
+                      </h3>
+                      <p className="mt-3 text-[13px] text-ink-500 leading-[1.7] line-clamp-3">
+                        {p.excerpt}
+                      </p>
+                      <div className="mt-5 pt-4 border-t border-dashed border-cream-200 flex items-center gap-3 text-[11.5px] text-ink-400">
+                        <span className="inline-flex items-center gap-1 tnum">
+                          <Calendar className="w-3 h-3" strokeWidth={2.5} />
+                          {p.date}
+                        </span>
+                        <span className="inline-flex items-center gap-1 tnum">
+                          <Clock className="w-3 h-3" strokeWidth={2.5} />
+                          {p.readMins}분
+                        </span>
+                      </div>
                     </div>
                   </Link>
                 </li>
