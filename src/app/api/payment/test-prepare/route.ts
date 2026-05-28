@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const order = createOrder({
+  const order = await createOrder({
     branchId: "TEST",
     branchName: "[테스트 결제]",
     amount,

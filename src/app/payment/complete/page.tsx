@@ -17,7 +17,7 @@ export default async function PaymentCompletePage({
 }) {
   const { moid } = await searchParams;
   if (!moid) redirect("/");
-  const order = getOrder(moid);
+  const order = await getOrder(moid);
 
   if (!order || order.status !== "paid") {
     return (

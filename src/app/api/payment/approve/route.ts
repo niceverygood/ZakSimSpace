@@ -31,7 +31,7 @@ export async function POST(req: Request) {
   }
 
   // Cross-check against our stored order (replay/tamper protection).
-  const order = getOrder(moid);
+  const order = await getOrder(moid);
   if (!order) {
     return NextResponse.json(
       { error: "주문을 찾을 수 없어요. 다시 시도해 주세요." },
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
     );
   }
   if (order.amount !== Number(amt)) {
-    updateOrder(moid, { status: "failed", failReason: "amount mismatch" });
+    await updateOrder(moid, { status: "failed", failReason: "amount mismatch" });
     return NextResponse.json(
       { error: "결제 금액이 주문과 일치하지 않아요." },
       { status: 400 },
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
       amt: order.amount,
     });
   } catch (e) {
-    updateOrder(moid, {
+    await updateOrder(moid, {
       status: "failed",
       failReason: e instanceof Error ? e.message : "approve fetch failed",
     });
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
 
   if (result.ResultCode !== "3001" && result.ResultCode !== "0000") {
     // 3001 = 카드 인증성공 (NicePay v1), 0000 = 정상 승인.
-    updateOrder(moid, {
+    await updateOrder(moid, {
       status: "failed",
       failReason: result.ResultMsg ?? `code ${result.ResultCode}`,
     });
@@ -77,7 +77,7 @@ export async function POST(req: Request) {
     );
   }
 
-  updateOrder(moid, {
+  await updateOrder(moid, {
     status: "paid",
     tid: typeof result.TID === "string" ? result.TID : tid,
     authDate: typeof result.AuthDate === "string" ? result.AuthDate : undefined,

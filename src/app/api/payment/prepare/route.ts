@@ -51,7 +51,7 @@ export async function POST(req: Request) {
 
   // Persist the order before showing the popup so we can validate the
   // approved amount/Moid in the return handler.
-  const order = createOrder({
+  const order = await createOrder({
     branchId,
     branchName: branch.name,
     amount,
