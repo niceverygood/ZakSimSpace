@@ -8,7 +8,10 @@ import { formatKRW } from "@/lib/contract-data";
 import { cn } from "@/lib/utils";
 
 type BizType = "individual" | "corporate" | "bulk";
-type Cycle = "monthly" | "half" | "yearly";
+type Cycle = 3 | 6 | 12 | 24;
+
+/** Live pricing keyed by sheet 사업자 유형 → 개월수 → 합계(원). */
+export type PriceMap = Record<"개인" | "법인", Record<number, number>>;
 
 const bizTabs: { value: BizType; label: string }[] = [
   { value: "individual", label: "개인사업자" },
@@ -16,39 +19,27 @@ const bizTabs: { value: BizType; label: string }[] = [
   { value: "bulk", label: "다수계약" },
 ];
 
-const cycleTabs: { value: Cycle; label: string; monthsLabel: string }[] = [
-  { value: "monthly", label: "월간", monthsLabel: "1개월" },
-  { value: "half", label: "6개월", monthsLabel: "6개월" },
-  { value: "yearly", label: "연간", monthsLabel: "12개월" },
+const cycleTabs: { value: Cycle; label: string }[] = [
+  { value: 3, label: "3개월" },
+  { value: 6, label: "6개월" },
+  { value: 12, label: "12개월" },
+  { value: 24, label: "24개월" },
 ];
 
 /**
- * Base monthly rate. Yearly: 16% discount. Half: 8% discount.
- * Bulk: -10% on top (다수 계약 시 추가 할인).
+ * Resolves price from the live raw_상품 map. 다수계약(bulk) applies a 10%
+ * discount on top of the 개인 rate. Monthly figure is the total / months.
  */
-function priceFor(biz: BizType, cycle: Cycle) {
-  const baseMonthly = 25000;
-  const bulkFactor = biz === "bulk" ? 0.9 : 1.0;
-  const monthly = Math.round(baseMonthly * bulkFactor);
-  if (cycle === "monthly") {
-    return { monthly, total: monthly, months: 1, discount: 0 };
-  }
-  if (cycle === "half") {
-    const total = Math.round(monthly * 6 * 0.92);
-    return {
-      monthly: Math.round(total / 6),
-      total,
-      months: 6,
-      discount: 8,
-    };
-  }
-  // yearly
-  const total = Math.round(monthly * 12 * 0.8);
+function priceFor(prices: PriceMap, biz: BizType, cycle: Cycle) {
+  const sheetType = biz === "corporate" ? "법인" : "개인";
+  const base = prices[sheetType]?.[cycle] ?? 0;
+  const total = biz === "bulk" ? Math.round(base * 0.9) : base;
+  const monthly = total > 0 ? Math.round(total / cycle) : 0;
   return {
-    monthly: Math.round(total / 12),
+    monthly,
     total,
-    months: 12,
-    discount: 20,
+    months: cycle,
+    discount: biz === "bulk" ? 10 : 0,
   };
 }
 
@@ -77,10 +68,10 @@ const safety = [
   "'인허가' 신청 및 관할 관청과의 절차 진행은 고객님의 소중한 권리로서 직접 수행하시게 되며, 최종 승인은 관할 관청의 전문적인 심사 기준에 따라 결정됩니다.",
 ];
 
-export function PricingExplorer() {
+export function PricingExplorer({ prices }: { prices: PriceMap }) {
   const [biz, setBiz] = useState<BizType>("individual");
-  const [cycle, setCycle] = useState<Cycle>("yearly");
-  const p = priceFor(biz, cycle);
+  const [cycle, setCycle] = useState<Cycle>(12);
+  const p = priceFor(prices, biz, cycle);
 
   return (
     <section className="bg-cream-50 py-14 lg:py-20">

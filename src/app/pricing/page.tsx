@@ -1,15 +1,46 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { PricingExplorer } from "./PricingExplorer";
+import { PricingExplorer, type PriceMap } from "./PricingExplorer";
+import { readProductsFromSheet, sheetsConfigured } from "@/lib/sheets";
 
 export const metadata: Metadata = {
   title: "오피스 가격",
   description:
-    "월 20,000원부터 시작하는 사업장. 사업자 유형과 계약 기간에 맞춰 최적의 가격을 안내합니다.",
+    "사업자 유형과 계약 기간에 맞춰 최적의 가격을 안내합니다.",
 };
 
-export default function PricingPage() {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+/** Fallback mirrors raw_상품 (개인/법인 동일) so the page still works offline. */
+const FALLBACK: PriceMap = {
+  개인: { 3: 120000, 6: 180000, 12: 250000, 24: 440000 },
+  법인: { 3: 120000, 6: 180000, 12: 250000, 24: 440000 },
+};
+
+async function loadPriceMap(): Promise<PriceMap> {
+  if (!sheetsConfigured()) return FALLBACK;
+  try {
+    const products = await readProductsFromSheet();
+    if (products.length === 0) return FALLBACK;
+    const map: PriceMap = { 개인: {}, 법인: {} };
+    for (const p of products) {
+      map[p.businessType][p.months] = p.total || p.unitPrice;
+    }
+    for (const t of ["개인", "법인"] as const) {
+      for (const m of [3, 6, 12, 24]) {
+        if (!map[t][m]) map[t][m] = FALLBACK[t][m];
+      }
+    }
+    return map;
+  } catch {
+    return FALLBACK;
+  }
+}
+
+export default async function PricingPage() {
+  const prices = await loadPriceMap();
   return (
     <>
       <Header />
@@ -32,7 +63,7 @@ export default function PricingPage() {
           </div>
         </section>
 
-        <PricingExplorer />
+        <PricingExplorer prices={prices} />
       </main>
       <Footer />
     </>
