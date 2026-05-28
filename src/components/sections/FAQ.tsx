@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Plus, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+/** Top 6 only — full list lives on /faq. */
 const faqs = [
   {
     q: "비상주 사무실이 무엇인가요?",
@@ -29,10 +30,6 @@ const faqs = [
   {
     q: "다른 지점으로 이전할 수 있나요?",
     a: "이용 중에도 다른 지점으로 자유롭게 이전 신청이 가능합니다. 이전 후에는 사업자등록증 정정 신고를 진행해 주셔야 하며, 작심스페이스에서 필요한 서류를 함께 안내해 드립니다.",
-  },
-  {
-    q: "법인사업자도 동일하게 이용할 수 있나요?",
-    a: "법인사업자도 동일하게 이용 가능하며, 법인 설립 전 본점 주소지로도 활용할 수 있습니다. 법인 설립 등기에 필요한 임대차계약서를 발급해 드리며, 한국법인설립 지원센터와의 협업을 통해 설립 절차도 안내해 드립니다.",
   },
 ];
 
@@ -104,14 +101,14 @@ export function FAQ() {
           ))}
         </div>
 
-        {/* Footer CTA */}
-        <div className="mt-12 text-center">
-          <p className="text-[14px] text-ink-500 mb-4">
+        {/* Footer CTA — visible button per PDF spec */}
+        <div className="mt-10 text-center">
+          <p className="text-[13.5px] text-ink-500 mb-4">
             궁금한 점이 더 있으신가요?
           </p>
           <Link
             href="/faq"
-            className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-ink-900 hover:text-navy-700 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full bg-ink-900 hover:bg-ink-800 text-white font-semibold px-6 h-12 text-[14px] transition-colors"
           >
             전체 질문 보기
             <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />

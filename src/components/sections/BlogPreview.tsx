@@ -1,15 +1,67 @@
+"use client";
+
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Calendar, Clock } from "lucide-react";
-import { posts, blogCategoryLabels } from "@/lib/blog-data";
+import { ArrowRight, Calendar, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { posts, blogCategoryLabels, type BlogPost } from "@/lib/blog-data";
+
+const SLIDE_INTERVAL_MS = 5500;
+
+type Tab = "all" | "news" | "story";
+
+const TABS: { value: Tab; label: string }[] = [
+  { value: "all", label: "전체" },
+  { value: "news", label: "뉴스" },
+  { value: "story", label: "블로그" },
+];
 
 export function BlogPreview() {
-  const items = posts.slice(0, 6);
+  const [tab, setTab] = useState<Tab>("all");
+  const [index, setIndex] = useState(0);
+  const pausedRef = useRef(false);
+
+  const items = useMemo<BlogPost[]>(() => {
+    const filtered =
+      tab === "all" ? posts : posts.filter((p) => p.category === tab);
+    return filtered.slice(0, 12);
+  }, [tab]);
+
+  // Wrap index when filter changes / list shrinks.
+  useEffect(() => {
+    if (index >= items.length) setIndex(0);
+  }, [items.length, index]);
+
+  // Auto-advance once per 5.5s unless the user hovers a card.
+  useEffect(() => {
+    if (items.length <= 1) return;
+    const id = window.setInterval(() => {
+      if (pausedRef.current) return;
+      setIndex((i) => (i + 1) % items.length);
+    }, SLIDE_INTERVAL_MS);
+    return () => window.clearInterval(id);
+  }, [items.length]);
+
+  const visibleCount = 3;
+  // Build a cyclical slice of `visibleCount` cards starting at the current index.
+  const visible: BlogPost[] = useMemo(() => {
+    if (items.length === 0) return [];
+    const out: BlogPost[] = [];
+    for (let i = 0; i < Math.min(visibleCount, items.length); i++) {
+      out.push(items[(index + i) % items.length]);
+    }
+    return out;
+  }, [items, index]);
+
+  const prev = () =>
+    setIndex((i) => (i - 1 + items.length) % Math.max(items.length, 1));
+  const next = () =>
+    setIndex((i) => (i + 1) % Math.max(items.length, 1));
 
   return (
     <section className="bg-cream-50 py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10 lg:mb-12">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-8 lg:mb-10">
           <div>
             <p className="text-[13px] font-semibold text-navy-600 tracking-wider uppercase mb-3">
               뉴스 / 블로그
@@ -30,28 +82,73 @@ export function BlogPreview() {
           </Link>
         </div>
 
-        {/* Grid */}
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {items.map((p, idx) => (
+        {/* Tabs + slider controls */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="inline-flex items-center gap-1 rounded-full bg-white border border-cream-200 p-1">
+            {TABS.map((t) => (
+              <button
+                key={t.value}
+                type="button"
+                onClick={() => {
+                  setTab(t.value);
+                  setIndex(0);
+                }}
+                className={`px-4 h-9 rounded-full text-[12.5px] font-bold transition-colors ${
+                  tab === t.value
+                    ? "bg-ink-900 text-white"
+                    : "text-ink-500 hover:text-ink-900"
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+          <div className="hidden sm:flex items-center gap-2">
+            <button
+              type="button"
+              onClick={prev}
+              aria-label="이전 슬라이드"
+              className="w-10 h-10 rounded-full bg-white border border-cream-200 hover:border-ink-400 flex items-center justify-center text-ink-700"
+            >
+              <ChevronLeft className="w-4 h-4" strokeWidth={2.5} />
+            </button>
+            <button
+              type="button"
+              onClick={next}
+              aria-label="다음 슬라이드"
+              className="w-10 h-10 rounded-full bg-white border border-cream-200 hover:border-ink-400 flex items-center justify-center text-ink-700"
+            >
+              <ChevronRight className="w-4 h-4" strokeWidth={2.5} />
+            </button>
+          </div>
+        </div>
+
+        {/* Sliding card row */}
+        <ul
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          onMouseEnter={() => {
+            pausedRef.current = true;
+          }}
+          onMouseLeave={() => {
+            pausedRef.current = false;
+          }}
+        >
+          {visible.map((p) => (
             <li key={p.slug}>
               <Link
                 href={`/blog/${p.slug}`}
                 className="group block h-full rounded-2xl bg-white border border-cream-200 overflow-hidden hover:border-navy-300 hover:-translate-y-0.5 transition-all duration-300"
               >
-                {/* Cover gradient */}
-                <div
-                  className={`aspect-[16/9] ${
-                    idx % 3 === 0
-                      ? "bg-gradient-to-br from-navy-500 via-navy-600 to-navy-800"
-                      : idx % 3 === 1
-                        ? "bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500"
-                        : "bg-gradient-to-br from-ink-700 to-ink-900"
-                  } relative`}
-                >
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 opacity-[0.10] [background-image:linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] [background-size:28px_28px]"
-                  />
+                <div className="aspect-[16/9] bg-cream-100 relative overflow-hidden">
+                  {p.image ? (
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-navy-500 to-ink-900" />
+                  )}
                   <div className="absolute top-4 left-4 inline-flex items-center rounded-full bg-white/95 backdrop-blur px-2.5 py-1 text-[10.5px] font-bold text-ink-800">
                     {blogCategoryLabels[p.category]}
                   </div>
@@ -78,6 +175,23 @@ export function BlogPreview() {
             </li>
           ))}
         </ul>
+
+        {/* Pagination dots */}
+        {items.length > visibleCount && (
+          <div className="mt-7 flex items-center justify-center gap-1.5">
+            {items.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                aria-label={`슬라이드 ${i + 1}로 이동`}
+                onClick={() => setIndex(i)}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === index ? "w-7 bg-ink-900" : "w-1.5 bg-cream-300"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
