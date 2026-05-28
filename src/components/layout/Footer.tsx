@@ -183,31 +183,34 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Sitemap / 회사 / 고객센터 */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-14 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1.2fr] gap-10 lg:gap-12">
-          {Object.entries(footerNav).map(([key, group]) => (
-            <div key={key}>
-              <h4 className="text-[13px] font-semibold text-white mb-4">
-                {group.title}
-              </h4>
-              <ul className="space-y-2.5">
-                {group.items.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="text-[13px] text-ink-300 hover:text-white transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+      {/* Sitemap / 회사 (좌) · 고객센터 (우) */}
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-14 lg:py-16 border-t border-ink-700/40">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-10 lg:gap-16">
+          {/* Nav columns */}
+          <div className="flex flex-wrap gap-x-16 gap-y-10">
+            {Object.entries(footerNav).map(([key, group]) => (
+              <div key={key}>
+                <h4 className="text-[13px] font-semibold text-white mb-4">
+                  {group.title}
+                </h4>
+                <ul className="space-y-2.5">
+                  {group.items.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="text-[13px] text-ink-300 hover:text-white transition-colors"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
 
-          {/* 고객센터 card (PDF spec: dark inset block to the right) */}
-          <div className="rounded-2xl bg-ink-800/70 border border-ink-700/60 p-6 lg:p-7">
+          {/* 고객센터 card */}
+          <div className="w-full lg:w-[320px] lg:flex-shrink-0 rounded-2xl bg-ink-800/70 border border-ink-700/60 p-6 lg:p-7">
             <Logo variant="light" />
             <p className="mt-5 text-[13px] text-ink-300">고객센터</p>
             <p className="text-[22px] font-extrabold text-white tnum mt-1">
