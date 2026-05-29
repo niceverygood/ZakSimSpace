@@ -57,7 +57,6 @@ export function ContractModal({
   // Step 4 — checkout
   const [cycle, setCycle] = useState<Cycle>("yearly");
   const [startDate, setStartDate] = useState<string>(todayISO());
-  const [licenseSupport, setLicenseSupport] = useState(false);
   const [mailOption, setMailOption] = useState<string>(mailOptions[0].value);
 
   // Live branches fetched once the modal first opens. Falls back to mock if
@@ -95,7 +94,6 @@ export function ContractModal({
         setSelectedBranchId(null);
         setCycle("yearly");
         setStartDate(todayISO());
-        setLicenseSupport(false);
         setMailOption(mailOptions[0].value);
       }, 200);
       return () => clearTimeout(t);
@@ -167,10 +165,9 @@ export function ContractModal({
       ? selectedBranch.yearlyPrice
       : selectedBranch.monthlyPrice
     : 0;
-  const licenseAddon = licenseSupport ? 50000 : 0;
   const mailAddon =
     mailOption === "scan-full" ? (cycle === "yearly" ? 36000 : 3000) : 0;
-  const total = unitPrice + licenseAddon + mailAddon;
+  const total = unitPrice + mailAddon;
 
   if (!open) return null;
 
@@ -250,13 +247,10 @@ export function ContractModal({
               setCycle={setCycle}
               startDate={startDate}
               setStartDate={setStartDate}
-              licenseSupport={licenseSupport}
-              setLicenseSupport={setLicenseSupport}
               mailOption={mailOption}
               setMailOption={setMailOption}
               total={total}
               unitPrice={unitPrice}
-              licenseAddon={licenseAddon}
               mailAddon={mailAddon}
               onReselect={() => setStep("setup")}
             />
@@ -757,13 +751,10 @@ function CheckoutStep({
   setCycle,
   startDate,
   setStartDate,
-  licenseSupport,
-  setLicenseSupport,
   mailOption,
   setMailOption,
   total,
   unitPrice,
-  licenseAddon,
   mailAddon,
   onReselect,
 }: {
@@ -774,17 +765,13 @@ function CheckoutStep({
   setCycle: (c: Cycle) => void;
   startDate: string;
   setStartDate: (d: string) => void;
-  licenseSupport: boolean;
-  setLicenseSupport: (b: boolean) => void;
   mailOption: string;
   setMailOption: (s: string) => void;
   total: number;
   unitPrice: number;
-  licenseAddon: number;
   mailAddon: number;
   onReselect: () => void;
 }) {
-  const canSupportLicense = branch.supportsLicense;
 
   return (
     <div className="pt-5 pb-2">
@@ -844,43 +831,6 @@ function CheckoutStep({
         </div>
       </Field>
 
-      {/* License toggle */}
-      <Field
-        label={
-          <span>
-            인허가 업종 주소지 지원{" "}
-            <span
-              className={cn(
-                "text-[12px] font-medium",
-                canSupportLicense ? "text-ink-400" : "text-rose-500",
-              )}
-            >
-              ({canSupportLicense ? "지원 지점" : "불가 지점"})
-            </span>
-          </span>
-        }
-      >
-        <button
-          type="button"
-          role="switch"
-          aria-checked={licenseSupport}
-          disabled={!canSupportLicense}
-          onClick={() => setLicenseSupport(!licenseSupport && canSupportLicense)}
-          className={cn(
-            "relative w-14 h-8 rounded-full transition-colors",
-            licenseSupport ? "bg-navy-600" : "bg-ink-200",
-            !canSupportLicense && "opacity-50 cursor-not-allowed",
-          )}
-        >
-          <span
-            className={cn(
-              "absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow transition-transform",
-              licenseSupport && "translate-x-6",
-            )}
-          />
-        </button>
-      </Field>
-
       {/* Mail handling */}
       <Field label="일반 우편물 대리 개봉">
         <div className="relative">
@@ -905,9 +855,6 @@ function CheckoutStep({
       {/* Summary */}
       <div className="mt-8 border-t border-cream-200 pt-5 space-y-2.5">
         <Row label={`오피스 × ${cycle === "yearly" ? "1년" : "1개월"}`} value={formatKRW(unitPrice)} />
-        {licenseAddon > 0 && (
-          <Row label="인허가 주소지 지원" value={formatKRW(licenseAddon)} />
-        )}
         {mailAddon > 0 && (
           <Row label="우편물 내용 스캔" value={formatKRW(mailAddon)} />
         )}
