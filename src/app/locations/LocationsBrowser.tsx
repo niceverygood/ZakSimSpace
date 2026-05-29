@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { MapPin, Search, ChevronDown } from "lucide-react";
 import {
-  regions,
   buildingTypes,
   formatKRW,
   type Branch,
@@ -17,7 +16,15 @@ type Congestion = "all" | "congested" | "not-congested";
 
 export function LocationsBrowser({ branches }: { branches: Branch[] }) {
   const [query, setQuery] = useState("");
-  const [region, setRegion] = useState<(typeof regions)[number]>("전체");
+  const [region, setRegion] = useState<string>("전체");
+
+  // Region options derived from the live branches, not a static list — so the
+  // dropdown only shows regions that actually have branches.
+  const regionOptions = useMemo(() => {
+    const set = new Set<string>();
+    for (const b of branches) if (b.region) set.add(b.region);
+    return ["전체", ...Array.from(set).sort()];
+  }, [branches]);
   const [cycle, setCycle] = useState<Cycle>("yearly");
   const [congestion, setCongestion] = useState<Congestion>("all");
   const [buildingType, setBuildingType] = useState<string>("all");
@@ -60,8 +67,8 @@ export function LocationsBrowser({ branches }: { branches: Branch[] }) {
             <FilterDropdown
               label="지역"
               value={region}
-              onChange={(v) => setRegion(v as (typeof regions)[number])}
-              options={regions.map((r) => ({ value: r, label: r }))}
+              onChange={(v) => setRegion(v)}
+              options={regionOptions.map((r) => ({ value: r, label: r }))}
             />
             <div>
               <label className="block text-[11.5px] font-semibold text-ink-500 mb-1.5">

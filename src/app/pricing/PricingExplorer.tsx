@@ -16,7 +16,6 @@ export type PriceMap = Record<"개인" | "법인", Record<number, number>>;
 const bizTabs: { value: BizType; label: string }[] = [
   { value: "individual", label: "개인사업자" },
   { value: "corporate", label: "법인사업자" },
-  { value: "bulk", label: "다수계약" },
 ];
 
 const cycleTabs: { value: Cycle; label: string }[] = [

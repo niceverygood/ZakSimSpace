@@ -14,7 +14,6 @@ import {
 import {
   industries,
   branches as mockBranches,
-  regions,
   buildingTypes,
   mailOptions,
   formatKRW,
@@ -49,7 +48,7 @@ export function ContractModal({
   const [selectedIndustryIds, setSelectedIndustryIds] = useState<string[]>([]);
 
   // Step 3 — filters
-  const [region, setRegion] = useState<(typeof regions)[number]>("전체");
+  const [region, setRegion] = useState<string>("전체");
   const [filterCycle, setFilterCycle] = useState<Cycle>("yearly");
   const [congestion, setCongestion] = useState<Congestion>("all");
   const [buildingType, setBuildingType] = useState<string>("all");
@@ -126,13 +125,12 @@ export function ContractModal({
     });
   };
 
-  const requiresLicense = useMemo(
-    () =>
-      selectedIndustryIds.some(
-        (id) => industries.find((i) => i.id === id)?.requiresLicense,
-      ),
-    [selectedIndustryIds],
-  );
+  // Region options from the live branch list (not the static mock regions).
+  const regionOptions = useMemo(() => {
+    const set = new Set<string>();
+    for (const b of branches) if (b.region) set.add(b.region);
+    return ["전체", ...Array.from(set).sort()];
+  }, [branches]);
 
   const filteredBranches = useMemo(() => {
     return branches.filter((b) => {
@@ -140,14 +138,13 @@ export function ContractModal({
       if (congestion === "congested" && !b.congested) return false;
       if (congestion === "not-congested" && b.congested) return false;
       if (buildingType !== "all" && b.buildingType !== buildingType) return false;
-      if (requiresLicense && !b.supportsLicense) return false;
       return true;
     });
-  }, [region, congestion, buildingType, requiresLicense]);
+  }, [branches, region, congestion, buildingType]);
 
   const selectedBranch = useMemo(
     () => branches.find((b) => b.id === selectedBranchId) ?? null,
-    [selectedBranchId],
+    [branches, selectedBranchId],
   );
 
   const selectedIndustryTitles = selectedIndustryIds
@@ -225,6 +222,7 @@ export function ContractModal({
             <BranchesStep
               region={region}
               setRegion={setRegion}
+              regionOptions={regionOptions}
               cycle={filterCycle}
               setCycle={setFilterCycle}
               congestion={congestion}
@@ -494,6 +492,7 @@ function SetupStep({
 function BranchesStep({
   region,
   setRegion,
+  regionOptions,
   cycle,
   setCycle,
   congestion,
@@ -506,8 +505,9 @@ function BranchesStep({
   selectedBranchId,
   onPick,
 }: {
-  region: (typeof regions)[number];
-  setRegion: (r: (typeof regions)[number]) => void;
+  region: string;
+  setRegion: (r: string) => void;
+  regionOptions: string[];
   cycle: Cycle;
   setCycle: (c: Cycle) => void;
   congestion: Congestion;
@@ -527,8 +527,8 @@ function BranchesStep({
         <FilterDropdown
           label="지역"
           value={region}
-          options={regions.map((r) => ({ value: r, label: r }))}
-          onChange={(v) => setRegion(v as (typeof regions)[number])}
+          options={regionOptions.map((r) => ({ value: r, label: r }))}
+          onChange={(v) => setRegion(v)}
         />
 
         <div>

@@ -268,9 +268,11 @@ function rowToBranch(r: Record<string, string>): SheetBranch | null {
   const name = (r["지점사업자명"] || r.name || r["지점명"] || "").trim();
   if (!name) return null;
 
-  // Only show currently-operating branches publicly.
+  // Only show currently-operating branches publicly. The 상태 cell can hold a
+  // combined value (e.g. "운영중 재계약가능"), so match by substring, not
+  // exact equality — otherwise valid 운영중 branches get dropped.
   const status = r["상태"] || "";
-  if (status && status !== "운영중") return null;
+  if (status && !status.includes("운영중")) return null;
 
   const region = r["지역#1"] || r.region || "";
   const subregion = r["지역#2"] || "";
