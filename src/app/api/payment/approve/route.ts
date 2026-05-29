@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { approveAtNicePay, isConfigured } from "@/lib/nicepay";
-import { getOrder, updateOrder } from "@/lib/orders";
+import { assignUnitNo, getOrder, updateOrder } from "@/lib/orders";
 
 export const dynamic = "force-dynamic";
 
@@ -77,8 +77,14 @@ export async function POST(req: Request) {
     );
   }
 
+  // Assign a 호수 (unit number) for this branch unless the order already has
+  // one (e.g. a retried approval) so the contract address is unique per tenant.
+  const unitNo =
+    order.unitNo ?? (order.branchId ? await assignUnitNo(order.branchId) : undefined);
+
   await updateOrder(moid, {
     status: "paid",
+    unitNo,
     tid: typeof result.TID === "string" ? result.TID : tid,
     authDate: typeof result.AuthDate === "string" ? result.AuthDate : undefined,
     cardName: typeof result.CardName === "string" ? result.CardName : undefined,

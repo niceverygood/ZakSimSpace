@@ -20,11 +20,19 @@ export function CheckoutClient({
   branchId,
   branchName,
   cycle,
+  months,
+  bizType,
+  startDate,
+  industry,
   amount,
 }: {
   branchId: string;
   branchName: string;
   cycle: "yearly" | "monthly";
+  months: number;
+  bizType: string;
+  startDate?: string;
+  industry?: string;
   amount: number;
 }) {
   const [phase, setPhase] = useState<Phase>("form");
@@ -79,6 +87,10 @@ export function CheckoutClient({
         body: JSON.stringify({
           branchId,
           cycle,
+          months,
+          bizType,
+          startDate,
+          industry,
           buyerName,
           buyerEmail,
           buyerTel,

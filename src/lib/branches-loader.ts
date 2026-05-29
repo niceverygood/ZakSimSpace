@@ -68,3 +68,26 @@ export async function findBranch(id: string): Promise<Branch | undefined> {
     (b) => normalize(b.id) === target || normalize(b.name) === target,
   );
 }
+
+/**
+ * Server-side price for a (branch, 사업자유형, 개월수) combination. Resolves
+ * against raw_상품 when the sheet is live; otherwise derives from the branch's
+ * baseline 12개월 price (×N/12) so 3/6/24 still produce a sensible amount.
+ */
+export async function resolvePrice(
+  branch: Branch,
+  bizType: "개인" | "법인",
+  months: 3 | 6 | 12 | 24,
+): Promise<number> {
+  if (sheetsConfigured()) {
+    try {
+      const products = await readProductsFromSheet();
+      const exact = pickProductPrice(products, branch.name, bizType, months);
+      if (exact && exact > 0) return exact;
+    } catch {
+      /* fall through to derived price */
+    }
+  }
+  // Derived fallback: yearly (12개월 개인 baseline) scaled to the term.
+  return Math.round((branch.yearlyPrice / 12) * months);
+}

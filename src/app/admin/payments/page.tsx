@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { adminPayments } from "@/lib/admin-data";
 import { formatKRW } from "@/lib/contract-data";
 import { listOrders, type Order } from "@/lib/orders";
@@ -33,6 +34,9 @@ export default async function AdminPaymentsPage() {
         <span key="b" className="text-ink-300">
           {o.branchName || "—"}
         </span>,
+        <span key="u" className="tnum text-navy-300 font-bold">
+          {o.unitNo ? `${o.unitNo}호` : "—"}
+        </span>,
         <span key="a" className="tnum font-extrabold text-white">
           {formatKRW(o.amount)}
         </span>,
@@ -40,6 +44,20 @@ export default async function AdminPaymentsPage() {
           {o.cardName || "카드"}
         </span>,
         <OrderStatus key="s" status={o.status} />,
+        o.status === "paid" ? (
+          <Link
+            key="c"
+            href={`/contract/${o.moid}`}
+            target="_blank"
+            className="text-navy-300 hover:text-navy-200 underline underline-offset-2 text-[12px]"
+          >
+            계약서
+          </Link>
+        ) : (
+          <span key="c" className="text-ink-600">
+            —
+          </span>
+        ),
       ],
     }));
     const total = orders
@@ -60,7 +78,7 @@ export default async function AdminPaymentsPage() {
           <LiveBadge live />
         </header>
         <AdminTable
-          headers={["주문번호", "일자", "구매자", "지점", "금액", "카드", "상태"]}
+          headers={["주문번호", "일자", "구매자", "지점", "호수", "금액", "카드", "상태", "계약서"]}
           rows={rows}
         />
       </div>

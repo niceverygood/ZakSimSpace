@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { CheckCircle2, ArrowRight, Download } from "lucide-react";
+import { CheckCircle2, ArrowRight, FileText } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { getOrder } from "@/lib/orders";
@@ -63,6 +63,9 @@ export default async function PaymentCompletePage({
 
             <dl className="mt-7 text-left space-y-3 border-t border-cream-200 pt-6">
               <Row label="주문번호" value={order.moid} mono />
+              {order.unitNo && (
+                <Row label="배정 호수" value={`${order.unitNo}호`} strong />
+              )}
               {order.tid && <Row label="거래번호" value={order.tid} mono />}
               <Row
                 label="결제 금액"
@@ -80,18 +83,18 @@ export default async function PaymentCompletePage({
 
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
-                href="/me/contracts"
+                href={`/contract/${order.moid}`}
                 className="inline-flex items-center gap-2 rounded-full bg-navy-600 hover:bg-navy-700 text-white font-bold px-6 h-12 text-[14px]"
+              >
+                <FileText className="w-4 h-4" strokeWidth={2} />
+                계약서 보기
+              </Link>
+              <Link
+                href="/me/contracts"
+                className="inline-flex items-center gap-2 rounded-full border border-ink-200 hover:border-ink-400 text-ink-800 font-semibold px-6 h-12 text-[13.5px]"
               >
                 내 계약 보기
                 <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
-              </Link>
-              <Link
-                href="/me/invoices"
-                className="inline-flex items-center gap-2 rounded-full border border-ink-200 hover:border-ink-400 text-ink-800 font-semibold px-6 h-12 text-[13.5px]"
-              >
-                <Download className="w-3.5 h-3.5" strokeWidth={2} />
-                세금계산서
               </Link>
             </div>
           </section>

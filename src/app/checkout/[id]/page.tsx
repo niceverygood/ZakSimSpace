@@ -3,11 +3,20 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { formatKRW } from "@/lib/contract-data";
-import { findBranch } from "@/lib/branches-loader";
+import { findBranch, resolvePrice } from "@/lib/branches-loader";
 import { CheckoutClient } from "./CheckoutClient";
 
 type Params = Promise<{ id: string }>;
-type Search = Promise<{ cycle?: string }>;
+type Search = Promise<{
+  cycle?: string;
+  months?: string;
+  bizType?: string;
+  startDate?: string;
+  industry?: string;
+}>;
+
+const TERM_MONTHS = [3, 6, 12, 24] as const;
+type Term = (typeof TERM_MONTHS)[number];
 
 // Resolve against the live sheet on every request (same reason as the branch
 // detail page) so newly-added branches don't 404 at checkout.
@@ -27,7 +36,8 @@ export default async function CheckoutPage({
   searchParams: Search;
 }) {
   const { id } = await params;
-  const { cycle } = await searchParams;
+  const { cycle, months: monthsParam, bizType: bizTypeParam, startDate, industry } =
+    await searchParams;
   let decodedId = id;
   try {
     decodedId = decodeURIComponent(id);
@@ -37,8 +47,17 @@ export default async function CheckoutPage({
   const branch = await findBranch(decodedId);
   if (!branch) notFound();
 
-  const isYearly = cycle !== "monthly";
-  const amount = isYearly ? branch.yearlyPrice : branch.monthlyPrice;
+  const bizType = bizTypeParam === "법인" ? "법인" : "개인";
+  const months: number = TERM_MONTHS.includes(Number(monthsParam) as Term)
+    ? Number(monthsParam)
+    : cycle === "monthly"
+      ? 1
+      : 12;
+  const isYearly = months >= 12;
+  const amount =
+    months === 1
+      ? branch.monthlyPrice
+      : await resolvePrice(branch, bizType, months as Term);
 
   return (
     <>
@@ -63,11 +82,11 @@ export default async function CheckoutPage({
             <p className="text-[13px] text-ink-500 mt-1">{branch.address}</p>
 
             <dl className="mt-6 pt-5 border-t border-cream-200 space-y-3">
-              <Row label="결제 주기" value={isYearly ? "연간" : "월간"} />
-              <Row
-                label={isYearly ? "오피스 × 1년" : "오피스 × 1개월"}
-                value={formatKRW(amount)}
-              />
+              <Row label="사업자 유형" value={bizType} />
+              <Row label="계약 기간" value={`${months}개월`} />
+              {startDate && <Row label="계약 시작일" value={startDate} />}
+              {industry && <Row label="업종" value={industry} />}
+              <Row label={`오피스 × ${months}개월`} value={formatKRW(amount)} />
             </dl>
 
             <div className="mt-5 pt-5 border-t border-cream-200 flex items-center justify-between">
@@ -86,6 +105,10 @@ export default async function CheckoutPage({
             branchId={branch.id}
             branchName={branch.name}
             cycle={isYearly ? "yearly" : "monthly"}
+            months={months}
+            bizType={bizType}
+            startDate={startDate}
+            industry={industry}
             amount={amount}
           />
         </div>
