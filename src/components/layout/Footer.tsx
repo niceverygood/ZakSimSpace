@@ -110,11 +110,13 @@ export function Footer() {
               Business Units
             </p>
             <div className="border-t border-ink-700/60" />
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 mt-7">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8 mt-7 items-start">
               {businessUnits.map((u) => (
                 <div key={u.name}>
-                  <p className="text-[14px] font-bold text-white">{u.name}</p>
-                  <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+                  <p className="text-[14px] font-bold text-white h-5 flex items-center">
+                    {u.name}
+                  </p>
+                  <ul className="mt-2.5 flex flex-wrap gap-x-3 gap-y-1.5 content-start min-h-[54px]">
                     {u.links.map((l) =>
                       isExternal(l.href) ? (
                         <li key={l.label}>
