@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { currentUser } from "@/lib/mypage-data";
 import { cn } from "@/lib/utils";
 
 type Channel = "email" | "sms" | "kakao";
@@ -19,10 +18,18 @@ const topicMeta: Record<Topic, { label: string; desc: string }> = {
   marketing: { label: "마케팅 정보", desc: "이벤트·신규 지점 오픈 안내 (선택)" },
 };
 
-export function SettingsForm() {
-  const [name, setName] = useState(currentUser.name);
-  const [email, setEmail] = useState(currentUser.email);
-  const [company, setCompany] = useState(currentUser.company);
+export function SettingsForm({
+  initialName,
+  initialEmail,
+  initialCompany,
+}: {
+  initialName: string;
+  initialEmail: string;
+  initialCompany: string;
+}) {
+  const [name, setName] = useState(initialName);
+  const [email, setEmail] = useState(initialEmail);
+  const [company, setCompany] = useState(initialCompany);
 
   const [channels, setChannels] = useState<Record<Topic, Record<Channel, boolean>>>(
     {

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { cookies } from "next/headers";
 import {
   Mail,
   CreditCard,
@@ -9,31 +8,13 @@ import {
   Calendar,
   Inbox,
 } from "lucide-react";
-import { formatKRWfromMypage } from "./helpers";
+import { formatKRWfromMypage, monthsOf } from "./helpers";
 import { formatKRW } from "@/lib/contract-data";
 import { contractEndISO } from "@/lib/contract-template";
-import { listOrders, type Order } from "@/lib/orders";
-import { createClient, isSupabaseConfigured } from "@/utils/supabase/server";
+import { myPaidOrders } from "./data";
 
 export const metadata: Metadata = { title: "마이페이지" };
 export const dynamic = "force-dynamic";
-
-/** Paid orders 검색 by signed-in user's buyer email. */
-async function myPaidOrders(): Promise<Order[]> {
-  if (!isSupabaseConfigured()) return [];
-  const supabase = createClient(await cookies());
-  const { data } = await supabase.auth.getUser();
-  const email = data.user?.email?.toLowerCase();
-  if (!email) return [];
-  const orders = await listOrders();
-  return orders.filter(
-    (o) => o.status === "paid" && o.buyerEmail.toLowerCase() === email,
-  );
-}
-
-function monthsOf(o: Order): number {
-  return o.months ?? (o.cycle === "yearly" ? 12 : 1);
-}
 
 export default async function MyPage() {
   const orders = await myPaidOrders();

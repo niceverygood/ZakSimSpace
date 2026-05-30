@@ -85,13 +85,15 @@ export function Hero() {
             </dl>
           </div>
 
-          {/* Right: 전국 지도 + 로켓 일러스트 */}
+          {/* Right: 비상주 사무실 서비스 일러스트 */}
           <div className="relative h-[420px] lg:h-[520px] hidden md:block">
-            <img
-              src="/hero-korea-rocket.png"
-              alt="전국 지점 지도와 로켓 — 작심스페이스"
-              className="absolute inset-0 w-full h-full object-contain"
-            />
+            <div className="absolute inset-0 rounded-[32px] overflow-hidden bg-white border border-cream-200 shadow-[0_24px_60px_-24px_rgba(35,61,104,0.28)]">
+              <img
+                src="/hero-main.png"
+                alt="비상주 사무실 계약·우편·알림 서비스 — 작심스페이스"
+                className="w-full h-full object-contain"
+              />
+            </div>
             {/* Pin chip near top */}
             <div className="absolute top-3 right-4 inline-flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur border border-ink-100 shadow-sm px-3 py-1.5">
               <MapPin className="w-3.5 h-3.5 text-navy-600" strokeWidth={2.5} />

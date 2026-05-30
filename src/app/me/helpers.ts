@@ -1,24 +1,11 @@
-export {
-  userContracts,
-  mailItems,
-  mailCategoryLabels,
-  billingHistory,
-  invoices,
-  paymentMethods,
-  currentUser,
-} from "@/lib/mypage-data";
-
 import { formatKRW } from "@/lib/contract-data";
+import type { Order } from "@/lib/orders";
 
 export function formatKRWfromMypage(n: number): string {
   return formatKRW(n);
 }
 
-export function statusLabel(s: "active" | "pending" | "ended"): {
-  label: string;
-  tone: "green" | "amber" | "gray";
-} {
-  if (s === "active") return { label: "이용 중", tone: "green" };
-  if (s === "pending") return { label: "심사 중", tone: "amber" };
-  return { label: "종료", tone: "gray" };
+/** Contract length in months, inferred from cycle when not explicit. */
+export function monthsOf(o: Order): number {
+  return o.months ?? (o.cycle === "yearly" ? 12 : 1);
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   FileText,
@@ -12,6 +12,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { createClient } from "@/utils/supabase/client";
 
 const navItems = [
   { href: "/me", label: "대시보드", icon: LayoutDashboard },
@@ -24,6 +25,19 @@ const navItems = [
 
 export function MyPageSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    try {
+      const supabase = createClient();
+      await supabase.auth.signOut();
+    } catch {
+      /* env missing — no-op */
+    }
+    router.push("/");
+    router.refresh();
+  };
+
   return (
     <nav aria-label="마이페이지">
       <ul className="space-y-1">
@@ -62,6 +76,7 @@ export function MyPageSidebar() {
       <div className="mt-6 pt-5 border-t border-cream-200">
         <button
           type="button"
+          onClick={handleSignOut}
           className="w-full flex items-center gap-3 h-11 px-3.5 rounded-xl text-[13.5px] font-semibold text-ink-500 hover:bg-cream-100 transition-colors"
         >
           <LogOut className="w-4 h-4 text-ink-400" strokeWidth={2} />
