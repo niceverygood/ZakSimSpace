@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Script from "next/script";
 import Link from "next/link";
 import { Loader2, ArrowRight, Lock, Info } from "lucide-react";
 import { formatKRW } from "@/lib/contract-data";
 import { cn } from "@/lib/utils";
+
+const NICEPAY_SRC = "https://web.nicepay.co.kr/v3/webstd/js/nicepay-3.0.js";
 
 declare global {
   interface Window {
@@ -67,6 +68,39 @@ export function CheckoutClient({
     return () => window.removeEventListener("message", onMessage);
   }, []);
 
+  // Manually inject the NicePay SDK so loading errors are visible (next/script's
+  // onLoad sometimes never fires under Turbopack + strict CSP, leaving the
+  // 결제하기 button permanently disabled).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (typeof window.goPay === "function") {
+      setSdkReady(true);
+      return;
+    }
+    const existing = document.querySelector<HTMLScriptElement>(
+      `script[src="${NICEPAY_SRC}"]`,
+    );
+    if (existing) {
+      const check = () => {
+        if (typeof window.goPay === "function") setSdkReady(true);
+      };
+      existing.addEventListener("load", check);
+      check();
+      return () => existing.removeEventListener("load", check);
+    }
+    const s = document.createElement("script");
+    s.src = NICEPAY_SRC;
+    s.async = true;
+    s.onload = () => {
+      if (typeof window.goPay === "function") setSdkReady(true);
+    };
+    s.onerror = () =>
+      setError(
+        "결제 모듈을 불러오지 못했어요. 광고 차단기를 끄거나 페이지를 새로고침해 주세요.",
+      );
+    document.head.appendChild(s);
+  }, []);
+
   const startPayment = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -74,9 +108,24 @@ export function CheckoutClient({
       setError("결제 약관에 동의해 주세요.");
       return;
     }
-    if (!sdkReady) {
-      setError("결제 모듈이 아직 준비되지 않았어요. 잠시 후 다시 시도해 주세요.");
+    if (!buyerName.trim() || !buyerEmail.trim() || !buyerTel.trim()) {
+      setError("이름·휴대전화·이메일을 모두 입력해 주세요.");
       return;
+    }
+    // Poll briefly if the SDK hasn't finished loading yet — beats permanently
+    // blocking the submit when the script is slow on first visit.
+    if (!sdkReady) {
+      const deadline = Date.now() + 2500;
+      while (Date.now() < deadline && typeof window.goPay !== "function") {
+        await new Promise((r) => setTimeout(r, 100));
+      }
+      if (typeof window.goPay === "function") setSdkReady(true);
+      else {
+        setError(
+          "결제 모듈이 준비 중이에요. 잠시 후 다시 시도하거나 페이지를 새로고침해 주세요.",
+        );
+        return;
+      }
     }
 
     setPhase("preparing");
@@ -136,17 +185,6 @@ export function CheckoutClient({
 
   return (
     <>
-      <Script
-        src="https://web.nicepay.co.kr/v3/webstd/js/nicepay-3.0.js"
-        strategy="afterInteractive"
-        onLoad={() => setSdkReady(true)}
-        onError={() =>
-          setError(
-            "결제 모듈 로드 실패. 광고 차단기를 끄거나 새로고침해 주세요.",
-          )
-        }
-      />
-
       {/* Buyer form */}
       <section className="mt-6 rounded-3xl bg-white border border-cream-200 p-6 lg:p-8">
         <h2 className="text-[16px] font-extrabold text-ink-900 mb-5">
@@ -246,7 +284,7 @@ export function CheckoutClient({
             </p>
             <button
               type="submit"
-              disabled={phase !== "form" || !sdkReady}
+              disabled={phase !== "form"}
               className="inline-flex items-center justify-center gap-2 rounded-full bg-navy-600 hover:bg-navy-700 disabled:bg-navy-300 text-white font-bold px-7 text-[14.5px] transition-colors h-[52px] min-w-[220px]"
             >
               {phase === "preparing" || phase === "popup-open" ? (

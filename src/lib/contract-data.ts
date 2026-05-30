@@ -83,6 +83,14 @@ export type Branch = {
   yearlyPrice: number;
   monthlyPrice: number;
   buildingType: "general" | "complex" | "office";
+  /**
+   * Per-사업자유형 · 개월수 단가 from raw_상품. Optional — falls back to
+   * yearly/monthly when not provided (e.g. mock data, sheet unavailable).
+   */
+  prices?: {
+    개인: Partial<Record<3 | 6 | 12 | 24, number>>;
+    법인: Partial<Record<3 | 6 | 12 | 24, number>>;
+  };
 };
 
 export const branches: Branch[] = [

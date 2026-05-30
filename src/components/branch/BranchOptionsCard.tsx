@@ -17,22 +17,22 @@ type BizType = "개인" | "법인";
 
 type Props = {
   branchId: string;
-  /** Price keyed by months (3/6/12/24). Caller resolves business type. */
-  pricesByMonths: Record<number, number>;
+  /** Per-사업자유형 prices keyed by months (3/6/12/24). */
+  pricesByBiz: Record<BizType, Record<number, number>>;
 };
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
 }
 
-export function BranchOptionsCard({ branchId, pricesByMonths }: Props) {
+export function BranchOptionsCard({ branchId, pricesByBiz }: Props) {
   const router = useRouter();
   const [bizType, setBizType] = useState<BizType>("개인");
   const [months, setMonths] = useState<number>(12);
   const [startDate, setStartDate] = useState<string>(todayISO());
   const [industry, setIndustry] = useState<string>("");
 
-  const total = pricesByMonths[months] ?? 0;
+  const total = pricesByBiz[bizType]?.[months] ?? 0;
 
   const goCheckout = () => {
     const params = new URLSearchParams({

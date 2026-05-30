@@ -22,14 +22,14 @@ const concerns: Care[] = [
   {
     icon: Mail,
     img: "/icons/usp-mail.png",
-    title: "소중한 우편물 알림",
-    desc: "도착한 우편물을 즉시 스캔해 마이페이지에 올리고 알림톡으로 알려드려요. 우편물 도달률 98%.",
+    title: "우편물 알림, 도달률 98%",
+    desc: "도착한 우편물을 즉시 스캔해 마이페이지에 올리고 알림톡으로 알려드려요.",
   },
   {
     icon: ShieldCheck,
     img: "/icons/usp-refund.png",
     title: "사업자등록 반려 시, 100% 환불 지원",
-    desc: "혹시 사업자등록이 반려되더라도 결제 금액을 100% 환불해 드려요. 부담 없이 시작하세요.",
+    desc: "혹시 사업자등록이 반려되더라도 결제 금액을 100% 환불해 드려요.",
   },
   {
     icon: Building2,
@@ -68,12 +68,12 @@ export function Features() {
             We care
           </p>
           <h2 className="text-[30px] lg:text-[40px] font-extrabold text-ink-900 leading-[1.25] tracking-tight">
-            한 번쯤은 고민해본 걱정들
+            사업자등록 전 걱정되는 모든 순간
             <br />
-            <span className="text-amber-500">작심스페이스 본사가 직접 케어</span>
+            <span className="text-amber-500">작심스페이스가 직접 챙깁니다</span>
           </h2>
           <p className="mt-4 text-[14.5px] text-ink-500">
-            사업자등록 전 걱정되는 모든 순간, 작심스페이스가 직접 챙깁니다.
+            한 번쯤은 고민해본 걱정들, 작심스페이스 본사가 직접 케어해 드려요.
           </p>
         </div>
 

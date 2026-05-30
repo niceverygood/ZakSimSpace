@@ -18,6 +18,7 @@ function toBranch(
   sheet: SheetBranch,
   yearly: number,
   monthly: number,
+  prices?: Branch["prices"],
 ): Branch {
   return {
     id: sheet.id,
@@ -30,8 +31,11 @@ function toBranch(
     yearlyPrice: yearly,
     monthlyPrice: monthly,
     buildingType: "general",
+    prices,
   };
 }
+
+const TERMS = [3, 6, 12, 24] as const;
 
 export async function loadBranches(): Promise<Branch[]> {
   if (!sheetsConfigured()) return mockBranches;
@@ -42,12 +46,20 @@ export async function loadBranches(): Promise<Branch[]> {
     ]);
     if (sheetBranches.length === 0) return mockBranches;
     return sheetBranches.map((b) => {
+      // Per-(사업자유형, 개월수) prices from raw_상품. Used by the contract modal
+      // and BranchOptionsCard so 개인/법인 + 3/6/12/24 all show correct amounts.
+      const prices: Branch["prices"] = { 개인: {}, 법인: {} };
+      for (const m of TERMS) {
+        const indiv = pickProductPrice(products, b.name, "개인", m);
+        if (indiv) prices.개인[m] = indiv;
+        const corp = pickProductPrice(products, b.name, "법인", m);
+        if (corp) prices.법인[m] = corp;
+      }
       // Default display = 개인 12개월 단가. Branch-specific row in raw_상품
       // takes precedence over the "all" fallback.
-      const yearly =
-        pickProductPrice(products, b.name, "개인", 12) ?? 240_000;
+      const yearly = prices.개인[12] ?? 240_000;
       const monthly = Math.round(yearly / 12);
-      return toBranch(b, yearly, monthly);
+      return toBranch(b, yearly, monthly, prices);
     });
   } catch {
     return mockBranches;

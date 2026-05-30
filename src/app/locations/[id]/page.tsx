@@ -54,20 +54,26 @@ export async function generateMetadata({
   };
 }
 
-async function loadPrices(branchName: string): Promise<Record<number, number>> {
-  if (!sheetsConfigured()) {
-    return { 3: 120000, 6: 180000, 12: 250000, 24: 440000 };
-  }
+type PricesByBiz = Record<"개인" | "법인", Record<number, number>>;
+
+async function loadPrices(branchName: string): Promise<PricesByBiz> {
+  const fallback: PricesByBiz = {
+    개인: { 3: 120000, 6: 180000, 12: 250000, 24: 440000 },
+    법인: { 3: 165000, 6: 240000, 12: 360000, 24: 600000 },
+  };
+  if (!sheetsConfigured()) return fallback;
   try {
     const products = await readProductsFromSheet();
     const months = [3, 6, 12, 24] as const;
-    const out: Record<number, number> = {};
-    for (const m of months) {
-      out[m] = pickProductPrice(products, branchName, "개인", m) ?? 0;
+    const out: PricesByBiz = { 개인: {}, 법인: {} };
+    for (const biz of ["개인", "법인"] as const) {
+      for (const m of months) {
+        out[biz][m] = pickProductPrice(products, branchName, biz, m) ?? 0;
+      }
     }
     return out;
   } catch {
-    return { 3: 120000, 6: 180000, 12: 250000, 24: 440000 };
+    return fallback;
   }
 }
 
@@ -270,7 +276,7 @@ export default async function BranchDetailPage({
             <div className="lg:sticky lg:top-24">
               <BranchOptionsCard
                 branchId={branch.id}
-                pricesByMonths={prices}
+                pricesByBiz={prices}
               />
             </div>
           </div>

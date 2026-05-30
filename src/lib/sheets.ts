@@ -167,6 +167,43 @@ export type SheetContract = {
 const CONTRACT_TAB_PRIMARY = "raw_25/26 계약";
 const CONTRACT_TAB_FALLBACK = "25년/26년 계약현황";
 
+/**
+ * Raw read of the 계약 sheet, A:AA columns, preserving original column order so
+ * the admin page can mirror the sheet 1:1 (per client QC feedback 0529).
+ * Returns the first non-empty row as headers and the rest as body rows.
+ */
+export async function readContractsRawA_AA(): Promise<{
+  headers: string[];
+  rows: string[][];
+}> {
+  let values: string[][] = [];
+  try {
+    values = await readSheetValues(`${CONTRACT_TAB_PRIMARY}!A1:AA`);
+  } catch {
+    /* tab missing — try fallback */
+  }
+  if (values.length === 0) {
+    try {
+      // Fallback tab: headers live around row 7 (rows 1-6 are titles/spacers).
+      values = await readSheetValues(`${CONTRACT_TAB_FALLBACK}!A7:AA`);
+    } catch {
+      return { headers: [], rows: [] };
+    }
+  }
+  if (values.length === 0) return { headers: [], rows: [] };
+  const [header, ...body] = values;
+  // Pad short rows to the header width so the table renders consistently.
+  const width = header.length;
+  const rows = body
+    .filter((r) => r.some((c) => c && c.length > 0))
+    .map((r) => {
+      const out = r.slice(0, width);
+      while (out.length < width) out.push("");
+      return out;
+    });
+  return { headers: header.map((h) => h.trim()), rows };
+}
+
 export async function readContractsFromSheet(): Promise<SheetContract[]> {
   let rows: Record<string, string>[] = [];
 

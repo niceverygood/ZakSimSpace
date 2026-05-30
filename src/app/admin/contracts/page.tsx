@@ -1,118 +1,122 @@
-import { formatKRW } from "@/lib/contract-data";
 import {
-  readContractsFromSheet,
+  readContractsRawA_AA,
   sheetsConfigured,
-  type SheetContract,
 } from "@/lib/sheets";
 import { AdminTable } from "../AdminTable";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-/** 시트 비어있거나 미연결 시 표시할 mock 3건. */
-const mockContracts: SheetContract[] = [
-  {
-    contract_id: "Z250102_1",
-    representative: "한무희",
-    company_name: "(주)라메드랩스",
-    business_number: "721-86-00979",
-    industry: "교육서비스업",
-    contract_type: "법인이전",
-    is_renewal: false,
-    start_date: "2025-01-02",
-    end_date: "2025-08-01",
-    duration_months: 7,
-    payment_method: "카드",
-    amount: 168000,
-  },
-  {
-    contract_id: "Z250102_2",
-    representative: "장윤석",
-    company_name: "장윤석(미정)",
-    business_number: "",
-    industry: "광고대행업",
-    contract_type: "개인신규",
-    is_renewal: false,
-    start_date: "2025-01-02",
-    end_date: "2026-03-01",
-    duration_months: 14,
-    payment_method: "계좌이체",
-    amount: 336000,
-  },
-  {
-    contract_id: "Z250114_1",
-    representative: "이원준",
-    company_name: "준엔지니어링",
-    business_number: "194-26-01420",
-    industry: "토목엔지니어링",
-    contract_type: "재계약(개인)",
-    is_renewal: true,
-    start_date: "2025-01-14",
-    end_date: "2026-03-13",
-    duration_months: 14,
-    payment_method: "카드",
-    amount: 336000,
-  },
-];
+/** Per QC 0529: mirror raw_계약 columns A~AA, sort by column L descending,
+ *  contract number = column C. */
+const SORT_COL_INDEX = 11; // L
+const CONTRACT_NO_COL_INDEX = 2; // C
 
-type Source = "sheets" | "mock";
+type RawSheet = { headers: string[]; rows: string[][] };
 
-async function loadContracts(): Promise<{
-  data: SheetContract[];
-  source: Source;
-  error?: string;
-}> {
-  if (!sheetsConfigured()) {
-    return { data: mockContracts, source: "mock" };
-  }
+/** Mock fallback when sheets unavailable — kept minimal for visual sanity. */
+const MOCK: RawSheet = {
+  headers: [
+    "No",
+    "지점",
+    "계약번호",
+    "유형",
+    "대표자명",
+    "상호명",
+    "사업자번호",
+    "업종",
+    "신규/이전",
+    "재계약",
+    "방문일",
+    "계약일",
+    "계약시작일",
+    "계약종료일",
+    "기간(개월)",
+    "결제방식",
+    "결제일",
+    "결제금액",
+    "환불",
+    "환불금액",
+    "환불일",
+    "특이사항",
+    "발번",
+    "호수",
+    "주소",
+    "전화",
+    "이메일",
+  ],
+  rows: [
+    [
+      "1", "교대 1호점", "Z250102_1", "법인이전", "한무희", "(주)라메드랩스",
+      "721-86-00979", "교육서비스업", "이전", "", "2025-01-02", "2025-01-02",
+      "2025-01-02", "2025-08-01", "7", "카드", "2025-01-02", "168000", "",
+      "", "", "", "", "101", "서울 서초구 …", "", "",
+    ],
+  ],
+};
+
+async function load(): Promise<{ data: RawSheet; live: boolean; error?: string }> {
+  if (!sheetsConfigured()) return { data: MOCK, live: false };
   try {
-    const data = await readContractsFromSheet();
-    if (data.length === 0) {
+    const raw = await readContractsRawA_AA();
+    if (raw.rows.length === 0) {
       return {
-        data: mockContracts,
-        source: "mock",
-        error: "시트에서 데이터를 찾지 못했습니다. raw_25/26 계약 시트 준비 대기 중.",
+        data: MOCK,
+        live: false,
+        error:
+          "시트에서 데이터를 찾지 못했습니다. raw_25/26 계약 탭을 확인하세요.",
       };
     }
-    return { data, source: "sheets" };
+    return { data: raw, live: true };
   } catch (e) {
     return {
-      data: mockContracts,
-      source: "mock",
+      data: MOCK,
+      live: false,
       error: e instanceof Error ? e.message : String(e),
     };
   }
 }
 
+/**
+ * Sort by column L (index 11) descending. Treat values as dates when possible
+ * (YYYY-MM-DD or YYYY.MM.DD); fall back to numeric / lexical. Empty cells sink.
+ */
+function sortByColumnLDesc(rows: string[][]): string[][] {
+  const score = (cell: string): number => {
+    if (!cell) return -Infinity;
+    const cleaned = cell.replace(/\./g, "-").replace(/\s+/g, "");
+    const parts = cleaned.split("-").map((p) => parseInt(p, 10));
+    if (parts.length === 3 && parts.every((n) => !Number.isNaN(n))) {
+      const [y, m, d] = parts;
+      const year = y < 100 ? 2000 + y : y;
+      return year * 10000 + m * 100 + d;
+    }
+    const n = Number(cell);
+    return Number.isFinite(n) ? n : -Infinity;
+  };
+  return [...rows].sort(
+    (a, b) => score(b[SORT_COL_INDEX] || "") - score(a[SORT_COL_INDEX] || ""),
+  );
+}
+
 export default async function AdminContractsPage() {
-  const { data: contracts, source, error } = await loadContracts();
+  const { data, live, error } = await load();
+  const sorted = sortByColumnLDesc(data.rows);
 
-  const newCount = contracts.filter((c) => !c.is_renewal).length;
-  const renewalCount = contracts.filter((c) => c.is_renewal).length;
-  const totalRevenue = contracts.reduce((sum, c) => sum + c.amount, 0);
-
-  const rows = contracts.map((c) => ({
-    id: c.contract_id,
-    cells: [
-      <span key="id" className="text-[12px] text-ink-400 tnum">{c.contract_id}</span>,
-      <span key="name" className="font-bold text-white">{c.company_name}</span>,
-      <span key="rep" className="text-ink-300">{c.representative || "—"}</span>,
-      <TypeBadge key="t" type={c.contract_type} isRenewal={c.is_renewal} />,
-      <span key="dur" className="tnum text-ink-300">
-        {c.duration_months ? `${c.duration_months}개월` : "—"}
-      </span>,
-      <span key="start" className="tnum text-ink-300">{c.start_date || "—"}</span>,
-      <span key="end" className="tnum text-ink-300">{c.end_date || "—"}</span>,
-      <span key="amt" className="tnum font-extrabold text-white">
-        {formatKRW(c.amount)}
-      </span>,
+  const tableRows = sorted.map((row, idx) => ({
+    id: row[CONTRACT_NO_COL_INDEX] || `row-${idx}`,
+    cells: row.map((cell, ci) => (
       <span
-        key="method"
-        className="inline-flex items-center rounded-full bg-ink-700 text-ink-300 border border-ink-700 px-2 py-0.5 text-[10.5px] font-bold"
+        key={ci}
+        className={
+          ci === CONTRACT_NO_COL_INDEX
+            ? "text-[12px] tnum font-bold text-white"
+            : "text-[12px] text-ink-300 tnum"
+        }
       >
-        {c.payment_method || "—"}
-      </span>,
-    ],
+        {cell || "—"}
+      </span>
+    )),
   }));
 
   return (
@@ -123,8 +127,7 @@ export default async function AdminContractsPage() {
             계약 관리
           </h1>
           <p className="text-[13px] text-ink-400 mt-1">
-            총 {contracts.length}건 · 신규 {newCount} · 재계약 {renewalCount} ·
-            누적 매출 {formatKRW(totalRevenue)}
+            총 {data.rows.length}건 · raw_계약 A~AA 컬럼 · L열 기준 내림차순
           </p>
           {error && (
             <p className="mt-2 inline-flex items-center rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-300 px-2.5 py-1 text-[11px]">
@@ -132,63 +135,28 @@ export default async function AdminContractsPage() {
             </p>
           )}
         </div>
-        <SourceBadge source={source} />
+        <SourceBadge live={live} />
       </header>
-      <AdminTable
-        headers={[
-          "계약번호",
-          "상호명",
-          "대표자",
-          "유형",
-          "기간",
-          "시작일",
-          "종료일",
-          "금액",
-          "결제",
-        ]}
-        rows={rows}
-      />
+      <div className="overflow-x-auto">
+        <AdminTable headers={data.headers} rows={tableRows} />
+      </div>
     </div>
   );
 }
 
-function TypeBadge({
-  type,
-  isRenewal,
-}: {
-  type: string;
-  isRenewal: boolean;
-}) {
-  if (!type) return <span className="text-ink-500">—</span>;
-  const cls = isRenewal
-    ? "bg-violet-500/20 text-violet-300 border-violet-500/40"
-    : type.includes("법인")
-      ? "bg-rose-500/20 text-rose-300 border-rose-500/40"
-      : "bg-emerald-500/20 text-emerald-300 border-emerald-500/40";
-  return (
-    <span
-      className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10.5px] font-bold ${cls}`}
-    >
-      {type}
-    </span>
-  );
-}
-
-function SourceBadge({ source }: { source: Source }) {
+function SourceBadge({ live }: { live: boolean }) {
   return (
     <span
       className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-bold ${
-        source === "sheets"
+        live
           ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
           : "bg-amber-500/20 text-amber-300 border-amber-500/40"
       }`}
     >
       <span
-        className={`w-1.5 h-1.5 rounded-full ${
-          source === "sheets" ? "bg-emerald-400" : "bg-amber-400"
-        }`}
+        className={`w-1.5 h-1.5 rounded-full ${live ? "bg-emerald-400" : "bg-amber-400"}`}
       />
-      {source === "sheets" ? "구글시트 라이브" : "Mock 데이터"}
+      {live ? "구글시트 라이브" : "Mock 데이터"}
     </span>
   );
 }

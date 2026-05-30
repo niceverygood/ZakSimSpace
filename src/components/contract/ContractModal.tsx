@@ -14,8 +14,6 @@ import {
 import {
   industries,
   branches as mockBranches,
-  buildingTypes,
-  mailOptions,
   formatKRW,
   type BusinessType,
   type Branch,
@@ -23,8 +21,23 @@ import {
 import { cn } from "@/lib/utils";
 
 type Step = "setup" | "branches" | "checkout";
-type Cycle = "yearly" | "monthly";
+type Months = 3 | 6 | 12 | 24;
 type Congestion = "all" | "congested" | "not-congested";
+
+const MONTH_OPTIONS: readonly Months[] = [3, 6, 12, 24] as const;
+
+/** "individual"/"corporate" UI 값 → raw_상품 키 "개인"/"법인". */
+function bizKorean(t: BusinessType | null): "개인" | "법인" {
+  return t === "corporate" ? "법인" : "개인";
+}
+
+/** 지점·사업자유형·개월수 조합으로 단가 결정. 시트 데이터 미존재 시 fallback. */
+function priceFor(branch: Branch, biz: BusinessType | null, months: Months): number {
+  const key = bizKorean(biz);
+  const fromSheet = branch.prices?.[key]?.[months];
+  if (fromSheet && fromSheet > 0) return fromSheet;
+  return Math.round((branch.yearlyPrice / 12) * months);
+}
 
 const MAX_INDUSTRIES = 3;
 
@@ -49,15 +62,13 @@ export function ContractModal({
 
   // Step 3 — filters
   const [region, setRegion] = useState<string>("전체");
-  const [filterCycle, setFilterCycle] = useState<Cycle>("yearly");
+  const [filterMonths, setFilterMonths] = useState<Months>(12);
   const [congestion, setCongestion] = useState<Congestion>("all");
-  const [buildingType, setBuildingType] = useState<string>("all");
   const [selectedBranchId, setSelectedBranchId] = useState<string | null>(null);
 
   // Step 4 — checkout
-  const [cycle, setCycle] = useState<Cycle>("yearly");
+  const [months, setMonths] = useState<Months>(12);
   const [startDate, setStartDate] = useState<string>(todayISO());
-  const [mailOption, setMailOption] = useState<string>(mailOptions[0].value);
 
   // Live branches fetched once the modal first opens. Falls back to mock if
   // the API errors so the form keeps working in dev without sheets configured.
@@ -88,13 +99,11 @@ export function ContractModal({
         setBusinessType(null);
         setSelectedIndustryIds([]);
         setRegion("전체");
-        setFilterCycle("yearly");
+        setFilterMonths(12);
         setCongestion("all");
-        setBuildingType("all");
         setSelectedBranchId(null);
-        setCycle("yearly");
+        setMonths(12);
         setStartDate(todayISO());
-        setMailOption(mailOptions[0].value);
       }, 200);
       return () => clearTimeout(t);
     }
@@ -135,10 +144,9 @@ export function ContractModal({
       if (region !== "전체" && b.region !== region) return false;
       if (congestion === "congested" && !b.congested) return false;
       if (congestion === "not-congested" && b.congested) return false;
-      if (buildingType !== "all" && b.buildingType !== buildingType) return false;
       return true;
     });
-  }, [branches, region, congestion, buildingType]);
+  }, [branches, region, congestion]);
 
   const selectedBranch = useMemo(
     () => branches.find((b) => b.id === selectedBranchId) ?? null,
@@ -159,15 +167,11 @@ export function ContractModal({
   const setupCanProceed =
     businessType !== null && selectedIndustryIds.length > 0;
 
-  // Pricing for checkout
+  // Pricing for checkout — raw_상품 (사업자유형 × 개월수) 우선, 미존재 시 fallback.
   const unitPrice = selectedBranch
-    ? cycle === "yearly"
-      ? selectedBranch.yearlyPrice
-      : selectedBranch.monthlyPrice
+    ? priceFor(selectedBranch, businessType, months)
     : 0;
-  const mailAddon =
-    mailOption === "scan-full" ? (cycle === "yearly" ? 36000 : 3000) : 0;
-  const total = unitPrice + mailAddon;
+  const total = unitPrice;
 
   if (!open) return null;
 
@@ -220,19 +224,18 @@ export function ContractModal({
               region={region}
               setRegion={setRegion}
               regionOptions={regionOptions}
-              cycle={filterCycle}
-              setCycle={setFilterCycle}
+              months={filterMonths}
+              setMonths={setFilterMonths}
               congestion={congestion}
               setCongestion={setCongestion}
-              buildingType={buildingType}
-              setBuildingType={setBuildingType}
+              businessType={businessType}
               businessTypeLabel={businessTypeLabel}
               industryLabels={selectedIndustryTitles}
               filteredBranches={filteredBranches}
               selectedBranchId={selectedBranchId}
               onPick={(id) => {
                 setSelectedBranchId(id);
-                setCycle(filterCycle);
+                setMonths(filterMonths);
                 setStep("checkout");
               }}
             />
@@ -243,15 +246,12 @@ export function ContractModal({
               branch={selectedBranch}
               businessTypeLabel={businessTypeLabel}
               industryLabels={selectedIndustryTitles}
-              cycle={cycle}
-              setCycle={setCycle}
+              months={months}
+              setMonths={setMonths}
               startDate={startDate}
               setStartDate={setStartDate}
-              mailOption={mailOption}
-              setMailOption={setMailOption}
               total={total}
               unitPrice={unitPrice}
-              mailAddon={mailAddon}
               onReselect={() => setStep("setup")}
             />
           )}
@@ -289,8 +289,17 @@ export function ContractModal({
               type="button"
               onClick={() => {
                 onClose();
+                const params = new URLSearchParams({
+                  cycle: months >= 12 ? "yearly" : "monthly",
+                  months: String(months),
+                  bizType: bizKorean(businessType),
+                  startDate,
+                  ...(selectedIndustryTitles[0] && {
+                    industry: selectedIndustryTitles[0],
+                  }),
+                });
                 router.push(
-                  `/checkout/${selectedBranch.id}?cycle=${cycle}`,
+                  `/checkout/${selectedBranch.id}?${params.toString()}`,
                 );
               }}
               className="w-full h-14 rounded-2xl font-bold text-[15px] bg-navy-600 hover:bg-navy-700 text-white transition-colors"
@@ -487,12 +496,11 @@ function BranchesStep({
   region,
   setRegion,
   regionOptions,
-  cycle,
-  setCycle,
+  months,
+  setMonths,
   congestion,
   setCongestion,
-  buildingType,
-  setBuildingType,
+  businessType,
   businessTypeLabel,
   industryLabels,
   filteredBranches,
@@ -502,12 +510,11 @@ function BranchesStep({
   region: string;
   setRegion: (r: string) => void;
   regionOptions: string[];
-  cycle: Cycle;
-  setCycle: (c: Cycle) => void;
+  months: Months;
+  setMonths: (m: Months) => void;
   congestion: Congestion;
   setCongestion: (c: Congestion) => void;
-  buildingType: string;
-  setBuildingType: (b: string) => void;
+  businessType: BusinessType | null;
   businessTypeLabel: string;
   industryLabels: string[];
   filteredBranches: Branch[];
@@ -517,7 +524,7 @@ function BranchesStep({
   return (
     <div className="pt-5 pb-2">
       {/* Filters */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
         <FilterDropdown
           label="지역"
           value={region}
@@ -525,29 +532,24 @@ function BranchesStep({
           onChange={(v) => setRegion(v)}
         />
 
-        <div>
+        <div className="sm:col-span-1">
           <label className="block text-[11.5px] font-semibold text-ink-500 mb-1.5">
-            결제 주기
+            계약 개월수
           </label>
-          <div className="grid grid-cols-2 h-11 rounded-xl border border-ink-200 overflow-hidden">
-            {(
-              [
-                { v: "yearly", l: "연간" },
-                { v: "monthly", l: "월간" },
-              ] as const
-            ).map((o) => (
+          <div className="grid grid-cols-4 h-11 rounded-xl border border-ink-200 overflow-hidden">
+            {MONTH_OPTIONS.map((m) => (
               <button
-                key={o.v}
+                key={m}
                 type="button"
-                onClick={() => setCycle(o.v)}
+                onClick={() => setMonths(m)}
                 className={cn(
-                  "text-[13px] font-semibold transition-colors",
-                  cycle === o.v
-                    ? "bg-navy-50 text-navy-700 border-navy-600 ring-1 ring-navy-600/40"
+                  "text-[12.5px] font-semibold transition-colors",
+                  months === m
+                    ? "bg-navy-50 text-navy-700 ring-1 ring-navy-600/40"
                     : "bg-white text-ink-500 hover:text-ink-800",
                 )}
               >
-                {o.l}
+                {m}개월
               </button>
             ))}
           </div>
@@ -585,13 +587,6 @@ function BranchesStep({
             })}
           </div>
         </div>
-
-        <FilterDropdown
-          label="건축물 용도"
-          value={buildingType}
-          options={[...buildingTypes]}
-          onChange={setBuildingType}
-        />
       </div>
 
       {/* Chips + count */}
@@ -604,7 +599,7 @@ function BranchesStep({
           {industryLabels.length > 1 && (
             <Chip>+{industryLabels.length - 1}</Chip>
           )}
-          <Chip>{cycle === "yearly" ? "연간" : "월간"}</Chip>
+          <Chip>{months}개월</Chip>
         </div>
         <p className="text-[12.5px] text-ink-500 font-semibold tnum">
           {filteredBranches.length}개 지점
@@ -622,7 +617,7 @@ function BranchesStep({
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {filteredBranches.map((b) => {
             const active = selectedBranchId === b.id;
-            const price = cycle === "yearly" ? b.yearlyPrice : b.monthlyPrice;
+            const price = priceFor(b, businessType, months);
             return (
               <li key={b.id}>
                 <button
@@ -656,7 +651,7 @@ function BranchesStep({
                   <p className="text-right text-[15.5px] font-extrabold text-ink-900 tnum mt-3">
                     {formatKRW(price)}
                     <span className="text-[11.5px] font-semibold text-ink-400 ml-1">
-                      /{cycle === "yearly" ? "연" : "월"}
+                      /{months}개월
                     </span>
                   </p>
                 </button>
@@ -747,29 +742,23 @@ function CheckoutStep({
   branch,
   businessTypeLabel,
   industryLabels,
-  cycle,
-  setCycle,
+  months,
+  setMonths,
   startDate,
   setStartDate,
-  mailOption,
-  setMailOption,
   total,
   unitPrice,
-  mailAddon,
   onReselect,
 }: {
   branch: Branch;
   businessTypeLabel: string;
   industryLabels: string[];
-  cycle: Cycle;
-  setCycle: (c: Cycle) => void;
+  months: Months;
+  setMonths: (m: Months) => void;
   startDate: string;
   setStartDate: (d: string) => void;
-  mailOption: string;
-  setMailOption: (s: string) => void;
   total: number;
   unitPrice: number;
-  mailAddon: number;
   onReselect: () => void;
 }) {
 
@@ -791,27 +780,22 @@ function CheckoutStep({
         </button>
       </div>
 
-      {/* Payment cycle */}
-      <Field label="결제 주기">
-        <div className="grid grid-cols-2 h-12 rounded-2xl border border-ink-200 overflow-hidden">
-          {(
-            [
-              { v: "yearly" as const, l: "연간" },
-              { v: "monthly" as const, l: "월간" },
-            ]
-          ).map((o) => (
+      {/* Payment term (개월수) */}
+      <Field label="계약 개월수">
+        <div className="grid grid-cols-4 h-12 rounded-2xl border border-ink-200 overflow-hidden">
+          {MONTH_OPTIONS.map((m) => (
             <button
-              key={o.v}
+              key={m}
               type="button"
-              onClick={() => setCycle(o.v)}
+              onClick={() => setMonths(m)}
               className={cn(
-                "text-[14px] font-bold transition-colors",
-                cycle === o.v
+                "text-[13px] font-bold transition-colors",
+                months === m
                   ? "bg-navy-50 text-navy-700"
                   : "bg-white text-ink-500 hover:text-ink-800",
               )}
             >
-              {o.l}
+              {m}개월
             </button>
           ))}
         </div>
@@ -831,33 +815,9 @@ function CheckoutStep({
         </div>
       </Field>
 
-      {/* Mail handling */}
-      <Field label="일반 우편물 대리 개봉">
-        <div className="relative">
-          <select
-            value={mailOption}
-            onChange={(e) => setMailOption(e.target.value)}
-            className="w-full h-12 appearance-none rounded-2xl border border-ink-200 bg-white px-4 pr-10 text-[14px] font-semibold text-ink-800 focus:outline-none focus:border-navy-500"
-          >
-            {mailOptions.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-          <ChevronDown
-            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-400"
-            strokeWidth={2}
-          />
-        </div>
-      </Field>
-
       {/* Summary */}
       <div className="mt-8 border-t border-cream-200 pt-5 space-y-2.5">
-        <Row label={`오피스 × ${cycle === "yearly" ? "1년" : "1개월"}`} value={formatKRW(unitPrice)} />
-        {mailAddon > 0 && (
-          <Row label="우편물 내용 스캔" value={formatKRW(mailAddon)} />
-        )}
+        <Row label={`오피스 × ${months}개월`} value={formatKRW(unitPrice)} />
         <div className="flex items-center justify-between pt-3 mt-3 border-t border-cream-200">
           <p className="text-[15px] font-bold text-ink-900">결제 금액</p>
           <p className="text-[20px] font-extrabold text-ink-900 tnum">
