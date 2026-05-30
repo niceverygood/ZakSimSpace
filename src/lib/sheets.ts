@@ -7,6 +7,7 @@
  */
 
 import "server-only";
+import { unstable_cache } from "next/cache";
 import { google, type sheets_v4 } from "googleapis";
 
 const SHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
@@ -284,7 +285,7 @@ const BRANCH_TAB_PRIMARY = "raw_26지점";
  * fetch from row 3 explicitly. Only "운영중" branches surface to the public
  * site; everything else (실사지원, 반려, 대기중, 운영불가, …) is filtered.
  */
-export async function readBranchesFromSheet(): Promise<SheetBranch[]> {
+async function readBranchesFromSheetUncached(): Promise<SheetBranch[]> {
   let rows: Record<string, string>[] = [];
   try {
     // Row 1-2 are titles, row 3 is a group label (담당자 정보 / 지점정보),
@@ -297,6 +298,17 @@ export async function readBranchesFromSheet(): Promise<SheetBranch[]> {
     .map(rowToBranch)
     .filter((b): b is SheetBranch => b !== null);
 }
+
+// Persist across serverless invocations via the Next Data Cache. The in-memory
+// memoizer above resets on every cold start, so without this each public page
+// request re-authenticates with Google and re-reads the sheet — the cause of
+// the slow /locations loads. 5-min revalidate keeps new branches surfacing
+// without a redeploy.
+export const readBranchesFromSheet = unstable_cache(
+  readBranchesFromSheetUncached,
+  ["sheet-branches"],
+  { revalidate: 300, tags: ["sheets", "branches"] },
+);
 
 function rowToBranch(r: Record<string, string>): SheetBranch | null {
   // 지점사업자명 (col H) is the customer-facing name per 강재혁 본부장 spec.
@@ -363,7 +375,7 @@ const PRODUCT_TAB = "raw_상품";
  *   col G: 합계
  * Header is on row 5 (rows 1-4 are titles), data starts row 6.
  */
-export async function readProductsFromSheet(): Promise<SheetProduct[]> {
+async function readProductsFromSheetUncached(): Promise<SheetProduct[]> {
   let rows: string[][] = [];
   try {
     rows = await readSheetValues(`${PRODUCT_TAB}!B5:G50`);
@@ -397,6 +409,14 @@ export async function readProductsFromSheet(): Promise<SheetProduct[]> {
   }
   return out;
 }
+
+// Same rationale as readBranchesFromSheet: persist across cold starts so the
+// pricing/branch-detail pages don't hit Google on every request.
+export const readProductsFromSheet = unstable_cache(
+  readProductsFromSheetUncached,
+  ["sheet-products"],
+  { revalidate: 300, tags: ["sheets", "products"] },
+);
 
 /**
  * Picks the price for a given (branchId, businessType, months) tuple.

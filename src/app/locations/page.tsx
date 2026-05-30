@@ -10,8 +10,10 @@ export const metadata: Metadata = {
     "작심스페이스 전국 직영·가맹점. 지역·과밀 여부로 필터링해서 내 사업장을 빠르게 찾아보세요.",
 };
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// ISR: serve cached HTML from the CDN and rebuild in the background every 5
+// min. The branch list comes from a live sheet (cached at the data layer), so
+// this removes Google from the request path without needing a redeploy.
+export const revalidate = 300;
 
 export default async function LocationsPage() {
   const branches = await loadBranches();

@@ -10,8 +10,9 @@ export const metadata: Metadata = {
     "사업자 유형과 계약 기간에 맞춰 최적의 가격을 안내합니다.",
 };
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// ISR: prices come from a live sheet (cached at the data layer); serve cached
+// HTML and revalidate every 5 min instead of re-reading Google per request.
+export const revalidate = 300;
 
 /** Fallback mirrors raw_상품 (개인/법인 동일) so the page still works offline. */
 const FALLBACK: PriceMap = {

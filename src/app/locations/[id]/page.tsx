@@ -18,11 +18,11 @@ import { BranchOptionsCard } from "@/components/branch/BranchOptionsCard";
 
 type Params = Promise<{ id: string }>;
 
-// Branches come from a live Google Sheet that changes without a redeploy, so
-// resolve every request at runtime instead of baking static params at build
-// (which 404'd any branch added after the last deploy).
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// ISR with on-demand params (dynamicParams defaults to true): a branch added to
+// the sheet after deploy renders on first visit, then caches for 5 min. This
+// keeps the no-redeploy behavior of the old force-dynamic setup but serves
+// cached HTML instead of re-reading Google on every request.
+export const revalidate = 300;
 
 /** Path params arrive percent-encoded for non-ASCII ids; decode defensively. */
 function safeDecode(s: string): string {

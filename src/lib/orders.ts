@@ -288,3 +288,25 @@ export async function listOrders(limit = 200): Promise<Order[]> {
     return [];
   }
 }
+
+/**
+ * A single buyer's paid orders, filtered in the DB so /me pages transfer only
+ * the user's rows instead of pulling 200 and filtering in JS. Email match is
+ * case-insensitive. Empty when DB unavailable.
+ */
+export async function listPaidOrdersByEmail(email: string): Promise<Order[]> {
+  const sb = supa();
+  if (!sb || !email) return [];
+  try {
+    const { data, error } = await sb
+      .from("orders")
+      .select("*")
+      .eq("status", "paid")
+      .ilike("buyer_email", email)
+      .order("created_at", { ascending: false });
+    if (error || !data) return [];
+    return (data as OrderRow[]).map(rowToOrder);
+  } catch {
+    return [];
+  }
+}
